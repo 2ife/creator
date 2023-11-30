@@ -1,0 +1,25 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const middlewares_1 = require("../middlewares");
+const admin_1 = require("../controllers/admin");
+const common_1 = require("./common");
+const router = express_1.default.Router();
+router.get("/", middlewares_1.apiLimiter, admin_1.renderAdmin);
+router.post("/login", middlewares_1.apiLimiter, middlewares_1.isNotLoggedIn, admin_1.loginAdmin);
+router.get("/logout", middlewares_1.apiLimiter, middlewares_1.isAdminLoggedIn, admin_1.logoutAdmin);
+router.post("/userInfo/:id", middlewares_1.apiLimiter, middlewares_1.isAdminLoggedIn, (0, common_1.checkParams)("id"), admin_1.getUserInfo);
+router.post("/deleteCashCode", middlewares_1.apiLimiter, middlewares_1.isAdminLoggedIn, admin_1.deleteCashCode);
+router.post("/deleteError", middlewares_1.apiLimiter, middlewares_1.isAdminLoggedIn, admin_1.deleteError);
+router.post("/lock/:id", middlewares_1.apiLimiter, middlewares_1.isAdminLoggedIn, (0, common_1.checkParams)("id"), admin_1.lockOrUnlockUser);
+router.post("/deleteUser/:id", middlewares_1.apiLimiter, middlewares_1.isAdminLoggedIn, (0, common_1.checkParams)("id"), admin_1.deleteUser);
+router.post("/changeNick/:id", middlewares_1.apiLimiter, middlewares_1.isAdminLoggedIn, (0, common_1.checkParams)("id"), admin_1.changeUserNick);
+router.post("/changeGold", middlewares_1.apiLimiter, middlewares_1.isAdminLoggedIn, admin_1.changeUserGold);
+router.post("/changeCash", middlewares_1.apiLimiter, middlewares_1.isAdminLoggedIn, admin_1.changeUserCash);
+router.post("/changeItem/:id", middlewares_1.apiLimiter, middlewares_1.isAdminLoggedIn, (0, common_1.checkParams)("id"), admin_1.changeUserItem);
+// router.get("/help", apiLimiter, isLoggedIn, renderHelp);
+// router.get("/profile", apiLimiter, isLoggedIn, renderProfile);
+exports.default = router;

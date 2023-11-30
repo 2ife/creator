@@ -1,0 +1,1925 @@
+@import './reset.css';
+
+* {
+user-select: none;
+}
+
+.screenTurnShower {
+  display: none;
+  z-index: 10;
+}
+
+.gameZone {
+  width: 100vw;
+  height: 50vw;
+  background-color: white;
+  font-size: 1.25vw;
+}
+
+@media (max-aspect-ratio:1/1) or (max-width:600px)or (max-height:300px) {
+  .screenTurnShower {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: black;
+    color: white;
+  }
+}
+
+@media (min-aspect-ratio:2/1) {
+  .gameZone {
+    width: 200vh;
+    height: 100vh;
+    font-size: 2.5vh;
+  }
+}
+
+body {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+header {
+  display: flex;
+  width: 100%;
+  height: 12.5%;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.title {
+  font-size: 250%;
+  font-weight: 900;
+}
+
+#loginForm,
+#joinForm {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 35%;
+  height: 40%;
+  border: 2px black solid;
+}
+
+.loginInputContainer,
+.joinInputContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 80%;
+  height: 35%;
+}
+
+.loginInputContainer label,
+.joinInputContainer label {
+  width: 30%;
+  font-size: 90%;
+  font-weight: 700;
+  text-align: left;
+}
+
+.loginInputContainer input,
+.joinInputContainer input {
+  width: 60%;
+  height: 35%;
+}
+
+.form_footerBtnContainer {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.modeChangeBtn,
+#loginBtn,
+#joinBtn {
+  width: 25%;
+  height: 60%;
+  border-width: 0.1vh 0.05vw;
+  border-color: black;
+  border-style: solid;
+  border-radius: 5%;
+}
+
+#loginBtn:active,
+#joinBtn:active {
+  padding-bottom: 2vh;
+}
+
+#joinForm {
+  width: 60%;
+  height: 80%;
+}
+
+.joinInputContainer {
+  height: 20%;
+}
+
+.joinInputContainer label {
+  width: 25%;
+}
+
+.joinInputContainer input {
+  width: 50%;
+  height: 30%;
+  margin: 0 5%;
+}
+
+.joinForm_checkBtn {
+  width: 15%;
+  height: 50%;
+  font-size: 70%;
+  font-weight: 900;
+  border: 2px black solid;
+}
+
+#joinForm .form_footerBtnContainer {
+  height: 20%;
+}
+
+.gameZone main {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 87.5%;
+}
+
+.homePart {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: no-repeat center/100% url("/images/homeZone.png");
+}
+
+.homePart_row {
+  width: 100%;
+  height: 14.28%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.homePart_cell {
+  width: 6.66%;
+  height: 100%;
+}
+
+.homePart_summonerImg,
+.homePart_totemImg {
+  width: 100%;
+  height: 100%;
+}
+
+.alertModal,
+.loadingShower {
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 20%;
+  position: absolute;
+  left: 35%;
+  top: 40%;
+  z-index: 7;
+  background-color: white;
+}
+
+.OutOfAlertModal,
+.outOfLoadingShower {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0%;
+  top: 0%;
+  z-index: 6;
+}
+
+.OutOfAlertModal {
+  background-color: black;
+  opacity: 0.5;
+}
+
+.homeModal {
+  display: none;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 68.5%;
+  position: absolute;
+  left: 35%;
+  top: 15.75%;
+  z-index: 5;
+}
+
+.bigHomeModal {
+  width: 60%;
+  left: 20%;
+}
+
+.outOfModal {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.5;
+  z-index: 4;
+}
+
+.homeModal_header {
+  background-color: rgb(25, 25, 25);
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.homeModal_closeBtn {
+  width: 10%;
+  height: 80%;
+  border: none;
+  background-color: rgb(25, 25, 25);
+  color: rgb(230, 230, 230);
+  font-size: 80%;
+  font-weight: 900;
+}
+
+.homeModal_main {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 70%;
+  background-color: white;
+}
+
+.bigHomeModal_main {
+  width: 49.9%;
+  margin: 0 0.05%;
+}
+
+
+.homeModal_img {
+  width: 26%;
+  height: 37%;
+  margin: 0 4%;
+  border: 1px black solid;
+}
+
+.homeModal_smallImgContainer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 26%;
+  height: 37%;
+  margin: 0 4%;
+}
+
+.homeModal_smallImg {
+  width: 45%;
+  height: 45%;
+  border: 1px black solid;
+}
+
+.homeModal_basicInfoContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 58%;
+  height: 45%;
+  margin: 0 2%;
+  font-size: 100%;
+  font-weight: 500;
+}
+
+.homeModal_basicInfo {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-weight: 600;
+}
+
+/* <div class="footer_creatorExpContainer">
+<div class="creatorExpContainer_expBar"></div>
+<div class="creatorExpContainer_expInfo">{{creator.exp}} ({{CreatorExpPercent}}%)</div>
+</div> */
+
+.homeModal_expContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 91.6%;
+  height: 15%;
+  margin: 0 4%;
+  padding: 0;
+  border: 0.05vw black solid;
+  background-color: white;
+  position: relative;
+}
+
+/* .footer_creatorExpContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 95%;
+  height: 42%;
+  margin: 0 2.5%;
+  background-color: white;
+  position: relative;
+}
+
+.creatorExpContainer_expBar {
+  position: absolute;
+  width: 0%;
+  height: 100%;
+  background-color: greenyellow;
+}
+
+.creatorExpContainer_expInfo {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 70%;
+  font-weight: 500;
+  background-color: none;
+  position: absolute;
+} */
+
+.homeModal_infoContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 92%;
+  height: 30%;
+  margin: 0 4%;
+}
+
+.homeModal_info {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 100%;
+}
+
+.homeModal_footer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 20%;
+  background-color: rgb(200, 200, 200);
+}
+
+.homeModal_smallFooter {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+}
+
+.homeModal_btn {
+  width: 40%;
+  height: 80%;
+  margin: 0 5%;
+  background-color: white;
+  padding: 0;
+  border: 0;
+  font-size: 90%;
+  font-weight: 600;
+  border-radius: 5%;
+}
+
+.bigHomeModal_btn {
+  width: 20%;
+  height: 80%;
+  margin: 0 15%;
+}
+
+.homeModal_btn span {
+  font-size: 80%;
+  font-weight: 500;
+
+}
+
+.homeModal_btn:active {
+  padding-bottom: 2%;
+}
+
+.itemPart {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  position: relative;
+}
+
+.classNav {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 10%;
+  background-color: beige;
+}
+
+.classNav_navBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 6%;
+  height: 80%;
+  margin: 0 1%;
+  font-size: 90%;
+  font-weight: 600;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: white;
+  position: relative;
+}
+
+.inventory {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 90%;
+  background-color: white;
+}
+
+.inventory_row {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 16.66%;
+}
+
+.itemContainer {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 4.7%;
+  height: 71.7%;
+  border-width: 0.05vh;
+  border-color: black;
+  border-style: solid;
+}
+
+.itemContainer_itemGrade {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  font-weight: 900;
+  font-size: 60%;
+}
+
+.itemContainer_itemImg {
+  width: 100%;
+  height: 100%;
+}
+
+.itemContainer_itemAmounts {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  font-weight: 500;
+  font-size: 60%;
+}
+
+@keyframes shine {
+  0% {
+    border-color: rgb(0, 255, 255);
+  }
+
+  50% {
+    border-color: rgb(0, 255, 180);
+  }
+
+  100% {
+    border-color: rgb(0, 255, 255);
+  }
+}
+
+.newItemImg {
+  width: 80%;
+  height: 80%;
+  border: 0.45vw rgb(0, 255, 255) solid;
+  animation: shine 1s linear infinite;
+}
+
+.itemDetailContainer {
+  position: absolute;
+  display: flex;
+  width: 18.8%;
+  height: 35.71%;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: rgb(0, 0, 0);
+  border: 0.05vw black solid;
+  color: white;
+}
+
+.itemDetailContainer_itemName,
+.itemDetailContainer_itemClass,
+.itemDetailContainer_itemDescription,
+.itemDetailContainer_btnContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 96%;
+  height: 12.5%;
+  font-size: 85%;
+  font-weight: 500;
+}
+
+.itemDetailContainer_itemName {
+  font-weight: 900;
+}
+
+.itemDetailContainer_itemName span {
+  color: greenyellow;
+}
+
+.itemDetailContainer_itemDescription {
+  height: 50%;
+  align-items: flex-start;
+}
+
+.itemDetailContainer_btnContainer {
+  height: 25%;
+  justify-content: center;
+}
+
+.itemDetailContainer_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 70%;
+  border: none;
+  font-size: 100%;
+  font-weight: 900;
+}
+
+.itemModal {
+  display: none;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 30%;
+  height: 68.5%;
+  position: absolute;
+  left: 35%;
+  top: 15.75%;
+  background-color: white;
+  z-index: 5;
+}
+
+.itemModal_header {
+  background-color: rgb(25, 25, 25);
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.itemModal_closeBtn {
+  width: 10%;
+  height: 80%;
+  border: none;
+  background-color: rgb(25, 25, 25);
+  color: rgb(230, 230, 230);
+  font-size: 80%;
+  font-weight: 900;
+}
+
+.itemModal_main {
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.itemModal_title {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 110%;
+  font-weight: 600;
+}
+
+.itemModal_content {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.itemModal_imgContainer {
+  position: relative;
+  width: 26%;
+  height: 46.25%;
+  border: 1px black solid;
+}
+
+.itemModal_itemGrade {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  font-weight: 900;
+  font-size: 80%;
+}
+
+.itemModal_img {
+  width: 100%;
+  height: 100%;
+}
+
+.itemModal_arrow {
+  width: 26%;
+  height: 46.25%;
+}
+
+.itemModal_smallImgContainer {
+  position: relative;
+  width: 18%;
+  height: 32%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.chosenSummonerContainer {
+  background-color: greenyellow;
+}
+
+.itemModal_summonerIndex {
+  position: absolute;
+  top: 3%;
+  left: 3%;
+  font-weight: 600;
+  font-size: 60%;
+}
+
+.itemModal_smallImg {
+  width: 97%;
+  height: 97%;
+}
+
+.itemModal_info {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 65%;
+  height: 70%;
+  font-size: 90%;
+  font-weight: 600;
+}
+
+.itemModal_amountsSetterContainer {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.itemModal_amountsSetterLabel {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 90%;
+  font-weight: 600;
+}
+
+.itemModal_amountsSetter {
+  display: flex;
+  text-align: center;
+  width: 30%;
+  height: 80%;
+  padding: 0;
+  border: 0;
+  background-color: rgb(200, 200, 200);
+}
+
+.itemModal_footer {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(200, 200, 200);
+
+}
+
+.itemModal_btn {
+  width: 40%;
+  height: 80%;
+  background-color: white;
+  padding: 0;
+  border: 0;
+  font-size: 90%;
+  font-weight: 600;
+  border-radius: 5%;
+}
+
+.makePart {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  position: relative;
+}
+
+.classNav_modeChangeBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 6%;
+  height: 80%;
+  margin: 0 1%;
+  font-size: 80%;
+  font-weight: 600;
+  color: red;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: white;
+}
+
+.navList {
+  position: absolute;
+  top: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 600%;
+}
+
+.twelveNavList {
+  height: 1200%;
+}
+
+.navList_nav {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 16.66%;
+  background-color: rgb(240, 240, 240);
+  border: 0.05vw white solid;
+  font-size: 85%;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
+
+.twelveNavList .navList_nav {
+  height: 8.2%;
+}
+
+.craftInventory {
+  width: 70%;
+  height: 90%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  background-color: white;
+}
+
+.craftInventory_row {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 16.66%;
+}
+
+
+.craftTargetContainer {
+  width: 6.5%;
+  height: 70%;
+  border-width: 0.05vh;
+  border-color: black;
+  border-style: solid;
+  position: relative;
+  z-index: 1;
+}
+
+.craftTargetImg {
+  width: 100%;
+  height: 100%;
+}
+
+.craftExecuter {
+  width: 29.9%;
+  height: 90%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.craftExecuter_basicInfo {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 0.1vh black solid;
+}
+
+.craftTarget_targetImgContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 18.44%;
+  height: 70%;
+  border-width: 0.1vh 0.05vw;
+  border-color: black;
+  border-style: solid;
+  position: relative;
+}
+
+.craftTarget_targetImg {
+  width: 100%;
+  height: 100%;
+}
+
+.craftTarget_info {
+  width: 70%;
+  height: 35%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 90%;
+  font-weight: 600;
+}
+
+.craftTarget_info .greenSpan,
+.craftExecuter_description .greenSpan {
+  color: greenyellow;
+}
+
+.craftExecuter_description {
+  width: 90%;
+  height: 25%;
+  padding: 0 5%;
+  border-bottom: 0.1vh black solid;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 80%;
+  font-weight: 500;
+}
+
+
+.craftExecuter_ingredientList {
+  width: 90%;
+  height: 40%;
+  padding: 0 5%;
+  border-bottom: 0.1vh black solid;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.craftExecuter_enhanceIngredientSet {
+  width: 20%;
+  height: 90%;
+  margin: 0 2%;
+  border: 1px black solid;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.craftTarget_ingredientContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 17%;
+  padding: 0 1.5%;
+  height: 40%;
+  position: relative;
+}
+
+.craftExecuter_enhanceName {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 85%;
+  padding: 0 7.5%;
+  height: 10%;
+  font-size: 70%;
+  font-weight: 500;
+}
+
+.selectedEnhanceName {
+  font-size: 80%;
+  font-weight: 900;
+  color: rgb(0, 255, 0);
+}
+
+.craftExecuter_enhanceIngredientContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 85%;
+  padding: 0 7.5%;
+  height: 44.44%;
+  position: relative;
+}
+
+.craftItemContainer_itemGrade {
+  position: absolute;
+  top: 5%;
+  left: 12.5%;
+  font-weight: 900;
+  font-size: 60%;
+}
+
+.ingredientContainer_ingredientImg {
+  width: 95%;
+  height: 70%;
+  border-width: 0.1vh 0.05vw;
+  border-color: black;
+  border-style: solid;
+}
+
+.ingredientContainer_ingredientAmounts {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 25%;
+  font-size: 60%;
+  font-weight: 600;
+}
+
+.lowAmounts {
+  color: gray;
+}
+
+.craftExecuter_executer {
+  width: 90%;
+  height: 15%;
+  padding: 0 5%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.executer_amounts {
+  width: 23%;
+  height: 50%;
+  padding: 0;
+  margin: 0 2.5%;
+  border: 1px black solid;
+  text-align: center;
+  font-size: 80%;
+  font-weight: 600;
+}
+
+.executer_craftBtn {
+  width: 28%;
+  height: 60%;
+  border-width: 0.5vh 0.25vw;
+  border-color: black;
+  border-style: solid;
+  border-radius: 15%;
+  font-size: 100%;
+  font-weight: 600;
+}
+
+.executer_craftBtn:active {
+  padding-bottom: 2vh;
+}
+
+.executer_rateContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 60%;
+  font-size: 70%;
+  font-weight: 500;
+}
+
+.makeModal {
+  display: none;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 30%;
+  height: 68.5%;
+  position: absolute;
+  left: 35%;
+  top: 15.75%;
+  background-color: white;
+  z-index: 5;
+}
+
+.makeModal_header {
+  background-color: rgb(25, 25, 25);
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.makeModal_main {
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.makeModal_title {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 110%;
+  font-weight: 600;
+}
+
+.makeModal_content {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.makeModal_imgContainer {
+  position: relative;
+  width: 26%;
+  height: 46.25%;
+  border: 1px black solid;
+}
+
+.makeModal_itemGrade {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  font-weight: 900;
+  font-size: 80%;
+}
+
+.makeModal_img {
+  width: 100%;
+  height: 100%;
+}
+
+.makeModal_info {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 58%;
+  height: 45%;
+  margin: 0 2%;
+  font-size: 90%;
+  font-weight: 600;
+}
+
+.makeModal_footer {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(200, 200, 200);
+
+}
+
+.makeModal_btn {
+  width: 40%;
+  height: 80%;
+  background-color: white;
+  padding: 0;
+  border: 0;
+  font-size: 90%;
+  font-weight: 600;
+  border-radius: 5%;
+}
+
+.enhancePart {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
+.marketPart {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  position: relative;
+}
+
+.searchNav {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: flex-start;
+  width: 24.9%;
+  height: 100%;
+  background-color: white;
+  border-right: 0.1px black solid;
+}
+
+.searchNav_searchTextContainer {
+  width: 80%;
+  height: 6%;
+  margin-top: 2%;
+  padding: 0;
+  border: 0.1px black solid;
+  text-align: center;
+  font-size: 90%;
+  font-weight: 500;
+}
+
+.searchNav_navBtn {
+  width: 40%;
+  height: 6.25%;
+  margin: 3% 0;
+  border: 0.1px black solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 90%;
+  font-weight: 600;
+  position: relative;
+}
+
+.searchNav_navBtn .navList {
+  top: 105%;
+}
+
+.sevenNavList {
+  height: 700%;
+}
+
+.sevenNavList .navList_nav {
+  height: 14%;
+}
+
+.elevenNavList {
+  height: 1200%;
+}
+
+.elevenNavList .navList_nav {
+  height: 9%;
+}
+
+.searchNav_markSpecificNav {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  width: 80%;
+  height: 40%;
+  font-size: 90%;
+  font-weight: 600;
+}
+
+.markSpecificNav_navBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 16%;
+  border: 0.1px black solid;
+  position: relative;
+}
+
+.markSpecificNav_navBtn:first-child {
+  margin-top: 5%;
+}
+
+.markSpecificNav_navBtn .navList {
+  flex-flow: row wrap;
+  width: 280%;
+  height: 100%;
+  top: 0;
+  left: 101%;
+  background-color: white;
+}
+
+.markSpecificNav_navBtn .navList_nav {
+  width: 14%;
+  height: 100%;
+  border: none;
+  font-size: 90%;
+}
+
+.searchNav_btn {
+  width: 80%;
+  height: 6.4%;
+  border: 0.1px black solid;
+  font-size: 90%;
+  font-weight: 600;
+}
+
+.searchNav_goldContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 80%;
+  height: 8%;
+  border: 0.1px black solid;
+}
+
+.goldContainer_goldImg {
+  width: 14.05%;
+  height: 80%;
+  margin: 0 2.5%;
+}
+
+.goldContainer_goldValue {
+  width: 75.95%;
+  height: 80%;
+  margin: 0 2.5%;
+  padding: 0;
+  border: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-size: 80%;
+  font-weight: 500;
+}
+
+.goldContainer_goldValue:focus {
+  outline: none;
+}
+
+.searchNav_btn:active {
+  padding-bottom: 5%;
+}
+
+.sellingItemList {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 75%;
+  height: 90%;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.sellingItemContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 49.5%;
+  margin: 0.25%;
+  height: 19.05%;
+  background-color: white;
+  position: relative;
+}
+
+.sellingItemContainer_imgContainer {
+  width: 16.27%;
+  height: 80%;
+  border: 0.1px black solid;
+  position: relative;
+}
+
+.sellingItemContainer_infoContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 50%;
+}
+
+.smallInfoContainer {
+  width: 20%;
+}
+
+.sellingItemContainer_label {
+  height: 40%;
+  font-size: 70%;
+  font-weight: 900;
+}
+
+.sellingItemContainer_unitPrice {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60%;
+  font-size: 80%;
+  font-weight: 500;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.sellingItemContainer_amountsSetter {
+  width: 100%;
+  height: 60%;
+  padding: 0;
+  border: 0;
+  text-align: center;
+  font-size: 80%;
+  font-weight: 500;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.sellingItemContainer_buyBtn {
+  width: 20%;
+  height: 50%;
+  padding: 0;
+  border: 0.1px black solid;
+  border-radius: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 80%;
+  font-weight: 900;
+}
+
+.marketItemList {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 75%;
+  height: 90%;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+.marketItemList_row{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 20%;
+}
+.marketItemContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 49.5%;
+  margin: 0.25%;
+  height: 95.25%;
+  background-color: white;
+  position: relative;
+}
+/* .marketItemList {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 75%;
+  height: 90%;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.marketItemContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 49.5%;
+  margin: 0.25%;
+  height: 19.05%;
+  background-color: white;
+  position: relative;
+} */
+
+.marketItemContainer_imgContainer {
+  width: 16.27%;
+  height: 80%;
+  border: 0.1px black solid;
+  position: relative;
+}
+
+.marketItemContainer_infoContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 50%;
+}
+
+.smallInfoContainer {
+  width: 20%;
+}
+
+.marketItemContainer_label {
+  height: 40%;
+  font-size: 70%;
+  font-weight: 900;
+}
+
+.marketItemContainer_unitPrice {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60%;
+  font-size: 80%;
+  font-weight: 500;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.marketItemContainer_amountsSetter {
+  width: 100%;
+  height: 60%;
+  padding: 0;
+  border: 0;
+  text-align: center;
+  font-size: 80%;
+  font-weight: 500;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.marketItemContainer_buyBtn {
+  width: 20%;
+  height: 50%;
+  padding: 0;
+  border: 0.1px black solid;
+  border-radius: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 80%;
+  font-weight: 900;
+}
+
+.searchPageController {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  background-color: white;
+  width: 75%;
+  height: 9.85%;
+}
+
+.searchPageController_btn {
+  width: 5%;
+  height: 50%;
+  padding: 0;
+  margin: 0 2.5%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 120%;
+  font-weight: 900;
+}
+
+.searchPageController_pageShower {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 20%;
+  height: 50%;
+  margin: 0 20%;
+}
+
+.pageShower_pageContainer {
+  width: 40%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 80%;
+  font-weight: 500;
+}
+
+.classNav_feeContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 5%;
+  height: 80%;
+  margin: 0 0.5%;
+  border: 0.1px black solid;
+  background-color: white;
+}
+
+.feeContainer_fee {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 39%;
+  font-size: 80%;
+  font-weight: 600;
+}
+
+.feeContainer_endtime {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60%;
+  font-size: 60%;
+  font-weight: 500;
+}
+
+.classNav_goldContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 20%;
+  height: 80%;
+  margin: 0 1%;
+  border: 0.1px black solid;
+  background-color: white;
+}
+
+.soldOut {
+  background-color: rgb(255, 255, 200);
+}
+
+.itemModal_setterContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 30%;
+}
+
+.itemModal_setterLabel {
+  width: 30%;
+}
+
+.itemModal_setter,
+.itemModal_totalPriceShower {
+  width: 60%;
+  height: 90%;
+  padding: 0;
+  border: 0;
+  background-color: rgb(200, 200, 200);
+  text-align: center;
+}
+
+.itemModal_totalPriceShower {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cashPart {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.cashItemList {
+  width: 100%;
+  height: 80%;
+  background-color: beige;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.cashItemList_row {
+  width: 100%;
+  height: 25%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.cashItemList_cashItemContainer {
+  width: 8%;
+  height: 91%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  background-color: white;
+}
+
+.cashItemContainer_imgContainer {
+  position: relative;
+  width: 70%;
+  height: 70%;
+  cursor: pointer;
+}
+
+.cashItemContainer_priceShower {
+  width: 80%;
+  height: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 80%;
+  font-weight: 900;
+  background: no-repeat 0 50%/30% url("/images/cash.png");
+  background-color: rgb(200, 200, 200);
+}
+
+.cashItemContainer_img {
+  width: 100%;
+  height: 100%;
+}
+
+.cashContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 20%;
+  height: 8%;
+  border: 0.1px black solid;
+}
+
+.cashContainer_cashImg {
+  width: 14.05%;
+  height: 80%;
+  margin: 0 2.5%;
+}
+
+.cashContainer_cashValue {
+  width: 75.95%;
+  height: 80%;
+  margin: 0 2.5%;
+  padding: 0;
+  border: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-size: 80%;
+  font-weight: 500;
+}
+
+.cashChargeInfo {
+  width: 70%;
+  height: 15%;
+  border: 0.1px black solid;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+footer {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  height: 12.5%;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: beige;
+}
+
+.footer_creatorInfoContainer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 30%;
+  height: 100%;
+}
+
+.footer_creatorInfo {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 40%;
+  height: 42%;
+  padding: 0.5% 5%;
+  /* font-size: 80%; */
+}
+
+.footer_creatorInfo:first-child {
+  font-size: 100%;
+  font-weight: 900;
+}
+
+.footer_creatorExpContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 95%;
+  height: 42%;
+  margin: 0 2.5%;
+  background-color: white;
+  position: relative;
+}
+
+.expBar {
+  position: absolute;
+  width: 0%;
+  height: 100%;
+  background-color: greenyellow;
+}
+
+.expInfo {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 75%;
+  font-weight: 500;
+  position: absolute;
+}
+
+
+
+.footer_btnContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 70%;
+  height: 100%;
+}
+
+.footer_btn,
+.footer_menuBtn {
+  width: 7.14%;
+  height: 80%;
+  border: 0;
+  border-radius: 50%;
+}
+
+.footer_btn img,
+.footer_menuBtn img {
+  width: 100%;
+  height: 100%;
+}
+
+.footer_btn:active {
+  padding-bottom: 1%;
+}
+
+#spaceNavBtn {
+  background: no-repeat center/100% url("/images/home.png");
+  background-color: white;
+}
+
+#itemNavBtn {
+  background: no-repeat center/100% url("/images/item.png");
+  background-color: white;
+}
+
+#makeNavBtn {
+  background: no-repeat center/100% url("/images/make.png");
+  background-color: white;
+}
+
+#marketNavBtn {
+  background: no-repeat center/100% url("/images/gold.png");
+  background-color: white;
+}
+
+#cashNavBtn {
+  background: no-repeat center/100% url("/images/cash.png");
+  background-color: white;
+
+}
+
+#menuBtn {
+  position: relative;
+  background: no-repeat center/100% url("/images/menu.png");
+  background-color: white;
+}
+
+.menuBtn_listContainer {
+  position: absolute;
+  right: -67%;
+  bottom: 112.5%;
+  width: 300%;
+  height: 300%;
+  background-color: rgb(240, 240, 240);
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.menuBtn_list {
+  width: 100%;
+  height: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 80%;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.menuBtn_list a {
+  width: 100%;
+  height: 100%;
+  color: black;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 120%;
+}

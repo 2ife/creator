@@ -1,0 +1,630 @@
+@import './reset.css';
+
+.gameZone {
+  width: 100vw;
+  height: 50vw;
+  background-color: white;
+  font-size: 1.25vw;
+}
+
+@media (max-aspect-ratio:1/1) or (max-width:600px)or (max-height:300px) {
+  .screenTurnShower {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: black;
+    color: white;
+  }
+}
+
+@media (min-aspect-ratio:2/1) {
+  .gameZone {
+    width: 200vh;
+    height: 100vh;
+    font-size: 2.5vh;
+  }
+}
+
+.title {
+  font-size: 250%;
+  font-weight: 900;
+}
+
+body {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 12.5%;
+}
+
+.header_navBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 7.5%;
+  margin: 0 2.5%;
+  height: 50%;
+  cursor: pointer;
+  background-color: white;
+  font-weight: 900;
+}
+
+.header_navBtn:active {
+  padding-bottom: 1%;
+}
+
+.header_logoutBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10%;
+  margin-left: 67.5%;
+  margin-right: 2.5%;
+  height: 50%;
+  cursor: pointer;
+  background-color: white;
+}
+
+.header_logoutBtn a {
+  text-decoration: none;
+  color: black;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+main {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 87.5%;
+}
+
+.searchNav {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 15%;
+  background-color: beige;
+}
+
+.searchNav_navBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 7.5%;
+  height: 50%;
+  border: 2px black solid;
+  cursor: pointer;
+  background-color: white;
+  position: relative;
+  font-weight: 900;
+}
+
+.searchNav_navList {
+  position: absolute;
+  top: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 300%;
+}
+
+.navList_nav {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(240, 240, 240);
+  border: 0.05vw white solid;
+  font-size: 85%;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
+
+.searchNav_conditionList {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 100%;
+}
+
+.searchNav_conditionContainer {
+  width: 100%;
+  height: 30%;
+  font-size: 100%;
+  font-weight: 900;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.conditionContainer_minContainer,
+.conditionContainer_maxContainer {
+  border-width: 1px;
+  padding: 0;
+  width: 35%;
+  height: 80%;
+  text-align: center;
+  font-weight: 500;
+}
+
+.searchNav_searchTextContainer {
+  width: 15%;
+  height: 40%;
+  padding: 0;
+  text-align: center;
+}
+
+.searchNav_searchBtn {
+  width: 5%;
+  height: 50%;
+  cursor: pointer;
+  background-color: white;
+}
+
+.searchNav_searchBtn:active {
+  padding-bottom: 1%;
+}
+
+.searchNav_executeBtnContainer {
+  width: 22.5%;
+  height: 90%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.searchNav_executeBtn {
+  width: 45%;
+  height: 60%;
+  font-size: 80%;
+}
+
+.searchNav_executeBtn:active {
+  font-weight: 900;
+}
+
+.userTable {
+  width: 100%;
+  height: 75%;
+}
+
+.userTable_head {
+  width: 100%;
+  height: 9%;
+}
+
+.userTable_body {
+  width: 100%;
+  height: 90%;
+}
+
+.userTable_headCell,
+.userTable_bodyCell {
+  width: 12%;
+  height: 100%;
+  border: 1px black solid;
+  text-align: center;
+  vertical-align: middle;
+  font-weight: 900;
+}
+
+.firstCell {
+  width: 4%;
+}
+
+.userTable_bodyCell {
+  height: 10%;
+  font-weight: 500;
+  user-select: auto;
+}
+
+.errorTable {
+  width: 100%;
+  height: 75%;
+}
+
+.errorTable_head {
+  width: 100%;
+  height: 9%;
+}
+
+.errorTable_body {
+  width: 100%;
+  height: 90%;
+}
+
+.errorTable_headCell,
+.errorTable_bodyCell {
+  width: 12%;
+  height: 100%;
+  border: 1px black solid;
+  text-align: center;
+  vertical-align: middle;
+  font-weight: 900;
+}
+
+.errorTable_bodyCell {
+  height: 10%;
+  font-weight: 500;
+  user-select: auto;
+}
+
+.userTableController {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 10%;
+}
+
+.userTableController_btn {
+  width: 5%;
+  height: 50%;
+  padding: 0;
+  margin: 0 2.5%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 120%;
+  font-weight: 900;
+}
+
+.userTableController_pageShower {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 20%;
+  height: 50%;
+  margin: 0 20%;
+  font-weight: 900;
+}
+
+.pageShower_pageContainer {
+  width: 40%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 100%;
+  font-weight: 900;
+}
+
+.errorTableController {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 10%;
+}
+
+.errorTableController_btn {
+  width: 5%;
+  height: 50%;
+  padding: 0;
+  margin: 0 2.5%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 120%;
+  font-weight: 900;
+}
+
+.errorTableController_pageShower {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 20%;
+  height: 50%;
+  margin: 0 20%;
+  font-weight: 900;
+}
+
+.userInfoContainer {
+  width: 100%;
+  height: 99.5%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+border-top: 2px black solid;
+}
+
+.userInfoContainer_label {
+  width: 40%;
+  height: 5%;
+  margin-left: 2.5%;
+  margin-right: 7.5%;
+  font-size: 100%;
+  font-weight: 900;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.userInfoContainer_closeBtn {
+  border: 0;
+  width: 10%;
+  height: 5%;
+  margin-left: 37.5%;
+  margin-right: 2.5%;
+  font-size: 150%;
+  font-weight: 900;
+  background-color: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.userInfoContainer_closeBtn:active{
+  font-size: 100%;
+}
+
+.userInfoTable {
+  width: 99%;
+  margin: 0 0.45%;
+  height: 10%;
+  background-color: white;
+}
+
+.userInfoTable_head {
+  width: 100%;
+  height: 50%;
+}
+
+.userInfoTable_headCell,
+.userInfoTable_bodyCell {
+  width: 12%;
+  height: 100%;
+  border: 1px black solid;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.userInfoTable_bodyCell {
+  height: 50%;
+}
+
+.errorInfoTable {
+  width: 99%;
+  margin: 0 0.45%;
+  height: 15%;
+  background-color: white;
+}
+
+.errorInfoTable_head {
+  width: 100%;
+  height: 33.3%;
+}
+
+.errorInfoTable_headCell,
+.errorInfoTable_bodyCell {
+  width: 15%;
+  height: 100%;
+  border: 1px black solid;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.errorInfoTable_bodyCell {
+  height: 33.3%;
+}
+
+.rightLabel {
+  margin-right: 0;
+  margin-left: 7.5%;
+}
+
+.summonersInfoTable {
+  width: 55%;
+  margin: 0 0.45%;
+  height: 15%;
+  background-color: white;
+}
+
+.summonersInfoTable_row {
+  width: 100%;
+  height: 33.3%;
+}
+
+.summonersInfoTable_bodyCell {
+  width: 9%;
+  height: 33.3%;
+  border: 1px black solid;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.totemsInfoTable {
+  width: 25%;
+  margin: 0 0.45%;
+  height: 15%;
+  background-color: white;
+}
+
+.totemsInfoTable_row {
+  width: 100%;
+  height: 33.3%;
+}
+
+.totemsInfoTable_bodyCell {
+  width: 19%;
+  height: 33.3%;
+  border: 1px black solid;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.firstCell {
+  width: 4%;
+}
+
+.userInfoContainer_btnContainer{
+  width: 100%;
+  height: 30%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.userInfoContainer_bigBtn{
+  width: 10%;
+  height: 30%;
+  margin: 0 0.45%;
+  font-size: 90%;
+}
+.userInfoContainer_bigBtn:active{
+  font-weight: 900;
+}
+.rightBigBtn{
+margin-right: 50%;
+}
+.userInfoContainer_complexBtnContainer{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 48.5%;
+  height: 30%;
+  margin: 0 0.45%;
+  border: 1px black solid;
+}
+.complexBtnContainer_setterContainer{
+display: flex;
+flex-flow: column nowrap;
+justify-content: space-around;
+align-items: center;
+  width: 25%;
+height: 100%;
+}
+.complexBtnContainer_setterLabel{
+  font-weight: 900;
+}
+.complexBtnContainer_textContainer,
+.complexBtnContainer_numberContainer{
+  width: 80%;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+.complexBtnContainer_btn{
+  width: 20%;
+  height: 60%;
+  margin: 0 1%;
+}
+.complexBtnContainer_btn:active{
+  font-weight: 900;
+}
+#loginForm {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 35%;
+  height: 40%;
+  border: 2px black solid;
+}
+
+.loginInputContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 80%;
+  height: 35%;
+}
+
+.loginInputContainer label {
+  width: 30%;
+  font-size: 90%;
+  font-weight: 700;
+  text-align: left;
+}
+
+.loginInputContainer input {
+  width: 60%;
+  height: 35%;
+}
+
+.form_footerBtnContainer {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#loginBtn {
+  width: 25%;
+  height: 60%;
+  border-width: 0.1vh 0.05vw;
+  border-color: black;
+  border-style: solid;
+  border-radius: 5%;
+}
+
+#loginBtn:active {
+  padding-bottom: 2vh;
+}
+
+.alertModal,
+.loadingShower {
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 20%;
+  position: absolute;
+  left: 35%;
+  top: 40%;
+  z-index: 7;
+  background-color: white;
+}
+
+.OutOfAlertModal,
+.outOfLoadingShower {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0%;
+  top: 0%;
+  z-index: 6;
+}
+
+.OutOfAlertModal {
+  background-color: black;
+  opacity: 0.5;
+}
