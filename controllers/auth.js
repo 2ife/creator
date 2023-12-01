@@ -182,6 +182,9 @@ const login = (req, res, next) => {
         if (!user) {
             return res.status(200).json({ info: "noUser" });
         }
+        if (user.lockMemo) {
+            return res.status(200).json({ info: 'lock' });
+        }
         return req.login(user, (loginError) => {
             if (loginError) {
                 authError.fatal = false;

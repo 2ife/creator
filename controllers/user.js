@@ -7,18 +7,7 @@ const common_1 = require("./common");
 // fail: weirdCode, noTicket
 const useMarketDiscountTicket = async (req, res, next) => {
     try {
-        const code = req.params.code;
         const UserId = req.user.id;
-        const { itemClass, itemGrade, itemDetail } = (0, common_1.splitCodeToInfoWithoutInspection)(code);
-        if (itemClass !== 7 || itemDetail !== "2") {
-            const errorObj = {
-                status: 400,
-                place: "controllers-user-useMarketDiscountTicket",
-                content: `weird code! code: ${code}`,
-                user: UserId,
-            };
-            throw new common_1.ReqError(errorObj, errorObj.content);
-        }
         const creator = await models_1.User.findOne({
             where: { id: UserId },
         });
@@ -27,7 +16,28 @@ const useMarketDiscountTicket = async (req, res, next) => {
                 fatal: true,
                 status: 400,
                 place: "controllers-user-useMarketDiscountTicket",
-                content: `no creator!`,
+                content: `no creator! userId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-user-useMarketDiscountTicket",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        const code = req.params.code;
+        const { itemClass, itemGrade, itemDetail } = (0, common_1.splitCodeToInfoWithoutInspection)(code);
+        if (itemClass !== 7 || itemDetail !== "2") {
+            const errorObj = {
+                status: 400,
+                place: "controllers-user-useMarketDiscountTicket",
+                content: `weird code! code: ${code}`,
                 user: UserId,
             };
             throw new common_1.ReqError(errorObj, errorObj.content);
@@ -85,6 +95,29 @@ exports.useMarketDiscountTicket = useMarketDiscountTicket;
 const useOldBook = async (req, res, next) => {
     try {
         const UserId = req.user.id;
+        const creator = await models_1.User.findOne({
+            where: { id: UserId },
+        });
+        if (!creator) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-user-useOldBook",
+                content: `no creator! userId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-user-useOldBook",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
         const code = req.params.code;
         const amounts = req.body.amounts;
         const { itemClass, itemGrade, itemDetail } = (0, common_1.splitCodeToInfoWithoutInspection)(code);
@@ -102,19 +135,6 @@ const useOldBook = async (req, res, next) => {
                 status: 400,
                 place: "controllers-user-useOldBook",
                 content: `invalid amounts! amounts: ${amounts}`,
-                user: UserId,
-            };
-            throw new common_1.ReqError(errorObj, errorObj.content);
-        }
-        const creator = await models_1.User.findOne({
-            where: { id: UserId },
-        });
-        if (!creator) {
-            const errorObj = {
-                fatal: true,
-                status: 400,
-                place: "controllers-user-useOldBook",
-                content: `no creator!`,
                 user: UserId,
             };
             throw new common_1.ReqError(errorObj, errorObj.content);

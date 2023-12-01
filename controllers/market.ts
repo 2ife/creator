@@ -67,7 +67,6 @@ const itemKorNameList = [
   ],
   ["창조의 파편", "창조의 숨결", "거래소 수수료 인하 티켓"],
 ];
-
 const searchByKorName = (itemClass: number, text: string) => {
   const targetDetailList: string[] = [];
   if (!text) {
@@ -88,12 +87,34 @@ const searchByKorName = (itemClass: number, text: string) => {
   }
   return targetDetailList;
 };
-
 // info:
 // fail:
 const registerItem: RequestHandler = async (req, res, next) => {
   try {
     const UserId = req.user!.id;
+    const creator = await User.findOne({
+      where: { id: UserId },
+    });
+    if (!creator) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-market-registerItem",
+        content: `no creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    if (creator.lockMemo) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-market-registerItem",
+        content: `locked creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
     const code = req.params.code;
     const { registerAmounts, registerPrice } = req.body;
     if (!Number.isInteger(registerAmounts) || registerAmounts <= 0) {
@@ -196,6 +217,29 @@ const registerItem: RequestHandler = async (req, res, next) => {
 const cancelSale: RequestHandler = async (req, res, next) => {
   try {
     const UserId = req.user!.id;
+    const creator = await User.findOne({
+      where: { id: UserId },
+    });
+    if (!creator) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-market-cancelSale",
+        content: `no creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    if (creator.lockMemo) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-market-cancelSale",
+        content: `locked creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
     const itemId = Number(req.params.id);
     const { cancelAmounts } = req.body;
     if (!Number.isInteger(cancelAmounts) || cancelAmounts < 1) {
@@ -345,6 +389,16 @@ const buyItem: RequestHandler = async (req, res, next) => {
       };
       throw new ReqError(errorObj, errorObj.content);
     }
+    if (creator.lockMemo) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-market-buyItem",
+        content: `locked creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
     const totalPrice = price! * buyingAmounts;
     if (creator.gold < totalPrice) {
       const errorObj = {
@@ -428,7 +482,7 @@ const buyItem: RequestHandler = async (req, res, next) => {
       };
       throw new ReqError(errorObj, err.message);
     }
-    res.status(200).json('ok');
+    res.status(200).json("ok");
   } catch (err: any) {
     if (!err.place) {
       err.fatal = false;
@@ -441,13 +495,31 @@ const buyItem: RequestHandler = async (req, res, next) => {
   }
 };
 // info:
-// fail:
-const getItemInfo: RequestHandler = async (req, res, next) => {};
-// info:
 // fail: bannedText, weirdCondition
 const searchItem: RequestHandler = async (req, res, next) => {
   try {
     const UserId = req.user!.id;
+    const creator = await User.findOne({ where: { id: UserId } });
+    if (!creator) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-market-searchItem",
+        content: `no creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    if (creator.lockMemo) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-market-searchItem",
+        content: `locked creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
     const {
       searchText,
       searchClass,
@@ -468,7 +540,7 @@ const searchItem: RequestHandler = async (req, res, next) => {
     // 텍스트 입력 철저히 확인 필요!!!
     const tester = /^[가-힣|: ]{1,}$/;
     const textTest = tester.test(searchText);
-    if (searchText&&!textTest) {
+    if (searchText && !textTest) {
       const errorObj = {
         fatal: true,
         status: 400,
@@ -490,6 +562,7 @@ const searchItem: RequestHandler = async (req, res, next) => {
       };
       throw new ReqError(errorObj, errorObj.content);
     }
+    let items: Item[] = [];
     if (searchClass === 5) {
       const markAvailableEnhanceGrade = [0, 1, 2, 3, 4, 5, null];
       if (
@@ -507,50 +580,61 @@ const searchItem: RequestHandler = async (req, res, next) => {
         };
         throw new ReqError(errorObj, errorObj.content);
       }
-      if (searchText && !"소환사의 문양".includes(searchText)) {
-        return res.status(200).json({ items: [] });
+      if (!searchText || "소환사의 문양".includes(searchText)) {
+        items = await Item.findAll({
+          where: {
+            saleCode: 1,
+            itemClass: searchClass,
+            markSpeedEnhanceGrade: markSpeedEnhanceGrade
+              ? markSpeedEnhanceGrade
+              : { [Op.lte]: 5 },
+            markGrowthEnhanceGrade: markGrowthEnhanceGrade
+              ? markGrowthEnhanceGrade
+              : { [Op.lte]: 5 },
+            markCreationEnhanceGrade: markCreationEnhanceGrade
+              ? markCreationEnhanceGrade
+              : { [Op.lte]: 5 },
+            markFantasyEnhanceGrade: markFantasyEnhanceGrade
+              ? markFantasyEnhanceGrade
+              : { [Op.lte]: 5 },
+            itemGrade: searchGrade,
+            amounts: { [Op.gte]: 1 },
+            UserId: { [Op.not]: UserId },
+          },
+          order: [
+            ["price", "ASC"],
+            ["markSpeedEnhanceGrade", "DESC"],
+            ["markGrowthEnhanceGrade", "DESC"],
+            ["markCreationEnhanceGrade", "DESC"],
+            ["markFantasyEnhanceGrade", "DESC"],
+          ],
+          limit: 300,
+        });
       }
-      const items = await Item.findAll({
-        where: {
-          saleCode: 1,
-          itemClass: searchClass,
-          markSpeedEnhanceGrade: markSpeedEnhanceGrade
-            ? markSpeedEnhanceGrade
-            : { [Op.lte]: 5 },
-          markGrowthEnhanceGrade: markGrowthEnhanceGrade
-            ? markGrowthEnhanceGrade
-            : { [Op.lte]: 5 },
-          markCreationEnhanceGrade: markCreationEnhanceGrade
-            ? markCreationEnhanceGrade
-            : { [Op.lte]: 5 },
-          markFantasyEnhanceGrade: markFantasyEnhanceGrade
-            ? markFantasyEnhanceGrade
-            : { [Op.lte]: 5 },
-          itemGrade: searchGrade,
-          amounts: { [Op.gte]: 1 },
-          UserId: { [Op.not]: UserId },
-        },
-        order: [
-          ["price", "ASC"],
-          ["markSpeedEnhanceGrade", "DESC"],
-          ["markGrowthEnhanceGrade", "DESC"],
-          ["markCreationEnhanceGrade", "DESC"],
-          ["markFantasyEnhanceGrade", "DESC"],
-        ],
-        limit: 200,
-      });
-      return res.status(200).json({ items });
-    }
-    if (searchText) {
+    } else if (searchText) {
       const targetDetailList = searchByKorName(searchClass, searchText);
-      if (!targetDetailList.length) {
-        return res.status(200).json({ items: [] });
+      if (targetDetailList.length) {
+        items = await Item.findAll({
+          where: {
+            saleCode: 1,
+            itemClass: searchClass,
+            itemDetail: { [Op.in]: targetDetailList },
+            itemGrade: searchGrade === 11 ? { [Op.lte]: 10 } : searchGrade,
+            amounts: { [Op.gte]: 1 },
+            UserId: { [Op.not]: UserId },
+          },
+          order: [
+            ["price", "ASC"],
+            ["itemDetail", "DESC"],
+          ],
+          limit: 300,
+        });
       }
-      const items = await Item.findAll({
+    } else {
+      items = await Item.findAll({
         where: {
           saleCode: 1,
           itemClass: searchClass,
-          itemDetail: { [Op.in]: targetDetailList },
           itemGrade: searchGrade === 11 ? { [Op.lte]: 10 } : searchGrade,
           amounts: { [Op.gte]: 1 },
           UserId: { [Op.not]: UserId },
@@ -559,31 +643,29 @@ const searchItem: RequestHandler = async (req, res, next) => {
           ["price", "ASC"],
           ["itemDetail", "DESC"],
         ],
-        limit: 200,
+        limit: 300,
       });
-      return res.status(200).json({ items });
     }
-    const items = await Item.findAll({
-      where: {
-        saleCode: 1,
-        itemClass: searchClass,
-        itemGrade: searchGrade === 11 ? { [Op.lte]: 10 } : searchGrade,
-        amounts: { [Op.gte]: 1 },
-        UserId: { [Op.not]: UserId },
-      },
-      order: [
-        ["price", "ASC"],
-        ["itemDetail", "DESC"],
-      ],
-      limit: 200,
-    });
-    const itemsData = items.map((item)=>{
-      const {id,code,amounts,price}=item
-      return{
-          id,code,amounts,price
-      }
-  })
-  return res.status(200).json({ itemsData });
+    const itemsData = items
+      .filter(async (item) => {
+        const updateTime = item.updatedAt.getTime();
+        const seller = await User.findOne({ where: { id: item.UserId } });
+        return (
+          updateTime < new Date().getTime() + Math.random() * 600000 &&
+          seller &&
+          seller.lockMemo === null
+        );
+      })
+      .map((item) => {
+        const { id, code, amounts, price } = item;
+        return {
+          id,
+          code,
+          amounts,
+          price,
+        };
+      });
+    return res.status(200).json({ itemsData });
   } catch (err: any) {
     if (!err.place) {
       err.fatal = false;
@@ -619,6 +701,16 @@ const receivePayment: RequestHandler = async (req, res, next) => {
         status: 400,
         place: "controllers-market-receivePayment",
         content: `no creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    if (creator.lockMemo) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-market-receivePayment",
+        content: `locked creator! UserId: ${UserId}`,
         user: UserId,
       };
       throw new ReqError(errorObj, errorObj.content);
@@ -676,6 +768,27 @@ const receivePayment: RequestHandler = async (req, res, next) => {
 const getSaleInfo: RequestHandler = async (req, res, next) => {
   try {
     const UserId = req.user!.id;
+    const creator = await User.findOne({ where: { id: UserId } });
+    if (!creator) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-market-getSaleInfo",
+        content: `no creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    if (creator.lockMemo) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-market-getSaleInfo",
+        content: `locked creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
     let sellingItems = [];
     const mySellingItems = await Item.findAll({
       where: {
@@ -705,7 +818,6 @@ export {
   registerItem,
   cancelSale,
   buyItem,
-  getItemInfo,
   searchItem,
   getSaleInfo,
   receivePayment,

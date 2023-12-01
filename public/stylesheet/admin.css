@@ -57,6 +57,7 @@ header {
   height: 50%;
   cursor: pointer;
   background-color: white;
+  font-size: 100%;
   font-weight: 900;
 }
 
@@ -74,12 +75,14 @@ header {
   height: 50%;
   cursor: pointer;
   background-color: white;
+  font-size: 100%;
+  font-weight: 900;
 }
 
 .header_logoutBtn a {
   text-decoration: none;
   color: black;
-  font-weight: 900;
+
   cursor: pointer;
 }
 
@@ -112,6 +115,13 @@ main {
   cursor: pointer;
   background-color: white;
   position: relative;
+}
+
+.searchNav_nameBtn {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  font-size: 110%;
   font-weight: 900;
 }
 
@@ -161,14 +171,16 @@ main {
   align-items: center;
 }
 
-.conditionContainer_minContainer,
-.conditionContainer_maxContainer {
-  border-width: 1px;
-  padding: 0;
-  width: 35%;
-  height: 80%;
-  text-align: center;
-  font-weight: 500;
+.conditionContainer_checkbox,
+.userTable_headCheckbox,
+.userTable_bodyCheckbox,
+.errorTable_headCheckbox,
+.errorTable_bodyCheckbox,
+.errorInfoTable_headCheckbox,
+.errorInfoTable_bodyCheckbox,
+.complexBtnContainer_checkbox {
+  height: 50%;
+  margin: 0;
 }
 
 .searchNav_searchTextContainer {
@@ -183,6 +195,8 @@ main {
   height: 50%;
   cursor: pointer;
   background-color: white;
+  font-size: 100%;
+    font-weight: 900;
 }
 
 .searchNav_searchBtn:active {
@@ -360,7 +374,7 @@ main {
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
-border-top: 2px black solid;
+  border-top: 2px black solid;
 }
 
 .userInfoContainer_label {
@@ -388,7 +402,8 @@ border-top: 2px black solid;
   justify-content: center;
   align-items: center;
 }
-.userInfoContainer_closeBtn:active{
+
+.userInfoContainer_closeBtn:active {
   font-size: 100%;
 }
 
@@ -491,7 +506,7 @@ border-top: 2px black solid;
   width: 4%;
 }
 
-.userInfoContainer_btnContainer{
+.userInfoContainer_btnContainer {
   width: 100%;
   height: 30%;
   display: flex;
@@ -500,19 +515,22 @@ border-top: 2px black solid;
   align-items: center;
 }
 
-.userInfoContainer_bigBtn{
+.userInfoContainer_bigBtn {
   width: 10%;
   height: 30%;
   margin: 0 0.45%;
   font-size: 90%;
 }
-.userInfoContainer_bigBtn:active{
+
+.userInfoContainer_bigBtn:active {
   font-weight: 900;
 }
-.rightBigBtn{
-margin-right: 50%;
+
+.rightBigBtn {
+  margin-right: 50%;
 }
-.userInfoContainer_complexBtnContainer{
+
+.userInfoContainer_complexBtnContainer {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
@@ -522,32 +540,42 @@ margin-right: 50%;
   margin: 0 0.45%;
   border: 1px black solid;
 }
-.complexBtnContainer_setterContainer{
-display: flex;
-flex-flow: column nowrap;
-justify-content: space-around;
-align-items: center;
+
+.complexBtnContainer_setterContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
   width: 25%;
-height: 100%;
+  height: 100%;
 }
-.complexBtnContainer_setterLabel{
+
+.complexBtnContainer_setterLabel {
   font-weight: 900;
 }
+
 .complexBtnContainer_textContainer,
-.complexBtnContainer_numberContainer{
+.complexBtnContainer_numberContainer {
   width: 80%;
+  height: 40%;
   margin: 0;
   padding: 0;
   text-align: center;
+  font-size: 100%;
 }
-.complexBtnContainer_btn{
+
+.complexBtnContainer_btn {
   width: 20%;
   height: 60%;
   margin: 0 1%;
+  font-size: 100%;
+  font-weight: 500;
 }
-.complexBtnContainer_btn:active{
+
+.complexBtnContainer_btn:active {
   font-weight: 900;
 }
+
 #loginForm {
   display: flex;
   flex-flow: column nowrap;

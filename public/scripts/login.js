@@ -106,6 +106,10 @@ const login = async () => {
             reload = true;
             alertByModal(loginFailMessage);
         }
+        else if (info === "lock") {
+            reload = true;
+            alertByModal('정지된 ID입니다!');
+        }
         else {
             return location.reload();
         }

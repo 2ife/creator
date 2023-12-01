@@ -3,7 +3,6 @@ import { isLoggedIn, apiLimiter } from "../middlewares";
 import {
   makeItem,
   enhanceMark,
-  getItemInfo,
   disassembleItem,
   buyCashItem,
 } from "../controllers/item";
@@ -41,14 +40,6 @@ router.post(
   checkRequest,
   checkParams("itemCode"),
   buyCashItem
-);
-router.post(
-  "/:code",
-  apiLimiter,
-  isLoggedIn,
-  checkRequest,
-  checkParams("itemCode"),
-  getItemInfo
 );
 
 export default router;

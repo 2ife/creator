@@ -1,12 +1,39 @@
 import { Item, User, sequelize } from "../models";
 import { RequestHandler } from "express";
-import { cashItemPriceArr,splitCodeToInfoWithoutInspection,ReqError } from "./common";
+import {
+  cashItemPriceArr,
+  splitCodeToInfoWithoutInspection,
+  ReqError,
+} from "./common";
 // info:
 // fail: weirdCode, noTicket
 const useMarketDiscountTicket: RequestHandler = async (req, res, next) => {
   try {
-    const code = req.params.code;
     const UserId = req.user!.id;
+    const creator = await User.findOne({
+      where: { id: UserId },
+    });
+    if (!creator) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-user-useMarketDiscountTicket",
+        content: `no creator! userId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    if (creator.lockMemo) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-user-useMarketDiscountTicket",
+        content: `locked creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    const code = req.params.code;
     const { itemClass, itemGrade, itemDetail } =
       splitCodeToInfoWithoutInspection(code);
     if (itemClass !== 7 || itemDetail !== "2") {
@@ -14,19 +41,6 @@ const useMarketDiscountTicket: RequestHandler = async (req, res, next) => {
         status: 400,
         place: "controllers-user-useMarketDiscountTicket",
         content: `weird code! code: ${code}`,
-        user: UserId,
-      };
-      throw new ReqError(errorObj, errorObj.content);
-    }
-    const creator = await User.findOne({
-      where: { id: UserId },
-    });
-    if (!creator) {
-      const errorObj = {
-        fatal:true,
-        status: 400,
-        place: "controllers-user-useMarketDiscountTicket",
-        content: `no creator!`,
         user: UserId,
       };
       throw new ReqError(errorObj, errorObj.content);
@@ -82,6 +96,29 @@ const useMarketDiscountTicket: RequestHandler = async (req, res, next) => {
 const useOldBook: RequestHandler = async (req, res, next) => {
   try {
     const UserId = req.user!.id;
+    const creator = await User.findOne({
+      where: { id: UserId },
+    });
+    if (!creator) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-user-useOldBook",
+        content: `no creator! userId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    if (creator.lockMemo) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-user-useOldBook",
+        content: `locked creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
     const code = req.params.code;
     const amounts = req.body.amounts;
     const { itemClass, itemGrade, itemDetail } =
@@ -104,33 +141,20 @@ const useOldBook: RequestHandler = async (req, res, next) => {
       };
       throw new ReqError(errorObj, errorObj.content);
     }
-    const creator = await User.findOne({
-      where: { id: UserId },
-    });
-    if (!creator) {
-      const errorObj = {
-        fatal:true,
-        status: 400,
-        place: "controllers-user-useOldBook",
-        content: `no creator!`,
-        user: UserId,
-      };
-      throw new ReqError(errorObj, errorObj.content);
-    }
     const book = await Item.findOne({
       where: { UserId, code, saleCode: 0 },
     });
     if (!book || book.amounts < amounts) {
       const errorObj = {
-        fatal:true,
+        fatal: true,
         status: 400,
         place: "controllers-user-useOldBook",
-        content: `insufficient book! amounts: ${book?book.amounts:0}`,
+        content: `insufficient book! amounts: ${book ? book.amounts : 0}`,
         user: UserId,
       };
       throw new ReqError(errorObj, errorObj.content);
     }
-    const cash = amounts * (cashItemPriceArr[itemGrade-1]*2.1);
+    const cash = amounts * (cashItemPriceArr[itemGrade - 1] * 2.1);
     const transaction = await sequelize.transaction();
     try {
       creator.cash += cash;

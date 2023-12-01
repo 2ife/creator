@@ -6,6 +6,7 @@ import session from "express-session";
 import nunjucks from "nunjucks";
 import dotenv from "dotenv";
 import passport from "passport";
+import cors from "cors";
 
 import pageRouter from "./routes/page";
 import authRouter from "./routes/auth";
@@ -20,17 +21,15 @@ import passportConfig from "./passport";
 import { logger } from "./logger";
 import helmet from "helmet";
 import hpp from "hpp";
-import redis from 'redis'
-import RedisStore from 'connect-redis'
 
 dotenv.config();
-const redisClient = redis.createClient({
-  url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
-  password: process.env.REDIS_PASSWORD,
-  legacyMode: true,
-});
-redisClient.connect().catch(console.error);
 const app = express();
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
 passportConfig(); // 패스포트 설정
 app.set("port", process.env.PORT || 8006);
 app.set("view engine", "html");
@@ -81,7 +80,6 @@ const sessionOption = {
     httpOnly: true,
     secure: false,
   },
-  store: new RedisStore({ client: redisClient }),
 };
 app.use(session(sessionOption));
 app.use(passport.initialize());
@@ -132,7 +130,11 @@ app.use((req, res, next) => {
   next(error);
 });
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  res.status(err.status || 500).json({ fatal: err.fatal });
+  if (err.content.includes("no router")) {
+    res.redirect("/");
+  } else {
+    res.status(err.status || 500).json({ fatal: err.fatal });
+  }
   try {
     logger.error(err.message);
     const { fatal, status, place, content, user } = err;
@@ -143,6 +145,9 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
       content,
       user,
     });
+    if (req.user) {
+      req.logout(() => {});
+    }
   } catch (err) {
     logger.error("error db 입력 오류!");
   }

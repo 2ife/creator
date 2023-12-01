@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.buyCashItem = exports.disassembleItem = exports.getItemInfo = exports.enhanceMark = exports.makeItem = void 0;
+exports.buyCashItem = exports.disassembleItem = exports.enhanceMark = exports.makeItem = void 0;
 const models_1 = require("../models");
 const sequelize_1 = require("sequelize");
 const common_1 = require("./common");
@@ -174,6 +174,16 @@ const makeItem = async (req, res, next) => {
                 status: 400,
                 place: "controllers-item-makeItem",
                 content: `no creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-item-makeItem",
+                content: `locked creator! UserId: ${UserId}`,
                 user: UserId,
             };
             throw new common_1.ReqError(errorObj, errorObj.content);
@@ -374,6 +384,29 @@ exports.makeItem = makeItem;
 const enhanceMark = async (req, res, next) => {
     try {
         const UserId = req.user.id;
+        const creator = await models_1.User.findOne({
+            where: { id: UserId },
+        });
+        if (!creator) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-item-enhanceMark",
+                content: `no creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-item-enhanceMark",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
         const code = req.params.code;
         const itemInfo = (0, common_1.splitCodeToInfoWithoutInspection)(code);
         const { itemClass, itemGrade } = itemInfo;
@@ -528,6 +561,29 @@ exports.enhanceMark = enhanceMark;
 const disassembleItem = async (req, res, next) => {
     try {
         const UserId = req.user.id;
+        const creator = await models_1.User.findOne({
+            where: { id: UserId },
+        });
+        if (!creator) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-item-disassembleItem",
+                content: `no creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-item-disassembleItem",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
         const code = req.params.code;
         const { itemClass, itemGrade, itemDetail } = (0, common_1.splitCodeToInfoWithoutInspection)(code);
         const itemDetailNumber = Number(itemDetail);
@@ -664,6 +720,16 @@ const buyCashItem = async (req, res, next) => {
             };
             throw new common_1.ReqError(errorObj, errorObj.content);
         }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-item-buyCashItem",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
         if (creator.cash < totalPrice) {
             const errorObj = {
                 status: 400,
@@ -725,7 +791,3 @@ const buyCashItem = async (req, res, next) => {
     }
 };
 exports.buyCashItem = buyCashItem;
-// info:
-// fail:
-const getItemInfo = async (req, res, next) => { };
-exports.getItemInfo = getItemInfo;

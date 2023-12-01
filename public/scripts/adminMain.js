@@ -9,6 +9,7 @@ const userNavBtn = document.querySelector("#userNavBtn");
 const errorNavBtn = document.querySelector("#errorNavBtn");
 const userSearchNav = document.querySelector("#userSearchNav");
 const userSearchNavBtn = userSearchNav.querySelector(".searchNav_navBtn");
+const userSearchNameBtn = userSearchNav.querySelector(".searchNav_nameBtn");
 const userSearchNavList = userSearchNavBtn.querySelector(".searchNav_navList");
 const userSearchNavs = userSearchNavList.querySelectorAll(".navlist_nav");
 const userSearchNavConditionList = userSearchNav.querySelector(".searchNav_conditionList");
@@ -32,14 +33,12 @@ const userTableRightBtn = userTableController.querySelector("#rightBtn");
 const userTableRightEndBtn = userTableController.querySelector("#rightEndBtn");
 const errorSearchNav = document.querySelector("#errorSearchNav");
 const errorSearchNavBtn = errorSearchNav.querySelector(".searchNav_navBtn");
+const errorSearchNameBtn = errorSearchNav.querySelector(".searchNav_nameBtn");
 const errorSearchNavList = errorSearchNavBtn.querySelector(".searchNav_navList");
 const errorSearchNavs = errorSearchNavList.querySelectorAll(".navlist_nav");
 const errorFatalCheckBox = errorSearchNav.querySelector(".conditionContainer_checkbox");
 const errorSearchTextContainer = errorSearchNav.querySelector(".searchNav_searchTextContainer");
 const errorSearchBtn = errorSearchNav.querySelector(".searchNav_searchBtn");
-// const errorSearchNavUserLockBtn = errorSearchNav.querySelector(
-//   "#errorSearchNavUserLockBtn"
-// ) as HTMLButtonElement;
 const errorSearchNavDeleteErrorBtn = errorSearchNav.querySelector("#errorSearchNavDeleteErrorBtn");
 const errorTable = document.querySelector(".errorTable");
 const errorTableHead = document.querySelector(".errorTable_head");
@@ -195,9 +194,9 @@ const checkCode = (code) => {
 /* common(html) */
 const clickSearchNavBtn = (part) => (event) => {
     const target = event.target;
-    const currentTarget = event.currentTarget;
+    const nameBtn = part === "user" ? userSearchNameBtn : errorSearchNameBtn;
     const navList = part === "user" ? userSearchNavList : errorSearchNavList;
-    if (target === currentTarget) {
+    if (target === nameBtn) {
         if (navList.style.display === "none") {
             navList.style.display = "flex";
         }
@@ -206,8 +205,7 @@ const clickSearchNavBtn = (part) => (event) => {
         }
     }
     else if (target.classList.contains("navList_nav")) {
-        currentTarget.innerText = target.innerText;
-        currentTarget.append(navList);
+        nameBtn.innerText = target.innerText;
         navList.style.display = "none";
     }
 };
@@ -393,7 +391,7 @@ const changeSearchPart = (part) => () => {
 };
 /* user */
 const searchUser = () => {
-    const userSearchClass = userSearchNavBtn.innerText;
+    const userSearchClass = userSearchNameBtn.innerText;
     const userLock = userLockCheckBox.checked;
     const userCashCode = userCashCodeCheckBox.checked;
     const searchText = userSearchTextContainer.value;
@@ -884,7 +882,7 @@ const changeUserItem = async () => {
 };
 /* error */
 const searchError = () => {
-    const errorSearchClass = errorSearchNavBtn.innerText;
+    const errorSearchClass = errorSearchNameBtn.innerText;
     const errorFatal = errorFatalCheckBox.checked;
     const searchText = errorSearchTextContainer.value;
     errorSearchTextContainer.value = "";

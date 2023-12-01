@@ -355,7 +355,7 @@ const tryLevelUp = (targetIndex, currentExp, level, grade) => {
     const expToLevelUp = 10 ** (Math.ceil(level / 10) + 2) *
         (targetIndex === 2 ? 50 : 10 ** targetIndex) *
         level;
-    if (currentExp < expToLevelUp) {
+    if (currentExp < expToLevelUp || level === 100) {
         return { level, currentExp };
     }
     let ableToLevelUp = true;

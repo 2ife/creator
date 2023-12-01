@@ -25,6 +25,16 @@ const renderMain = async (req, res, next) => {
             };
             throw new common_1.ReqError(errorObj, errorObj.content);
         }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-page-renderMain",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
         const marketDiscount = creator.marketCommisionDiscount;
         if (marketDiscount !== "0") {
             const colonIndex = marketDiscount.indexOf(":");

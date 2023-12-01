@@ -60,8 +60,11 @@ const itemModalAmountsSetter = itemModalAmountsSetterContainer.querySelector(".i
 const itemModalBtn = itemModal.querySelector(".itemModal_btn");
 const makePart = document.querySelector(".makePart");
 const makePartNavBtns = makePart.querySelectorAll(".classNav_navBtn");
+const makePartNameBtns = makePart.querySelectorAll(".classNav_nameBtn");
 const makePartClassNavBtn = makePart.querySelector("#makeClassNavBtn");
+const makePartClassNameBtn = makePartClassNavBtn.querySelector(".classNav_nameBtn");
 const makePartGradeNavBtn = makePart.querySelector("#makeGradeNavBtn");
+const makePartGradeNameBtn = makePartGradeNavBtn.querySelector(".classNav_nameBtn");
 const makeModeChangeBtn = makePart.querySelector(".classNav_modeChangeBtn");
 const makePartNavLists = makePart.querySelectorAll(".navList");
 const makePartNavs = makePart.querySelectorAll(".navList_nav");
@@ -86,10 +89,9 @@ const makeModalBtn = makeModal.querySelector(".makeModal_btn");
 const marketPart = document.querySelector(".marketPart");
 const searchNav = marketPart.querySelector(".searchNav");
 const searchTextContainer = searchNav.querySelector(".searchNav_searchTextContainer");
-const searchNavBtns = searchNav.querySelectorAll(".searchNav_navBtn");
+const searchNameBtns = searchNav.querySelectorAll(".classNav_nameBtn");
 const searchClassNavBtn = searchNav.querySelector("#marketClassNavBtn");
 const searchGradeNavBtn = searchNav.querySelector("#marketGradeNavBtn");
-const markSpecificSearchNavBtns = searchNav.querySelectorAll(".markSpecificNav_navBtn");
 const marketMarkSpeedEnhanceNavBtn = searchNav.querySelector("#marketMarkSpeedEnhanceNavBtn");
 const marketMarkGrowthEnhanceNavBtn = searchNav.querySelector("#marketMarkGrowthEnhanceNavBtn");
 const marketMarkCreationEnhanceNavBtn = searchNav.querySelector("#marketMarkCreationEnhanceNavBtn");
@@ -1117,7 +1119,7 @@ try{
 }
 } catch (err: any) {
   // dev
-  // alert(err)
+  // console.log(err)
   reload = true;
   alertByModal("오류가 발생하여 재접속합니다.");
 }
@@ -1180,6 +1182,7 @@ const openSummonerMenu = async (summonerIndex) => {
         }
         showLoading();
         const res = await axios.default.post(`/summoner/${summonerIndex}`);
+        console.log(res)
         const { data } = res;
         const { fatal } = data;
         if (fatal) {
@@ -1189,7 +1192,6 @@ const openSummonerMenu = async (summonerIndex) => {
             throw new Error("error");
         }
         resetHomeModal();
-        console.log(data)
         if (data.info === "noSummoner") {
             homeModalImg.src = "/images/summoner/noSummoner.png";
             homeModalName.innerText = `소환사 ${changeNumToRome(summonerIndex)}`;
@@ -1303,7 +1305,7 @@ const openSummonerMenu = async (summonerIndex) => {
     catch (err) {
         console.log(err);
         stopLoading();
-        // reload = true;
+        reload = true;
         alertByModal(err.message === "fatal error"
             ? "오류가 발생하여 재접속합니다.\n오류 조사를 위해 해당 계정이 일시적으로 정지될 수 있으니 양해 부탁드립니다."
             : "오류가 발생하여 재접속합니다.");
@@ -1352,7 +1354,7 @@ const createSummoner = (summonerIndex) => async () => {
         openSummonerMenu(summonerIndex);
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1398,7 +1400,7 @@ const awakenSummoner = (summonerIndex) => async () => {
         openSummonerMenu(summonerIndex);
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1416,7 +1418,6 @@ const summonItem = (summonerIndex) => async () => {
         OutOfHomeModal.style.display = "none";
         const res = await axios.default.post(`/summoner/summon/${summonerIndex}`);
         const { data } = res;
-        console.log(data)
         const { fatal } = data;
         if (fatal) {
             throw new Error("fatal error");
@@ -1445,7 +1446,7 @@ const summonItem = (summonerIndex) => async () => {
     catch (err) {
         console.log(err);
         stopLoading();
-        // reload = true;
+        reload = true;
         alertByModal(err.message === "fatal error"
             ? "오류가 발생하여 재접속합니다.\n오류 조사를 위해 해당 계정이 일시적으로 정지될 수 있으니 양해 부탁드립니다."
             : "오류가 발생하여 재접속합니다.");
@@ -1491,7 +1492,7 @@ const clickImgInHomeModal = async (event) => {
         openSummonerMenu(summonerIndex);
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1569,7 +1570,7 @@ const openTotemMenu = async (totemIndex) => {
         stopLoading();
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1606,7 +1607,7 @@ const createTotem = (totemIndex) => async () => {
         openTotemMenu(totemIndex);
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1660,7 +1661,7 @@ const awakenTotem = (totemIndex) => async () => {
         openTotemMenu(totemIndex);
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1791,7 +1792,7 @@ const blessSummoner = (code) => async () => {
         openSummonerMenu(summonerIndex);
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1832,7 +1833,7 @@ const equipMark = (code) => async () => {
         openSummonerMenu(summonerIndex);
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1864,7 +1865,7 @@ const useMarketDiscountTicket = (code) => async () => {
         stopLoading();
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1902,7 +1903,7 @@ const useOldBook = (code) => async () => {
         stopLoading();
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1938,7 +1939,7 @@ const disassembleItem = (code) => async () => {
         stopLoading();
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -2083,7 +2084,7 @@ const openItemMenu = async (code) => {
         stopLoading();
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -2128,7 +2129,7 @@ const changeMakeMode = async (event) => {
         stopLoading();
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -2137,12 +2138,8 @@ const changeMakeMode = async (event) => {
     }
 };
 const resetMakeNav = () => {
-    const classNavList = makePartClassNavBtn.querySelector(".navList");
-    const gradeNavList = makePartGradeNavBtn.querySelector(".navList");
-    makePartClassNavBtn.innerText = "분류";
-    makePartClassNavBtn.append(classNavList);
-    makePartGradeNavBtn.innerText = "등급";
-    makePartGradeNavBtn.append(gradeNavList);
+    makePartClassNameBtn.innerText = "분류";
+    makePartGradeNameBtn.innerText = "등급";
     makePartNavLists.forEach((list) => {
         list.style.display = "none";
     });
@@ -2155,7 +2152,8 @@ const openNavList = (navLists) => (event) => {
         return;
     }
     const target = event.currentTarget;
-    const navList = target.querySelector(".navList");
+    const navBtn = target.parentNode;
+    const navList = navBtn.querySelector(".navList");
     const navListDisplay = navList.style.display;
     navLists.forEach((list) => {
         list.style.display = "none";
@@ -2171,16 +2169,15 @@ const chooseCraftInventoryClassification = async (event) => {
     const target = event.currentTarget;
     const navList = target.parentNode;
     const navIndex = Array.from(makePartNavLists).indexOf(navList);
-    const navBtn = makePartNavBtns[navIndex];
+    const nameBtn = makePartNameBtns[navIndex];
     if (target.innerText === "모두") {
-        navBtn.innerText = "등급";
+        nameBtn.innerText = "등급";
     }
     else {
-        navBtn.innerText = target.innerText;
+        nameBtn.innerText = target.innerText;
     }
-    navBtn.append(navList);
     navList.style.display = "none";
-    const targetItemClass = ["원소", "힘", "목재", "축복", "문양", "조합서", "기타"].indexOf(makePartClassNavBtn.innerText) + 1;
+    const targetItemClass = ["원소", "힘", "목재", "축복", "문양", "조합서", "기타"].indexOf(makePartClassNameBtn.innerText) + 1;
     if (navIndex === 0 || (navIndex === 1 && targetItemClass !== -1)) {
         const targetItemGrade = [
             "등급 x",
@@ -2195,7 +2192,7 @@ const chooseCraftInventoryClassification = async (event) => {
             "IX",
             "X",
             "등급",
-        ].indexOf(makePartGradeNavBtn.innerText);
+        ].indexOf(makePartGradeNameBtn.innerText);
         let makableList = [];
         let itemClassPart = targetItemClass;
         let itemGradePart = targetItemGrade;
@@ -2407,7 +2404,7 @@ const renderCraftExecuter = (code) => {
         craftTargetRateContainer.style.display = "flex";
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         reload = true;
         alertByModal(err.message === "fatal error"
             ? "오류가 발생하여 재접속합니다.\n오류 조사를 위해 해당 계정이 일시적으로 정지될 수 있으니 양해 부탁드립니다."
@@ -2491,7 +2488,7 @@ const makeItem = async () => {
         stopLoading();
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         reload = true;
         alertByModal(err.message === "fatal error"
             ? "오류가 발생하여 재접속합니다.\n오류 조사를 위해 해당 계정이 일시적으로 정지될 수 있으니 양해 부탁드립니다."
@@ -2585,7 +2582,7 @@ const renderEnhanceExecuter = async (code) => {
         craftTargetRateContainer.style.display = "none";
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         reload = true;
         alertByModal("오류가 발생하여 재접속합니다.");
     }
@@ -2642,7 +2639,7 @@ const enhanceMark = async () => {
         stopLoading();
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         reload = true;
         alertByModal(err.message === "fatal error"
             ? "오류가 발생하여 재접속합니다.\n오류 조사를 위해 해당 계정이 일시적으로 정지될 수 있으니 양해 부탁드립니다."
@@ -2688,24 +2685,9 @@ const changeToSaleMode = () => {
 };
 const resetSearchNav = () => {
     searchTextContainer.value = "";
-    const classNavList = searchClassNavBtn.querySelector(".navList");
-    const gradeNavList = searchGradeNavBtn.querySelector(".navList");
-    const markSpeedEnhanceNavList = marketMarkSpeedEnhanceNavBtn.querySelector(".navList");
-    const markGrowthEnhanceNavList = marketMarkGrowthEnhanceNavBtn.querySelector(".navList");
-    const markCreationEnhanceNavList = marketMarkCreationEnhanceNavBtn.querySelector(".navList");
-    const markFantasyEnhanceNavList = marketMarkFantasyEnhanceNavBtn.querySelector(".navList");
-    searchClassNavBtn.innerText = "분류";
-    searchClassNavBtn.append(classNavList);
-    searchGradeNavBtn.innerText = "등급";
-    searchGradeNavBtn.append(gradeNavList);
-    marketMarkSpeedEnhanceNavBtn.innerText = "신속";
-    marketMarkSpeedEnhanceNavBtn.append(markSpeedEnhanceNavList);
-    marketMarkGrowthEnhanceNavBtn.innerText = "성장";
-    marketMarkGrowthEnhanceNavBtn.append(markGrowthEnhanceNavList);
-    marketMarkCreationEnhanceNavBtn.innerText = "창조";
-    marketMarkCreationEnhanceNavBtn.append(markCreationEnhanceNavList);
-    marketMarkFantasyEnhanceNavBtn.innerText = "환상";
-    marketMarkFantasyEnhanceNavBtn.append(markFantasyEnhanceNavList);
+    searchNameBtns.forEach((btn, index) => {
+        btn.innerText = ["분류", "등급", "신속", "성장", "창조", "환상"][index];
+    });
 };
 const chooseSearchNav = (event) => {
     if (loadInterval) {
@@ -2714,17 +2696,16 @@ const chooseSearchNav = (event) => {
     const target = event.currentTarget;
     const navList = target.parentNode;
     const navIndex = Array.from(marketPartNavLists).indexOf(navList);
-    const navBtn = Array.from(searchNavBtns).concat(Array.from(markSpecificSearchNavBtns))[navIndex];
+    const nameBtn = Array.from(searchNameBtns)[navIndex];
     if (target.innerText === "모두") {
-        navBtn.innerText = ["등급", "신속", "성장", "창조", "환상"][navIndex - 1];
+        nameBtn.innerText = ["등급", "신속", "성장", "창조", "환상"][navIndex - 1];
     }
     else if (navIndex < 2) {
-        navBtn.innerText = target.innerText;
+        nameBtn.innerText = target.innerText;
     }
     else {
-        navBtn.innerText = `${["신속", "성장", "창조", "환상"][navIndex - 2]} ${target.innerText}`;
+        nameBtn.innerText = `${["신속", "성장", "창조", "환상"][navIndex - 2]} ${target.innerText}`;
     }
-    navBtn.append(navList);
     navList.style.display = "none";
 };
 const searchItem = async () => {
@@ -2811,7 +2792,7 @@ const searchItem = async () => {
         renderMarketItems(1);
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -2971,7 +2952,7 @@ const buyItem = async (event) => {
         }
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -3036,7 +3017,7 @@ const openSaleInventory = async (event) => {
         marketPartInventories[btnIndex].style.display = "flex";
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -3106,7 +3087,7 @@ const cancelSale = (id) => async () => {
         marketSalePartNavBtns[7].click();
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -3137,7 +3118,7 @@ const receivePayment = (id) => async () => {
         marketSalePartNavBtns[7].click();
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -3265,7 +3246,7 @@ const registerItem = (code) => async () => {
         stopLoading();
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -3329,6 +3310,8 @@ const buyCashItem = (code) => async () => {
         const res = await axios.default.post(`/item/buyCashItem/${code}`, {
             buyingAmounts,
         });
+        console.log(res)
+
         const { data } = res;
         const { fatal } = data;
         if (fatal) {
@@ -3344,7 +3327,7 @@ const buyCashItem = (code) => async () => {
         stopLoading();
     }
     catch (err) {
-        alert(err);
+        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -3466,7 +3449,7 @@ itemModalCloseBtn.addEventListener("click", () => {
     itemModal.style.display = "none";
     OutOfItemModal.style.display = "none";
 });
-makePartNavBtns.forEach((btn) => {
+makePartNameBtns.forEach((btn) => {
     btn.addEventListener("click", openNavList(makePartNavLists));
 });
 makePartNavs.forEach((nav) => {
@@ -3483,10 +3466,7 @@ makeModalCloseBtn.addEventListener("click", () => {
 });
 marketSaleModeBtn.addEventListener("click", changeToSaleMode);
 marketBuyModeBtn.addEventListener("click", changeToBuyMode);
-searchNavBtns.forEach((btn) => {
-    btn.addEventListener("click", openNavList(marketPartNavLists));
-});
-markSpecificSearchNavBtns.forEach((btn) => {
+searchNameBtns.forEach((btn) => {
     btn.addEventListener("click", openNavList(marketPartNavLists));
 });
 marketSearchPartNavs.forEach((nav) => {

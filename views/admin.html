@@ -19,7 +19,8 @@
     </header>
     <main>
       <div class="searchNav" id="userSearchNav">
-        <div class="searchNav_navBtn">닉네임
+        <div class="searchNav_navBtn">
+          <button class="searchNav_nameBtn">닉네임</button>
           <ul style="display: none;" class="searchNav_navList">
             <li class="navList_nav">닉네임</li>
             <li class="navList_nav">ID</li>
@@ -33,23 +34,10 @@
           <div class="searchNav_conditionContainer">CASHCODE:&nbsp;<input type="checkbox"
               class="conditionContainer_checkbox" id="userCashCodeCheckBox">
           </div>
-          <!-- <div class="searchNav_conditionContainer">level&nbsp;&nbsp;&nbsp;&nbsp;<input type="number"
-              class="conditionContainer_minContainer" id="userMinLevelContainer" min="1"
-              max="100">&nbsp;&nbsp;~&nbsp;&nbsp;<input type="number" class="conditionContainer_maxContainer"
-              id="userMaxLevelContainer" min="1" max="100"></div>
-          <div class="searchNav_conditionContainer">gold&nbsp;&nbsp;&nbsp;&nbsp;<input type="number"
-              class="conditionContainer_minContainer" id="userMinGoldContainer" min="0">&nbsp;&nbsp;~&nbsp;&nbsp;<input
-              type="number" name="" id="userMaxGoldContainer" class="conditionContainer_maxContainer" id="userMaxGoldContainer" min="0">
-          </div>
-          <div class="searchNav_conditionContainer">cash&nbsp;&nbsp;&nbsp;&nbsp;<input type="number"
-              class="conditionContainer_minContainer" id="userMinCashContainer" min="0">&nbsp;&nbsp;~&nbsp;&nbsp;<input
-              type="number" name="" id="userMaxCashContainer" class="conditionContainer_maxContainer" id="userMaxCashContainer" min="0">
-          </div> -->
         </div>
         <input type="search" class="searchNav_searchTextContainer">
         <button class="searchNav_searchBtn">🔍</button>
         <div class="searchNav_executeBtnContainer">
-          <!-- <button class="searchNav_executeBtn" id="userSearchNavUserLockBtn">계정 정지 (해제)</button> -->
           <button class="searchNav_executeBtn" id="userSearchNavDeleteCashCodeBtn">캐시코드 제거</button>
         </div>
       </div>
@@ -96,7 +84,8 @@
         <button class="userTableController_btn" id="rightEndBtn">&gt;&gt;</button>
       </div>
       <div style="display: none;" class="searchNav" id="errorSearchNav">
-        <div class="searchNav_navBtn">유저
+        <div class="searchNav_navBtn">
+          <button class="searchNav_nameBtn">유저</button>
           <ul style="display: none;" class="searchNav_navList">
             <li class="navList_nav">유저</li>
             <li class="navList_nav">위치</li>

@@ -157,13 +157,22 @@ const itemModalBtn = itemModal.querySelector(
 const makePart = document.querySelector(".makePart") as HTMLDivElement;
 const makePartNavBtns = makePart.querySelectorAll(
   ".classNav_navBtn"
+) as NodeListOf<HTMLDivElement>;
+const makePartNameBtns = makePart.querySelectorAll(
+  ".classNav_nameBtn"
 ) as NodeListOf<HTMLButtonElement>;
 const makePartClassNavBtn = makePart.querySelector(
   "#makeClassNavBtn"
 ) as HTMLDivElement;
+const makePartClassNameBtn = makePartClassNavBtn.querySelector(
+  ".classNav_nameBtn"
+) as HTMLButtonElement;
 const makePartGradeNavBtn = makePart.querySelector(
   "#makeGradeNavBtn"
 ) as HTMLDivElement;
+const makePartGradeNameBtn = makePartGradeNavBtn.querySelector(
+  ".classNav_nameBtn"
+) as HTMLButtonElement;
 const makeModeChangeBtn = makePart.querySelector(
   ".classNav_modeChangeBtn"
 ) as HTMLDivElement;
@@ -231,18 +240,15 @@ const searchNav = marketPart.querySelector(".searchNav") as HTMLDivElement;
 const searchTextContainer = searchNav.querySelector(
   ".searchNav_searchTextContainer"
 ) as HTMLInputElement;
-const searchNavBtns = searchNav.querySelectorAll(
-  ".searchNav_navBtn"
-) as NodeListOf<HTMLDivElement>;
+const searchNameBtns = searchNav.querySelectorAll(
+  ".classNav_nameBtn"
+) as NodeListOf<HTMLButtonElement>;
 const searchClassNavBtn = searchNav.querySelector(
   "#marketClassNavBtn"
 ) as HTMLDivElement;
 const searchGradeNavBtn = searchNav.querySelector(
   "#marketGradeNavBtn"
 ) as HTMLDivElement;
-const markSpecificSearchNavBtns = searchNav.querySelectorAll(
-  ".markSpecificNav_navBtn"
-) as NodeListOf<HTMLDivElement>;
 const marketMarkSpeedEnhanceNavBtn = searchNav.querySelector(
   "#marketMarkSpeedEnhanceNavBtn"
 ) as HTMLDivElement;
@@ -1671,7 +1677,7 @@ try{
 }
 } catch (err: any) {
   // dev
-  // alert(err)
+  // console.log(err)
   reload = true;
   alertByModal("오류가 발생하여 재접속합니다.");
 }
@@ -1899,7 +1905,7 @@ const openSummonerMenu = async (summonerIndex: number) => {
     summonBtn.focus();
     stopLoading();
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -1950,7 +1956,7 @@ const createSummoner = (summonerIndex: number) => async () => {
     stopLoading();
     openSummonerMenu(summonerIndex);
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -1998,7 +2004,7 @@ const awakenSummoner = (summonerIndex: number) => async () => {
     stopLoading();
     openSummonerMenu(summonerIndex);
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2043,7 +2049,7 @@ const summonItem = (summonerIndex: number) => async () => {
     }
     showItemsAmountsChange(items as { [key: string]: number });
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2091,7 +2097,7 @@ const clickImgInHomeModal = async (event: MouseEvent) => {
     stopLoading();
     openSummonerMenu(summonerIndex);
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2183,7 +2189,7 @@ const openTotemMenu = async (totemIndex: number) => {
     awakenBtn.focus();
     stopLoading();
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2220,7 +2226,7 @@ const createTotem = (totemIndex: number) => async () => {
     stopLoading();
     openTotemMenu(totemIndex);
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2278,7 +2284,7 @@ const awakenTotem = (totemIndex: number) => async () => {
     stopLoading();
     openTotemMenu(totemIndex);
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2413,7 +2419,7 @@ const blessSummoner = (code: string) => async () => {
       summoners[summonerIndex - 1].level = summonerLevelInfo.level;
       for (const totem of totems) {
         if (totem) {
-          totem.level = totemsLevelInfo[totem.totemIndex-1].level;
+          totem.level = totemsLevelInfo[totem.totemIndex - 1].level;
         }
       }
     }
@@ -2421,7 +2427,7 @@ const blessSummoner = (code: string) => async () => {
     footerBtns[0].click();
     openSummonerMenu(summonerIndex);
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2465,7 +2471,7 @@ const equipMark = (code: string) => async () => {
     footerBtns[0].click();
     openSummonerMenu(summonerIndex);
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2498,7 +2504,7 @@ const useMarketDiscountTicket = (code: string) => async () => {
     updateMarketDiscount();
     stopLoading();
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2536,7 +2542,7 @@ const useOldBook = (code: string) => async () => {
     updateCreatorCash(cash);
     stopLoading();
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2572,7 +2578,7 @@ const disassembleItem = (code: string) => async () => {
     OutOfItemModal.style.display = "none";
     stopLoading();
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2722,7 +2728,7 @@ const openItemMenu = async (code: string) => {
     itemModalBtn.focus();
     stopLoading();
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2768,7 +2774,7 @@ const changeMakeMode = async (event: MouseEvent) => {
     }
     stopLoading();
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2779,16 +2785,8 @@ const changeMakeMode = async (event: MouseEvent) => {
   }
 };
 const resetMakeNav = () => {
-  const classNavList = makePartClassNavBtn.querySelector(
-    ".navList"
-  ) as HTMLDivElement;
-  const gradeNavList = makePartGradeNavBtn.querySelector(
-    ".navList"
-  ) as HTMLDivElement;
-  makePartClassNavBtn.innerText = "분류";
-  makePartClassNavBtn.append(classNavList);
-  makePartGradeNavBtn.innerText = "등급";
-  makePartGradeNavBtn.append(gradeNavList);
+  makePartClassNameBtn.innerText = "분류";
+  makePartGradeNameBtn.innerText = "등급";
   makePartNavLists.forEach((list) => {
     list.style.display = "none";
   });
@@ -2802,7 +2800,8 @@ const openNavList =
       return;
     }
     const target = event.currentTarget as HTMLDivElement;
-    const navList = target.querySelector(".navList") as HTMLDivElement;
+    const navBtn = target.parentNode as HTMLDivElement;
+    const navList = navBtn.querySelector(".navList") as HTMLDivElement;
     const navListDisplay = navList.style.display;
     navLists.forEach((list) => {
       list.style.display = "none";
@@ -2818,17 +2817,16 @@ const chooseCraftInventoryClassification = async (event: MouseEvent) => {
   const target = event.currentTarget as HTMLDivElement;
   const navList = target.parentNode as HTMLDivElement;
   const navIndex = Array.from(makePartNavLists).indexOf(navList);
-  const navBtn = makePartNavBtns[navIndex];
+  const nameBtn = makePartNameBtns[navIndex];
   if (target.innerText === "모두") {
-    navBtn.innerText = "등급";
+    nameBtn.innerText = "등급";
   } else {
-    navBtn.innerText = target.innerText;
+    nameBtn.innerText = target.innerText;
   }
-  navBtn.append(navList);
   navList.style.display = "none";
   const targetItemClass =
     ["원소", "힘", "목재", "축복", "문양", "조합서", "기타"].indexOf(
-      makePartClassNavBtn.innerText
+      makePartClassNameBtn.innerText
     ) + 1;
   if (navIndex === 0 || (navIndex === 1 && targetItemClass !== -1)) {
     const targetItemGrade = [
@@ -2844,7 +2842,7 @@ const chooseCraftInventoryClassification = async (event: MouseEvent) => {
       "IX",
       "X",
       "등급",
-    ].indexOf(makePartGradeNavBtn.innerText);
+    ].indexOf(makePartGradeNameBtn.innerText);
     let makableList: string[] = [];
     let itemClassPart = targetItemClass;
     let itemGradePart: number | null = targetItemGrade;
@@ -3080,7 +3078,7 @@ const renderCraftExecuter = (code: string) => {
           }%)`;
     craftTargetRateContainer.style.display = "flex";
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     reload = true;
     alertByModal(
       err.message === "fatal error"
@@ -3171,7 +3169,7 @@ const makeItem = async () => {
     resetCraftExecuter();
     stopLoading();
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     reload = true;
     alertByModal(
       err.message === "fatal error"
@@ -3292,7 +3290,7 @@ const renderEnhanceExecuter = async (code: string) => {
     craftAmountsSetter.style.display = "none";
     craftTargetRateContainer.style.display = "none";
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     reload = true;
     alertByModal("오류가 발생하여 재접속합니다.");
   }
@@ -3372,7 +3370,7 @@ const enhanceMark = async () => {
     }
     stopLoading();
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     reload = true;
     alertByModal(
       err.message === "fatal error"
@@ -3420,34 +3418,9 @@ const changeToSaleMode = () => {
 };
 const resetSearchNav = () => {
   searchTextContainer.value = "";
-  const classNavList = searchClassNavBtn.querySelector(
-    ".navList"
-  ) as HTMLDivElement;
-  const gradeNavList = searchGradeNavBtn.querySelector(
-    ".navList"
-  ) as HTMLDivElement;
-  const markSpeedEnhanceNavList = marketMarkSpeedEnhanceNavBtn.querySelector(
-    ".navList"
-  ) as HTMLDivElement;
-  const markGrowthEnhanceNavList = marketMarkGrowthEnhanceNavBtn.querySelector(
-    ".navList"
-  ) as HTMLDivElement;
-  const markCreationEnhanceNavList =
-    marketMarkCreationEnhanceNavBtn.querySelector(".navList") as HTMLDivElement;
-  const markFantasyEnhanceNavList =
-    marketMarkFantasyEnhanceNavBtn.querySelector(".navList") as HTMLDivElement;
-  searchClassNavBtn.innerText = "분류";
-  searchClassNavBtn.append(classNavList);
-  searchGradeNavBtn.innerText = "등급";
-  searchGradeNavBtn.append(gradeNavList);
-  marketMarkSpeedEnhanceNavBtn.innerText = "신속";
-  marketMarkSpeedEnhanceNavBtn.append(markSpeedEnhanceNavList);
-  marketMarkGrowthEnhanceNavBtn.innerText = "성장";
-  marketMarkGrowthEnhanceNavBtn.append(markGrowthEnhanceNavList);
-  marketMarkCreationEnhanceNavBtn.innerText = "창조";
-  marketMarkCreationEnhanceNavBtn.append(markCreationEnhanceNavList);
-  marketMarkFantasyEnhanceNavBtn.innerText = "환상";
-  marketMarkFantasyEnhanceNavBtn.append(markFantasyEnhanceNavList);
+  searchNameBtns.forEach((btn, index) => {
+    btn.innerText = ["분류", "등급", "신속", "성장", "창조", "환상"][index];
+  });
 };
 const chooseSearchNav = (event: MouseEvent) => {
   if (loadInterval) {
@@ -3456,19 +3429,16 @@ const chooseSearchNav = (event: MouseEvent) => {
   const target = event.currentTarget as HTMLDivElement;
   const navList = target.parentNode as HTMLDivElement;
   const navIndex = Array.from(marketPartNavLists).indexOf(navList);
-  const navBtn = Array.from(searchNavBtns).concat(
-    Array.from(markSpecificSearchNavBtns)
-  )[navIndex];
+  const nameBtn = Array.from(searchNameBtns)[navIndex];
   if (target.innerText === "모두") {
-    navBtn.innerText = ["등급", "신속", "성장", "창조", "환상"][navIndex - 1];
+    nameBtn.innerText = ["등급", "신속", "성장", "창조", "환상"][navIndex - 1];
   } else if (navIndex < 2) {
-    navBtn.innerText = target.innerText;
+    nameBtn.innerText = target.innerText;
   } else {
-    navBtn.innerText = `${["신속", "성장", "창조", "환상"][navIndex - 2]} ${
+    nameBtn.innerText = `${["신속", "성장", "창조", "환상"][navIndex - 2]} ${
       target.innerText
     }`;
   }
-  navBtn.append(navList);
   navList.style.display = "none";
 };
 const searchItem = async () => {
@@ -3562,7 +3532,7 @@ const searchItem = async () => {
     stopLoading();
     renderMarketItems(1);
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -3753,7 +3723,7 @@ const buyItem = async (event: MouseEvent) => {
       alertByModal("이미 판매된 상품입니다.");
     }
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -3834,7 +3804,7 @@ const openSaleInventory = async (event: MouseEvent) => {
     }
     marketPartInventories[btnIndex].style.display = "flex";
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -3924,7 +3894,7 @@ const cancelSale = (id: number) => async () => {
     stopLoading();
     marketSalePartNavBtns[7].click();
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -3955,7 +3925,7 @@ const receivePayment = (id: number) => async () => {
     stopLoading();
     marketSalePartNavBtns[7].click();
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -4090,7 +4060,7 @@ const registerItem = (code: string) => async () => {
     OutOfSaleModal.style.display = "none";
     stopLoading();
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -4180,7 +4150,7 @@ const buyCashItem = (code: string) => async () => {
     OutOfCashModal.style.display = "none";
     stopLoading();
   } catch (err: any) {
-    alert(err);
+    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -4310,7 +4280,7 @@ itemModalCloseBtn.addEventListener("click", () => {
   OutOfItemModal.style.display = "none";
 });
 
-makePartNavBtns.forEach((btn) => {
+makePartNameBtns.forEach((btn) => {
   btn.addEventListener("click", openNavList(makePartNavLists));
 });
 makePartNavs.forEach((nav) => {
@@ -4328,10 +4298,7 @@ makeModalCloseBtn.addEventListener("click", () => {
 
 marketSaleModeBtn.addEventListener("click", changeToSaleMode);
 marketBuyModeBtn.addEventListener("click", changeToBuyMode);
-searchNavBtns.forEach((btn) => {
-  btn.addEventListener("click", openNavList(marketPartNavLists));
-});
-markSpecificSearchNavBtns.forEach((btn) => {
+searchNameBtns.forEach((btn) => {
   btn.addEventListener("click", openNavList(marketPartNavLists));
 });
 marketSearchPartNavs.forEach((nav) => {

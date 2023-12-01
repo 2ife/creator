@@ -4,7 +4,7 @@
 {% if creatorData %}
 <div class="gameZone">
   <main>
-    <div class="homePart" style="display: none;">
+    <div class="homePart" >
       <div class="homePart_row">
         <div class="homePart_cell"></div>
         <div class="homePart_cell">
@@ -290,7 +290,8 @@
     </div>
     <div class="makePart" style="display: none;">
       <div class="classNav">
-        <div class="classNav_navBtn" id="makeClassNavBtn">분류
+        <div class="classNav_navBtn" id="makeClassNavBtn">
+          <button class="classNav_nameBtn">분류</button>
           <ul class="navList" style="display: none;">
             <li class="navList_nav">원소</li>
             <li class="navList_nav">힘</li>
@@ -300,7 +301,8 @@
             <li class="navList_nav">기타</li>
           </ul>
         </div>
-        <div class="classNav_navBtn" id="makeGradeNavBtn">등급
+        <div class="classNav_navBtn" id="makeGradeNavBtn">
+          <button class="classNav_nameBtn">등급</button>
           <ul class="navList twelveNavList" style="display: none;">
             <li class="navList_nav">등급 x</li>
             <li class="navList_nav">I</li>
@@ -373,7 +375,8 @@
     <div class="marketPart" style="display: none;">
       <div class="searchNav">
         <input type="text" name="" id="" class="searchNav_searchTextContainer" placeholder="검색">
-        <div class="searchNav_navBtn" id="marketClassNavBtn">분류
+        <div class="searchNav_navBtn" id="marketClassNavBtn">
+          <button class="classNav_nameBtn">분류</button>
           <ul class="navList sevenNavList" style="display: none;">
             <li class="navList_nav">원소</li>
             <li class="navList_nav">힘</li>
@@ -384,7 +387,8 @@
             <li class="navList_nav">기타</li>
           </ul>
         </div>
-        <div class="searchNav_navBtn" id="marketGradeNavBtn">등급
+        <div class="searchNav_navBtn" id="marketGradeNavBtn">
+          <button class="classNav_nameBtn">등급</button>
           <ul class="navList elevenNavList" style="display: none;">
             <li class="navList_nav">등급 x</li>
             <li class="navList_nav">I</li>
@@ -421,7 +425,7 @@
           문양 상세 검색 (강화)
           {% for navBtn in range(0,4) %}
           <div class="markSpecificNav_navBtn" id="{{markSpecificNavBtnIdArr[navBtn]}}">
-            {{markSpecificNavBtnTextArr[navBtn]}}
+          <button class="classNav_nameBtn">{{markSpecificNavBtnTextArr[navBtn]}}</button>
             <ul class="navList" style="display: none;">
               {% for nav in range(0,7) %}
               <li class="navList_nav">{{markSpecificNavTextArr[nav]}}</li>
@@ -588,7 +592,7 @@
         </div>
       </div>
     </div>
-    <div class="cashPart">
+    <div class="cashPart" style="display: none;">
       <div class="cashItemList">
         {% set RomeGradeArr = ["I",
         "II",

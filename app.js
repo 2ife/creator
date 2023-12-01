@@ -22,6 +22,8 @@ const admin_1 = __importDefault(require("./routes/admin"));
 const models_1 = require("./models");
 const passport_2 = __importDefault(require("./passport"));
 const logger_1 = require("./logger");
+const helmet_1 = __importDefault(require("helmet"));
+const hpp_1 = __importDefault(require("hpp"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 (0, passport_2.default)(); // 패스포트 설정
@@ -40,6 +42,12 @@ models_1.sequelize
     console.error(err);
 });
 if (process.env.NODE_ENV === "production") {
+    app.use((0, helmet_1.default)({
+        contentSecurityPolicy: false,
+        crossOriginEmbedderPolicy: false,
+        crossOriginResourcePolicy: false,
+    }));
+    app.use((0, hpp_1.default)());
     app.use((0, morgan_1.default)("combined"));
 }
 else {
@@ -95,7 +103,12 @@ app.use((req, res, next) => {
     next(error);
 });
 const errorHandler = (err, req, res, next) => {
-    res.status(err.status || 500).json({ fatal: err.fatal });
+    if (err.content.includes("no router")) {
+        res.redirect("/");
+    }
+    else {
+        res.status(err.status || 500).json({ fatal: err.fatal });
+    }
     try {
         logger_1.logger.error(err.message);
         const { fatal, status, place, content, user } = err;
@@ -106,6 +119,9 @@ const errorHandler = (err, req, res, next) => {
             content,
             user,
         });
+        if (req.user) {
+            req.logout(() => { });
+        }
     }
     catch (err) {
         logger_1.logger.error("error db 입력 오류!");

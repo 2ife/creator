@@ -121,7 +121,7 @@ const login = async () => {
     const res = await axios.post("/auth/login", { id, password });
     const { data } = res;
     const { fatal, info } = data as {
-      info: "noUser" | undefined;
+      info: "noUser"|'lock' | undefined;
       fatal: boolean | undefined;
     };
     if (fatal) {
@@ -133,6 +133,9 @@ const login = async () => {
     if (info === "noUser") {
       reload = true;
       alertByModal(loginFailMessage);
+    }else if (info === "lock") {
+      reload = true;
+      alertByModal('정지된 ID입니다!');
     } else {
       return location.reload();
     }

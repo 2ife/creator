@@ -1,4 +1,4 @@
-import { Item, Totem, Summoner, sequelize } from "../models";
+import { User, Item, Totem, Summoner, sequelize } from "../models";
 import { updateSummonerInfo } from "./summoner";
 import { RequestHandler } from "express";
 import { changeLevelAndExp, ReqError } from "./common";
@@ -7,8 +7,31 @@ import { changeLevelAndExp, ReqError } from "./common";
 // fail: alreadyExist, insufficientIngredients,
 const createTotem: RequestHandler = async (req, res, next) => {
   try {
-    const totemIndex = Number(req.params.id);
     const UserId = req.user!.id;
+    const creator = await User.findOne({
+      where: { id: UserId },
+    });
+    if (!creator) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-totem-createTotem",
+        content: `no creator!`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    if (creator.lockMemo) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-totem-createTotem",
+        content: `locked creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    const totemIndex = Number(req.params.id);
     const existTotem = await Totem.findOne({
       where: { UserId, totemIndex },
     });
@@ -104,8 +127,31 @@ const createTotem: RequestHandler = async (req, res, next) => {
 // fail: noTotem, fullGrade, OutOfCondition, insufficientIngredients
 const awakenTotem: RequestHandler = async (req, res, next) => {
   try {
-    const totemIndex = Number(req.params.id);
     const UserId = req.user!.id;
+    const creator = await User.findOne({
+      where: { id: UserId },
+    });
+    if (!creator) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-totem-awakenTotem",
+        content: `no creator!`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    if (creator.lockMemo) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-totem-awakenTotem",
+        content: `locked creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    const totemIndex = Number(req.params.id);
     const totem = await Totem.findOne({
       where: { UserId, totemIndex },
     });
@@ -186,7 +232,7 @@ const awakenTotem: RequestHandler = async (req, res, next) => {
     for (const summoner of summoners) {
       const update = await updateSummonerInfo(UserId, summoner);
       if (update.error) {
-        throw update.error
+        throw update.error;
       }
     }
     const transaction = await sequelize.transaction();
@@ -235,8 +281,31 @@ const awakenTotem: RequestHandler = async (req, res, next) => {
 // fail:
 const getTotemInfo: RequestHandler = async (req, res, next) => {
   try {
-    const totemIndex = Number(req.params.id);
     const UserId = req.user!.id;
+    const creator = await User.findOne({
+      where: { id: UserId },
+    });
+    if (!creator) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-totem-getTotemInfo",
+        content: `no creator!`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    if (creator.lockMemo) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-totem-getTotemInfo",
+        content: `locked creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    const totemIndex = Number(req.params.id);
     const totem = await Totem.findOne({
       where: { UserId, totemIndex },
     });
@@ -250,15 +319,15 @@ const getTotemInfo: RequestHandler = async (req, res, next) => {
       expPercent: ((totem.exp / expToLevelUp) * 100).toFixed(2),
       grade: totem.grade,
     });
-} catch (err: any) {
-  if (!err.place) {
-    err.fatal = false;
-    err.status = 400;
-    err.place = "controllers-totem-getTotemInfo";
-    err.content = "getTotemInfoError";
-    err.user = req.user ? req.user.id : null;
+  } catch (err: any) {
+    if (!err.place) {
+      err.fatal = false;
+      err.status = 400;
+      err.place = "controllers-totem-getTotemInfo";
+      err.content = "getTotemInfoError";
+      err.user = req.user ? req.user.id : null;
+    }
+    return next(err);
   }
-  return next(err);
-}
 };
 export { createTotem, awakenTotem, getTotemInfo };

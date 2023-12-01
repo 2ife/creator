@@ -8,8 +8,31 @@ const common_1 = require("./common");
 // fail: alreadyExist, insufficientIngredients,
 const createTotem = async (req, res, next) => {
     try {
-        const totemIndex = Number(req.params.id);
         const UserId = req.user.id;
+        const creator = await models_1.User.findOne({
+            where: { id: UserId },
+        });
+        if (!creator) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-totem-createTotem",
+                content: `no creator!`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-totem-createTotem",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        const totemIndex = Number(req.params.id);
         const existTotem = await models_1.Totem.findOne({
             where: { UserId, totemIndex },
         });
@@ -103,8 +126,31 @@ exports.createTotem = createTotem;
 // fail: noTotem, fullGrade, OutOfCondition, insufficientIngredients
 const awakenTotem = async (req, res, next) => {
     try {
-        const totemIndex = Number(req.params.id);
         const UserId = req.user.id;
+        const creator = await models_1.User.findOne({
+            where: { id: UserId },
+        });
+        if (!creator) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-totem-awakenTotem",
+                content: `no creator!`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-totem-awakenTotem",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        const totemIndex = Number(req.params.id);
         const totem = await models_1.Totem.findOne({
             where: { UserId, totemIndex },
         });
@@ -227,8 +273,31 @@ exports.awakenTotem = awakenTotem;
 // fail:
 const getTotemInfo = async (req, res, next) => {
     try {
-        const totemIndex = Number(req.params.id);
         const UserId = req.user.id;
+        const creator = await models_1.User.findOne({
+            where: { id: UserId },
+        });
+        if (!creator) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-totem-getTotemInfo",
+                content: `no creator!`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-totem-getTotemInfo",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        const totemIndex = Number(req.params.id);
         const totem = await models_1.Totem.findOne({
             where: { UserId, totemIndex },
         });

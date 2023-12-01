@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.receivePayment = exports.getSaleInfo = exports.searchItem = exports.getItemInfo = exports.buyItem = exports.cancelSale = exports.registerItem = void 0;
+exports.receivePayment = exports.getSaleInfo = exports.searchItem = exports.buyItem = exports.cancelSale = exports.registerItem = void 0;
 const models_1 = require("../models");
 const sequelize_1 = require("sequelize");
 const common_1 = require("./common");
@@ -95,6 +95,29 @@ const searchByKorName = (itemClass, text) => {
 const registerItem = async (req, res, next) => {
     try {
         const UserId = req.user.id;
+        const creator = await models_1.User.findOne({
+            where: { id: UserId },
+        });
+        if (!creator) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-market-registerItem",
+                content: `no creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-market-registerItem",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
         const code = req.params.code;
         const { registerAmounts, registerPrice } = req.body;
         if (!Number.isInteger(registerAmounts) || registerAmounts <= 0) {
@@ -185,6 +208,29 @@ exports.registerItem = registerItem;
 const cancelSale = async (req, res, next) => {
     try {
         const UserId = req.user.id;
+        const creator = await models_1.User.findOne({
+            where: { id: UserId },
+        });
+        if (!creator) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-market-cancelSale",
+                content: `no creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-market-cancelSale",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
         const itemId = Number(req.params.id);
         const { cancelAmounts } = req.body;
         if (!Number.isInteger(cancelAmounts) || cancelAmounts < 1) {
@@ -309,6 +355,16 @@ const buyItem = async (req, res, next) => {
             };
             throw new common_1.ReqError(errorObj, errorObj.content);
         }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-market-buyItem",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
         const totalPrice = price * buyingAmounts;
         if (creator.gold < totalPrice) {
             const errorObj = {
@@ -389,7 +445,7 @@ const buyItem = async (req, res, next) => {
             };
             throw new common_1.ReqError(errorObj, err.message);
         }
-        res.status(200).json('ok');
+        res.status(200).json("ok");
     }
     catch (err) {
         if (!err.place) {
@@ -404,14 +460,31 @@ const buyItem = async (req, res, next) => {
 };
 exports.buyItem = buyItem;
 // info:
-// fail:
-const getItemInfo = async (req, res, next) => { };
-exports.getItemInfo = getItemInfo;
-// info:
 // fail: bannedText, weirdCondition
 const searchItem = async (req, res, next) => {
     try {
         const UserId = req.user.id;
+        const creator = await models_1.User.findOne({ where: { id: UserId } });
+        if (!creator) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-market-searchItem",
+                content: `no creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-market-searchItem",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
         const { searchText, searchClass, searchGrade, markSpeedEnhanceGrade, markGrowthEnhanceGrade, markCreationEnhanceGrade, markFantasyEnhanceGrade, } = req.body;
         // 텍스트 입력 철저히 확인 필요!!!
         const tester = /^[가-힣|: ]{1,}$/;
@@ -436,6 +509,7 @@ const searchItem = async (req, res, next) => {
             };
             throw new common_1.ReqError(errorObj, errorObj.content);
         }
+        let items = [];
         if (searchClass === 5) {
             const markAvailableEnhanceGrade = [0, 1, 2, 3, 4, 5, null];
             if (!markAvailableEnhanceGrade.includes(markSpeedEnhanceGrade) ||
@@ -451,50 +525,63 @@ const searchItem = async (req, res, next) => {
                 };
                 throw new common_1.ReqError(errorObj, errorObj.content);
             }
-            if (searchText && !"소환사의 문양".includes(searchText)) {
-                return res.status(200).json({ items: [] });
+            if (!searchText || "소환사의 문양".includes(searchText)) {
+                items = await models_1.Item.findAll({
+                    where: {
+                        saleCode: 1,
+                        itemClass: searchClass,
+                        markSpeedEnhanceGrade: markSpeedEnhanceGrade
+                            ? markSpeedEnhanceGrade
+                            : { [sequelize_1.Op.lte]: 5 },
+                        markGrowthEnhanceGrade: markGrowthEnhanceGrade
+                            ? markGrowthEnhanceGrade
+                            : { [sequelize_1.Op.lte]: 5 },
+                        markCreationEnhanceGrade: markCreationEnhanceGrade
+                            ? markCreationEnhanceGrade
+                            : { [sequelize_1.Op.lte]: 5 },
+                        markFantasyEnhanceGrade: markFantasyEnhanceGrade
+                            ? markFantasyEnhanceGrade
+                            : { [sequelize_1.Op.lte]: 5 },
+                        itemGrade: searchGrade,
+                        amounts: { [sequelize_1.Op.gte]: 1 },
+                        UserId: { [sequelize_1.Op.not]: UserId },
+                    },
+                    order: [
+                        ["price", "ASC"],
+                        ["markSpeedEnhanceGrade", "DESC"],
+                        ["markGrowthEnhanceGrade", "DESC"],
+                        ["markCreationEnhanceGrade", "DESC"],
+                        ["markFantasyEnhanceGrade", "DESC"],
+                    ],
+                    limit: 300,
+                });
             }
-            const items = await models_1.Item.findAll({
-                where: {
-                    saleCode: 1,
-                    itemClass: searchClass,
-                    markSpeedEnhanceGrade: markSpeedEnhanceGrade
-                        ? markSpeedEnhanceGrade
-                        : { [sequelize_1.Op.lte]: 5 },
-                    markGrowthEnhanceGrade: markGrowthEnhanceGrade
-                        ? markGrowthEnhanceGrade
-                        : { [sequelize_1.Op.lte]: 5 },
-                    markCreationEnhanceGrade: markCreationEnhanceGrade
-                        ? markCreationEnhanceGrade
-                        : { [sequelize_1.Op.lte]: 5 },
-                    markFantasyEnhanceGrade: markFantasyEnhanceGrade
-                        ? markFantasyEnhanceGrade
-                        : { [sequelize_1.Op.lte]: 5 },
-                    itemGrade: searchGrade,
-                    amounts: { [sequelize_1.Op.gte]: 1 },
-                    UserId: { [sequelize_1.Op.not]: UserId },
-                },
-                order: [
-                    ["price", "ASC"],
-                    ["markSpeedEnhanceGrade", "DESC"],
-                    ["markGrowthEnhanceGrade", "DESC"],
-                    ["markCreationEnhanceGrade", "DESC"],
-                    ["markFantasyEnhanceGrade", "DESC"],
-                ],
-                limit: 200,
-            });
-            return res.status(200).json({ items });
         }
-        if (searchText) {
+        else if (searchText) {
             const targetDetailList = searchByKorName(searchClass, searchText);
-            if (!targetDetailList.length) {
-                return res.status(200).json({ items: [] });
+            if (targetDetailList.length) {
+                items = await models_1.Item.findAll({
+                    where: {
+                        saleCode: 1,
+                        itemClass: searchClass,
+                        itemDetail: { [sequelize_1.Op.in]: targetDetailList },
+                        itemGrade: searchGrade === 11 ? { [sequelize_1.Op.lte]: 10 } : searchGrade,
+                        amounts: { [sequelize_1.Op.gte]: 1 },
+                        UserId: { [sequelize_1.Op.not]: UserId },
+                    },
+                    order: [
+                        ["price", "ASC"],
+                        ["itemDetail", "DESC"],
+                    ],
+                    limit: 300,
+                });
             }
-            const items = await models_1.Item.findAll({
+        }
+        else {
+            items = await models_1.Item.findAll({
                 where: {
                     saleCode: 1,
                     itemClass: searchClass,
-                    itemDetail: { [sequelize_1.Op.in]: targetDetailList },
                     itemGrade: searchGrade === 11 ? { [sequelize_1.Op.lte]: 10 } : searchGrade,
                     amounts: { [sequelize_1.Op.gte]: 1 },
                     UserId: { [sequelize_1.Op.not]: UserId },
@@ -503,28 +590,24 @@ const searchItem = async (req, res, next) => {
                     ["price", "ASC"],
                     ["itemDetail", "DESC"],
                 ],
-                limit: 200,
+                limit: 300,
             });
-            return res.status(200).json({ items });
         }
-        const items = await models_1.Item.findAll({
-            where: {
-                saleCode: 1,
-                itemClass: searchClass,
-                itemGrade: searchGrade === 11 ? { [sequelize_1.Op.lte]: 10 } : searchGrade,
-                amounts: { [sequelize_1.Op.gte]: 1 },
-                UserId: { [sequelize_1.Op.not]: UserId },
-            },
-            order: [
-                ["price", "ASC"],
-                ["itemDetail", "DESC"],
-            ],
-            limit: 200,
-        });
-        const itemsData = items.map((item) => {
+        const itemsData = items
+            .filter(async (item) => {
+            const updateTime = item.updatedAt.getTime();
+            const seller = await models_1.User.findOne({ where: { id: item.UserId } });
+            return (updateTime < new Date().getTime() + Math.random() * 600000 &&
+                seller &&
+                seller.lockMemo === null);
+        })
+            .map((item) => {
             const { id, code, amounts, price } = item;
             return {
-                id, code, amounts, price
+                id,
+                code,
+                amounts,
+                price,
             };
         });
         return res.status(200).json({ itemsData });
@@ -565,6 +648,16 @@ const receivePayment = async (req, res, next) => {
                 status: 400,
                 place: "controllers-market-receivePayment",
                 content: `no creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-market-receivePayment",
+                content: `locked creator! UserId: ${UserId}`,
                 user: UserId,
             };
             throw new common_1.ReqError(errorObj, errorObj.content);
@@ -620,6 +713,27 @@ exports.receivePayment = receivePayment;
 const getSaleInfo = async (req, res, next) => {
     try {
         const UserId = req.user.id;
+        const creator = await models_1.User.findOne({ where: { id: UserId } });
+        if (!creator) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-market-getSaleInfo",
+                content: `no creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-market-getSaleInfo",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
         let sellingItems = [];
         const mySellingItems = await models_1.Item.findAll({
             where: {

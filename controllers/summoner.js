@@ -329,8 +329,31 @@ const getExpBonusInfo = (mark, bearTotem, growthBless) => {
 // fail: alreadyExist, lowLevel, noLastSummoner, insufficientBreatheOfCreation
 const createSummoner = async (req, res, next) => {
     try {
-        const summonerIndex = Number(req.params.id);
         const UserId = req.user.id;
+        const creator = await models_1.User.findOne({
+            where: { id: UserId },
+        });
+        if (!creator) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-summoner-createSummoner",
+                content: `no creator!`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-summoner-createSummoner",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        const summonerIndex = Number(req.params.id);
         const existSummoners = await models_1.Summoner.findAll({
             where: { UserId },
             order: [["summonerIndex", "DESC"]],
@@ -348,19 +371,6 @@ const createSummoner = async (req, res, next) => {
                 status: 400,
                 place: "controllers-summoner-createSummoner",
                 content: `summoner already exist! summonerIndex / targetSummoner: ${summonerIndex} / ${targetSummoner}`,
-                user: UserId,
-            };
-            throw new common_1.ReqError(errorObj, errorObj.content);
-        }
-        const creator = await models_1.User.findOne({
-            where: { id: UserId },
-        });
-        if (!creator) {
-            const errorObj = {
-                fatal: true,
-                status: 400,
-                place: "controllers-summoner-createSummoner",
-                content: `no creator!`,
                 user: UserId,
             };
             throw new common_1.ReqError(errorObj, errorObj.content);
@@ -459,8 +469,29 @@ exports.createSummoner = createSummoner;
 // fail: noSummoner,
 const summonItem = async (req, res, next) => {
     try {
-        const summonerIndex = Number(req.params.id);
         const UserId = req.user.id;
+        const creator = await models_1.User.findOne({ where: { id: UserId } });
+        if (!creator) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-summoner-summonItem",
+                content: `no creator!`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-summoner-summonItem",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        const summonerIndex = Number(req.params.id);
         const summoner = await models_1.Summoner.findOne({
             where: { UserId, summonerIndex },
         });
@@ -484,17 +515,6 @@ const summonItem = async (req, res, next) => {
             return res.status(200).json({ info: "noSummonCounter" });
         }
         let items = {};
-        const creator = await models_1.User.findOne({ where: { id: UserId } });
-        if (!creator) {
-            const errorObj = {
-                fatal: true,
-                status: 400,
-                place: "controllers-summoner-summonItem",
-                content: `no creator!`,
-                user: UserId,
-            };
-            throw new common_1.ReqError(errorObj, errorObj.content);
-        }
         const expBonus = getExpBonusInfo(mark, totems[1], BLESS_DATA[1]);
         let fragmentOfCreation = 0;
         let gold = 0;
@@ -630,8 +650,31 @@ exports.summonItem = summonItem;
 // fail: noSummoner, fullGrade, outOfCondition, insufficientBreatheOfCreation
 const awakenSummoner = async (req, res, next) => {
     try {
-        const summonerIndex = Number(req.params.id);
         const UserId = req.user.id;
+        const creator = await models_1.User.findOne({
+            where: { id: UserId },
+        });
+        if (!creator) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-summoner-awakenSummoner",
+                content: `no creator!`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-summoner-awakenSummoner",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        const summonerIndex = Number(req.params.id);
         const summoner = await models_1.Summoner.findOne({
             where: { UserId, summonerIndex },
         });
@@ -732,11 +775,7 @@ exports.awakenSummoner = awakenSummoner;
 // fail: weirdCode, noSummoner, noBless,
 const blessSummoner = async (req, res, next) => {
     try {
-        const summonerIndex = Number(req.params.id);
         const UserId = req.user.id;
-        const { code, blessAmounts } = req.body;
-        const { itemClass, itemGrade, itemDetail } = (0, common_1.splitCodeToInfoWithoutInspection)(code);
-        const itemDetailNumber = Number(itemDetail);
         const creator = await models_1.User.findOne({ where: { id: UserId } });
         if (!creator) {
             const errorObj = {
@@ -748,6 +787,20 @@ const blessSummoner = async (req, res, next) => {
             };
             throw new common_1.ReqError(errorObj, errorObj.content);
         }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-summoner-blessSummoner",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        const summonerIndex = Number(req.params.id);
+        const { code, blessAmounts } = req.body;
+        const { itemClass, itemGrade, itemDetail } = (0, common_1.splitCodeToInfoWithoutInspection)(code);
+        const itemDetailNumber = Number(itemDetail);
         if (itemClass !== 4) {
             const errorObj = {
                 status: 400,
@@ -959,8 +1012,31 @@ exports.blessSummoner = blessSummoner;
 // fail: weirdCode, noSummoner, noMark,
 const equipMark = async (req, res, next) => {
     try {
-        const summonerIndex = Number(req.params.id);
         const UserId = req.user.id;
+        const creator = await models_1.User.findOne({
+            where: { id: UserId },
+        });
+        if (!creator) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-summoner-equipMark",
+                content: `no creator!`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-summoner-equipMark",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        const summonerIndex = Number(req.params.id);
         const { code } = req.body;
         const markInfo = (0, common_1.splitCodeToInfo)(code);
         if (!markInfo) {
@@ -1077,8 +1153,31 @@ exports.equipMark = equipMark;
 // fail: noSummoner, noMark
 const unequipMark = async (req, res, next) => {
     try {
-        const summonerIndex = Number(req.params.id);
         const UserId = req.user.id;
+        const creator = await models_1.User.findOne({
+            where: { id: UserId },
+        });
+        if (!creator) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-summoner-unequipMark",
+                content: `no creator!`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-summoner-unequipMark",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        const summonerIndex = Number(req.params.id);
         const summoner = await models_1.Summoner.findOne({
             where: { UserId, summonerIndex },
         });
@@ -1168,8 +1267,31 @@ exports.unequipMark = unequipMark;
 // fail:
 const getSummonerInfo = async (req, res, next) => {
     try {
-        const summonerIndex = Number(req.params.id);
         const UserId = req.user.id;
+        const creator = await models_1.User.findOne({
+            where: { id: UserId },
+        });
+        if (!creator) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-summoner-getSummonerInfo",
+                content: `no creator!`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        if (creator.lockMemo) {
+            const errorObj = {
+                fatal: true,
+                status: 400,
+                place: "controllers-summoner-getSummonerInfo",
+                content: `locked creator! UserId: ${UserId}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        const summonerIndex = Number(req.params.id);
         const summoner = await models_1.Summoner.findOne({
             where: { UserId, summonerIndex },
         });

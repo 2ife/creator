@@ -193,6 +193,16 @@ const makeItem: RequestHandler = async (req, res, next) => {
       };
       throw new ReqError(errorObj, errorObj.content);
     }
+    if(creator.lockMemo){
+      const errorObj = {
+        fatal:true,
+        status: 400,
+        place: "controllers-item-makeItem",
+        content: `locked creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
     if (itemGrade >= 4 && creator.level < (itemGrade - 1) * 10) {
       const errorObj = {
         status: 400,
@@ -400,6 +410,29 @@ const makeItem: RequestHandler = async (req, res, next) => {
 const enhanceMark: RequestHandler = async (req, res, next) => {
   try {
     const UserId = req.user!.id;
+    const creator = await User.findOne({
+      where: { id: UserId },
+    });
+    if (!creator) {
+      const errorObj = {
+        fatal:true,
+        status: 400,
+        place: "controllers-item-enhanceMark",
+        content: `no creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    if(creator.lockMemo){
+      const errorObj = {
+        fatal:true,
+        status: 400,
+        place: "controllers-item-enhanceMark",
+        content: `locked creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
     const code = req.params.code;
     const itemInfo = splitCodeToInfoWithoutInspection(code);
     const { itemClass, itemGrade } = itemInfo;
@@ -556,6 +589,29 @@ const enhanceMark: RequestHandler = async (req, res, next) => {
 const disassembleItem: RequestHandler = async (req, res, next) => {
   try {
     const UserId = req.user!.id;
+    const creator = await User.findOne({
+      where: { id: UserId },
+    });
+    if (!creator) {
+      const errorObj = {
+        fatal:true,
+        status: 400,
+        place: "controllers-item-disassembleItem",
+        content: `no creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    if(creator.lockMemo){
+      const errorObj = {
+        fatal:true,
+        status: 400,
+        place: "controllers-item-disassembleItem",
+        content: `locked creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
     const code = req.params.code;
     const { itemClass, itemGrade, itemDetail } =
       splitCodeToInfoWithoutInspection(code);
@@ -698,6 +754,16 @@ const buyCashItem: RequestHandler = async (req, res, next) => {
       };
       throw new ReqError(errorObj, errorObj.content);
     }
+    if(creator.lockMemo){
+      const errorObj = {
+        fatal:true,
+        status: 400,
+        place: "controllers-item-buyCashItem",
+        content: `locked creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
     if (creator.cash < totalPrice) {
       const errorObj = {
         status: 400,
@@ -758,7 +824,4 @@ const buyCashItem: RequestHandler = async (req, res, next) => {
     return next(err);
   }
 };
-// info:
-// fail:
-const getItemInfo: RequestHandler = async (req, res, next) => {};
-export { makeItem, enhanceMark, getItemInfo, disassembleItem, buyCashItem };
+export { makeItem, enhanceMark,  disassembleItem, buyCashItem };

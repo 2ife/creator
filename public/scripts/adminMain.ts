@@ -10,6 +10,9 @@ const userSearchNav = document.querySelector(
 const userSearchNavBtn = userSearchNav.querySelector(
   ".searchNav_navBtn"
 ) as HTMLDivElement;
+const userSearchNameBtn = userSearchNav.querySelector(
+  ".searchNav_nameBtn"
+) as HTMLDivElement;
 const userSearchNavList = userSearchNavBtn.querySelector(
   ".searchNav_navList"
 ) as HTMLUListElement;
@@ -80,6 +83,9 @@ const errorSearchNav = document.querySelector(
 const errorSearchNavBtn = errorSearchNav.querySelector(
   ".searchNav_navBtn"
 ) as HTMLDivElement;
+const errorSearchNameBtn = errorSearchNav.querySelector(
+  ".searchNav_nameBtn"
+) as HTMLDivElement;
 const errorSearchNavList = errorSearchNavBtn.querySelector(
   ".searchNav_navList"
 ) as HTMLUListElement;
@@ -95,9 +101,6 @@ const errorSearchTextContainer = errorSearchNav.querySelector(
 const errorSearchBtn = errorSearchNav.querySelector(
   ".searchNav_searchBtn"
 ) as HTMLButtonElement;
-// const errorSearchNavUserLockBtn = errorSearchNav.querySelector(
-//   "#errorSearchNavUserLockBtn"
-// ) as HTMLButtonElement;
 const errorSearchNavDeleteErrorBtn = errorSearchNav.querySelector(
   "#errorSearchNavDeleteErrorBtn"
 ) as HTMLButtonElement;
@@ -396,18 +399,17 @@ const clickSearchNavBtn = (part: "user" | "error") => (event: MouseEvent) => {
   const target = event.target as
     | HTMLUListElement
     | HTMLLIElement
-    | HTMLDivElement;
-  const currentTarget = event.currentTarget as HTMLDivElement;
+    | HTMLButtonElement|HTMLDivElement
+  const nameBtn = part === "user" ?userSearchNameBtn:errorSearchNameBtn
   const navList = part === "user" ? userSearchNavList : errorSearchNavList;
-  if (target === currentTarget) {
+  if (target === nameBtn) {
     if (navList.style.display === "none") {
       navList.style.display = "flex";
     } else {
       navList.style.display = "none";
     }
   } else if (target.classList.contains("navList_nav")) {
-    currentTarget.innerText = target.innerText;
-    currentTarget.append(navList);
+    nameBtn.innerText = target.innerText;
     navList.style.display = "none";
   }
 };
@@ -611,7 +613,7 @@ const changeSearchPart = (part: "user" | "error") => () => {
 
 /* user */
 const searchUser = () => {
-  const userSearchClass = userSearchNavBtn.innerText;
+  const userSearchClass = userSearchNameBtn.innerText;
   const userLock = userLockCheckBox.checked;
   const userCashCode = userCashCodeCheckBox.checked;
   const searchText = userSearchTextContainer.value;
@@ -1135,7 +1137,7 @@ const changeUserItem = async () => {
 
 /* error */
 const searchError = () => {
-  const errorSearchClass = errorSearchNavBtn.innerText;
+  const errorSearchClass = errorSearchNameBtn.innerText;
   const errorFatal = errorFatalCheckBox.checked;
   const searchText = errorSearchTextContainer.value;
   errorSearchTextContainer.value = "";

@@ -23,6 +23,16 @@ const renderMain: RequestHandler = async (req, res, next) => {
       };
       throw new ReqError(errorObj, errorObj.content);
     }
+    if (creator.lockMemo) {
+      const errorObj = {
+        fatal: true,
+        status: 400,
+        place: "controllers-page-renderMain",
+        content: `locked creator! UserId: ${UserId}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
     const marketDiscount = creator.marketCommisionDiscount;
     if (marketDiscount !== "0") {
       const colonIndex = marketDiscount.indexOf(":");

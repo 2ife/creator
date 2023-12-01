@@ -133,13 +133,28 @@ const splitCodeToInfo = (code) => {
         itemDetail,
     };
 };
+class ReqError extends Error {
+    constructor(obj, msg) {
+        super(msg);
+        this.fatal = obj.fatal ? obj.fatal : false;
+        this.status = obj.status;
+        this.place = obj.place;
+        this.content = obj.content;
+        this.user = obj.user ? obj.user : null;
+    }
+}
 const checkRequest = (req, res, next) => {
     if (req.user?.id) {
         next();
     }
     else {
-        console.log("req 오류!", req);
-        res.status(403).send({ fatal: false });
+        const errorObj = {
+            status: 400,
+            place: "routes-common-checkRequest",
+            content: `no userId! req.user: ${req.user}`,
+        };
+        const error = new ReqError(errorObj, errorObj.content);
+        next(error);
     }
 };
 exports.checkRequest = checkRequest;
@@ -149,12 +164,16 @@ const checkParams = (mode) => (req, res, next) => {
             const code = req.params.code;
             const itemInfo = splitCodeToInfo(code);
             if (itemInfo) {
-                res.locals.itemInfo = itemInfo;
                 next();
             }
             else {
-                console.log("item code 입력 오류!", "id", req.user?.id, "입력값: ", code);
-                res.status(403).send({ fatal: true });
+                const errorObj = {
+                    status: 400,
+                    place: "routes-common-checkParams",
+                    content: `weird code! code: ${code}`,
+                };
+                const error = new ReqError(errorObj, errorObj.content);
+                next(error);
             }
             break;
         }
@@ -164,8 +183,13 @@ const checkParams = (mode) => (req, res, next) => {
                 next();
             }
             else {
-                console.log("item id 입력 오류!", "id", req.user?.id, "입력값: ", req.params.id);
-                res.status(403).send({ fatal: true });
+                const errorObj = {
+                    status: 400,
+                    place: "routes-common-checkParams",
+                    content: `weird id! id: ${id}`,
+                };
+                const error = new ReqError(errorObj, errorObj.content);
+                next(error);
             }
             break;
         }
@@ -175,8 +199,13 @@ const checkParams = (mode) => (req, res, next) => {
                 next();
             }
             else {
-                console.log("summoner id 입력 오류!", "id", req.user?.id, "입력값: ", req.params.id);
-                res.status(403).send({ fatal: true });
+                const errorObj = {
+                    status: 400,
+                    place: "routes-common-checkParams",
+                    content: `weird summonerTotemIndex! index: ${index}`,
+                };
+                const error = new ReqError(errorObj, errorObj.content);
+                next(error);
             }
             break;
         }

@@ -4,7 +4,6 @@ import {
   registerItem,
   cancelSale,
   buyItem,
-  getItemInfo,
   searchItem,
   getSaleInfo,
   receivePayment,
@@ -36,14 +35,6 @@ router.post(
   checkRequest,
   checkParams("id"),
   buyItem
-);
-router.post(
-  "/item/:code",
-  apiLimiter,
-  isLoggedIn,
-  checkRequest,
-  checkParams("itemCode"),
-  getItemInfo
 );
 router.post("/search", apiLimiter, isLoggedIn, checkRequest, searchItem);
 router.post(
