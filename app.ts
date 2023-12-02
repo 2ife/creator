@@ -6,7 +6,7 @@ import session from "express-session";
 import nunjucks from "nunjucks";
 import dotenv from "dotenv";
 import passport from "passport";
-import cors from "cors";
+// import cors from "cors";
 
 import pageRouter from "./routes/page";
 import authRouter from "./routes/auth";
@@ -24,12 +24,12 @@ import hpp from "hpp";
 
 dotenv.config();
 const app = express();
-app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: true,
+//     credentials: true,
+//   })
+// );
 passportConfig(); // 패스포트 설정
 app.set("port", process.env.PORT || 8006);
 app.set("view engine", "html");
@@ -79,7 +79,7 @@ const sessionOption = {
   cookie: {
     httpOnly: true,
     secure: false,
-  },
+  }
 };
 app.use(session(sessionOption));
 app.use(passport.initialize());
@@ -130,11 +130,7 @@ app.use((req, res, next) => {
   next(error);
 });
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  if (err.content.includes("no router")) {
-    res.redirect("/");
-  } else {
     res.status(err.status || 500).json({ fatal: err.fatal });
-  }
   try {
     logger.error(err.message);
     const { fatal, status, place, content, user } = err;

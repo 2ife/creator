@@ -45,4 +45,4 @@ const isNotLoggedIn: RequestHandler = (req, res, next) => {
     });
   }
 };
-export { isLoggedIn, isNotLoggedIn, isAdminLoggedIn,apiLimiter };
+export { isLoggedIn, isNotLoggedIn, isAdminLoggedIn, apiLimiter };

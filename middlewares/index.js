@@ -25,7 +25,6 @@ const isLoggedIn = (req, res, next) => {
         next();
     }
     else {
-console.log('not authenticated!')
         res.redirect("/");
     }
 };

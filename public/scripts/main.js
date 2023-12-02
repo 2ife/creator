@@ -1119,7 +1119,7 @@ try{
 }
 } catch (err: any) {
   // dev
-  // console.log(err)
+  //
   reload = true;
   alertByModal("오류가 발생하여 재접속합니다.");
 }
@@ -1182,7 +1182,6 @@ const openSummonerMenu = async (summonerIndex) => {
         }
         showLoading();
         const res = await axios.default.post(`/summoner/${summonerIndex}`);
-        console.log(res)
         const { data } = res;
         const { fatal } = data;
         if (fatal) {
@@ -1303,7 +1302,6 @@ const openSummonerMenu = async (summonerIndex) => {
         stopLoading();
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1354,7 +1352,6 @@ const createSummoner = (summonerIndex) => async () => {
         openSummonerMenu(summonerIndex);
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1400,7 +1397,6 @@ const awakenSummoner = (summonerIndex) => async () => {
         openSummonerMenu(summonerIndex);
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1444,7 +1440,6 @@ const summonItem = (summonerIndex) => async () => {
         showItemsAmountsChange(items);
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1492,7 +1487,6 @@ const clickImgInHomeModal = async (event) => {
         openSummonerMenu(summonerIndex);
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1570,7 +1564,6 @@ const openTotemMenu = async (totemIndex) => {
         stopLoading();
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1607,7 +1600,6 @@ const createTotem = (totemIndex) => async () => {
         openTotemMenu(totemIndex);
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1661,7 +1653,6 @@ const awakenTotem = (totemIndex) => async () => {
         openTotemMenu(totemIndex);
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1792,7 +1783,6 @@ const blessSummoner = (code) => async () => {
         openSummonerMenu(summonerIndex);
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1833,7 +1823,6 @@ const equipMark = (code) => async () => {
         openSummonerMenu(summonerIndex);
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1865,7 +1854,6 @@ const useMarketDiscountTicket = (code) => async () => {
         stopLoading();
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1903,7 +1891,6 @@ const useOldBook = (code) => async () => {
         stopLoading();
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -1939,7 +1926,6 @@ const disassembleItem = (code) => async () => {
         stopLoading();
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -2084,7 +2070,6 @@ const openItemMenu = async (code) => {
         stopLoading();
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -2129,7 +2114,6 @@ const changeMakeMode = async (event) => {
         stopLoading();
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -2404,7 +2388,6 @@ const renderCraftExecuter = (code) => {
         craftTargetRateContainer.style.display = "flex";
     }
     catch (err) {
-        console.log(err);
         reload = true;
         alertByModal(err.message === "fatal error"
             ? "오류가 발생하여 재접속합니다.\n오류 조사를 위해 해당 계정이 일시적으로 정지될 수 있으니 양해 부탁드립니다."
@@ -2488,7 +2471,6 @@ const makeItem = async () => {
         stopLoading();
     }
     catch (err) {
-        console.log(err);
         reload = true;
         alertByModal(err.message === "fatal error"
             ? "오류가 발생하여 재접속합니다.\n오류 조사를 위해 해당 계정이 일시적으로 정지될 수 있으니 양해 부탁드립니다."
@@ -2582,7 +2564,6 @@ const renderEnhanceExecuter = async (code) => {
         craftTargetRateContainer.style.display = "none";
     }
     catch (err) {
-        console.log(err);
         reload = true;
         alertByModal("오류가 발생하여 재접속합니다.");
     }
@@ -2639,7 +2620,6 @@ const enhanceMark = async () => {
         stopLoading();
     }
     catch (err) {
-        console.log(err);
         reload = true;
         alertByModal(err.message === "fatal error"
             ? "오류가 발생하여 재접속합니다.\n오류 조사를 위해 해당 계정이 일시적으로 정지될 수 있으니 양해 부탁드립니다."
@@ -2792,7 +2772,6 @@ const searchItem = async () => {
         renderMarketItems(1);
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -2952,7 +2931,6 @@ const buyItem = async (event) => {
         }
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -3017,7 +2995,6 @@ const openSaleInventory = async (event) => {
         marketPartInventories[btnIndex].style.display = "flex";
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -3087,7 +3064,6 @@ const cancelSale = (id) => async () => {
         marketSalePartNavBtns[7].click();
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -3118,7 +3094,6 @@ const receivePayment = (id) => async () => {
         marketSalePartNavBtns[7].click();
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -3246,7 +3221,6 @@ const registerItem = (code) => async () => {
         stopLoading();
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"
@@ -3310,8 +3284,6 @@ const buyCashItem = (code) => async () => {
         const res = await axios.default.post(`/item/buyCashItem/${code}`, {
             buyingAmounts,
         });
-        console.log(res)
-
         const { data } = res;
         const { fatal } = data;
         if (fatal) {
@@ -3327,7 +3299,6 @@ const buyCashItem = (code) => async () => {
         stopLoading();
     }
     catch (err) {
-        console.log(err);
         stopLoading();
         reload = true;
         alertByModal(err.message === "fatal error"

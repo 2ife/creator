@@ -11,6 +11,7 @@ const express_session_1 = __importDefault(require("express-session"));
 const nunjucks_1 = __importDefault(require("nunjucks"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const passport_1 = __importDefault(require("passport"));
+// import cors from "cors";
 const page_1 = __importDefault(require("./routes/page"));
 const auth_1 = __importDefault(require("./routes/auth"));
 const user_1 = __importDefault(require("./routes/user"));
@@ -26,6 +27,12 @@ const helmet_1 = __importDefault(require("helmet"));
 const hpp_1 = __importDefault(require("hpp"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
+// app.use(
+//   cors({
+//     origin: true,
+//     credentials: true,
+//   })
+// );
 (0, passport_2.default)(); // 패스포트 설정
 app.set("port", process.env.PORT || 8006);
 app.set("view engine", "html");
@@ -67,7 +74,7 @@ const sessionOption = {
     cookie: {
         httpOnly: true,
         secure: false,
-    },
+    }
 };
 app.use((0, express_session_1.default)(sessionOption));
 app.use(passport_1.default.initialize());
@@ -103,12 +110,7 @@ app.use((req, res, next) => {
     next(error);
 });
 const errorHandler = (err, req, res, next) => {
-    if (err.content.includes("no router")) {
-        res.redirect("/");
-    }
-    else {
-        res.status(err.status || 500).json({ fatal: err.fatal });
-    }
+    res.status(err.status || 500).json({ fatal: err.fatal });
     try {
         logger_1.logger.error(err.message);
         const { fatal, status, place, content, user } = err;

@@ -1677,7 +1677,7 @@ try{
 }
 } catch (err: any) {
   // dev
-  // console.log(err)
+  // 
   reload = true;
   alertByModal("오류가 발생하여 재접속합니다.");
 }
@@ -1905,7 +1905,6 @@ const openSummonerMenu = async (summonerIndex: number) => {
     summonBtn.focus();
     stopLoading();
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -1956,7 +1955,6 @@ const createSummoner = (summonerIndex: number) => async () => {
     stopLoading();
     openSummonerMenu(summonerIndex);
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2004,7 +2002,6 @@ const awakenSummoner = (summonerIndex: number) => async () => {
     stopLoading();
     openSummonerMenu(summonerIndex);
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2049,7 +2046,6 @@ const summonItem = (summonerIndex: number) => async () => {
     }
     showItemsAmountsChange(items as { [key: string]: number });
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2097,7 +2093,6 @@ const clickImgInHomeModal = async (event: MouseEvent) => {
     stopLoading();
     openSummonerMenu(summonerIndex);
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2189,7 +2184,6 @@ const openTotemMenu = async (totemIndex: number) => {
     awakenBtn.focus();
     stopLoading();
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2226,7 +2220,6 @@ const createTotem = (totemIndex: number) => async () => {
     stopLoading();
     openTotemMenu(totemIndex);
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2284,7 +2277,6 @@ const awakenTotem = (totemIndex: number) => async () => {
     stopLoading();
     openTotemMenu(totemIndex);
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2427,7 +2419,6 @@ const blessSummoner = (code: string) => async () => {
     footerBtns[0].click();
     openSummonerMenu(summonerIndex);
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2471,7 +2462,6 @@ const equipMark = (code: string) => async () => {
     footerBtns[0].click();
     openSummonerMenu(summonerIndex);
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2504,7 +2494,6 @@ const useMarketDiscountTicket = (code: string) => async () => {
     updateMarketDiscount();
     stopLoading();
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2542,7 +2531,6 @@ const useOldBook = (code: string) => async () => {
     updateCreatorCash(cash);
     stopLoading();
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2578,7 +2566,6 @@ const disassembleItem = (code: string) => async () => {
     OutOfItemModal.style.display = "none";
     stopLoading();
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2728,7 +2715,6 @@ const openItemMenu = async (code: string) => {
     itemModalBtn.focus();
     stopLoading();
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -2774,7 +2760,6 @@ const changeMakeMode = async (event: MouseEvent) => {
     }
     stopLoading();
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -3078,7 +3063,6 @@ const renderCraftExecuter = (code: string) => {
           }%)`;
     craftTargetRateContainer.style.display = "flex";
   } catch (err: any) {
-    console.log(err);
     reload = true;
     alertByModal(
       err.message === "fatal error"
@@ -3169,7 +3153,6 @@ const makeItem = async () => {
     resetCraftExecuter();
     stopLoading();
   } catch (err: any) {
-    console.log(err);
     reload = true;
     alertByModal(
       err.message === "fatal error"
@@ -3290,7 +3273,6 @@ const renderEnhanceExecuter = async (code: string) => {
     craftAmountsSetter.style.display = "none";
     craftTargetRateContainer.style.display = "none";
   } catch (err: any) {
-    console.log(err);
     reload = true;
     alertByModal("오류가 발생하여 재접속합니다.");
   }
@@ -3370,7 +3352,6 @@ const enhanceMark = async () => {
     }
     stopLoading();
   } catch (err: any) {
-    console.log(err);
     reload = true;
     alertByModal(
       err.message === "fatal error"
@@ -3532,7 +3513,6 @@ const searchItem = async () => {
     stopLoading();
     renderMarketItems(1);
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -3723,7 +3703,6 @@ const buyItem = async (event: MouseEvent) => {
       alertByModal("이미 판매된 상품입니다.");
     }
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -3804,7 +3783,6 @@ const openSaleInventory = async (event: MouseEvent) => {
     }
     marketPartInventories[btnIndex].style.display = "flex";
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -3894,7 +3872,6 @@ const cancelSale = (id: number) => async () => {
     stopLoading();
     marketSalePartNavBtns[7].click();
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -3925,7 +3902,6 @@ const receivePayment = (id: number) => async () => {
     stopLoading();
     marketSalePartNavBtns[7].click();
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -4060,7 +4036,6 @@ const registerItem = (code: string) => async () => {
     OutOfSaleModal.style.display = "none";
     stopLoading();
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
@@ -4150,7 +4125,6 @@ const buyCashItem = (code: string) => async () => {
     OutOfCashModal.style.display = "none";
     stopLoading();
   } catch (err: any) {
-    console.log(err);
     stopLoading();
     reload = true;
     alertByModal(
