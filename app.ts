@@ -79,7 +79,7 @@ const sessionOption = {
   cookie: {
     httpOnly: true,
     secure: false,
-  }
+  },
 };
 app.use(session(sessionOption));
 app.use(passport.initialize());
@@ -130,7 +130,7 @@ app.use((req, res, next) => {
   next(error);
 });
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-    res.status(err.status || 500).json({ fatal: err.fatal });
+  res.status(err.status || 500).json({ fatal: err.fatal });
   try {
     logger.error(err.message);
     const { fatal, status, place, content, user } = err;
