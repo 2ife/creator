@@ -4,7 +4,7 @@
   "description": "Creator Game Mini Version",
   "main": "app.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production PORT=80 pm2 start app.js -i -1",
+    "start": "cross-env NODE_ENV=production PORT=443 pm2 start app.js -i 0",
     "dev": "nodemon app"
   },
   "author": "Dave",
