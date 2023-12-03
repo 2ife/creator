@@ -1,7 +1,7 @@
 {
   "name": "creator",
   "version": "0.0.1",
-  "description": "Creator Game Mini Version",
+  "description": "Creator Game",
   "main": "app.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production PORT=3000 pm2 start app.js -i 0",
