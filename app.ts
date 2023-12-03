@@ -31,7 +31,7 @@ const app = express();
 //   })
 // );
 passportConfig(); // 패스포트 설정
-app.set("port", process.env.PORT || 8006);
+app.set("port", process.env.PORT || 3000);
 app.set("view engine", "html");
 nunjucks.configure("views", {
   express: app,
