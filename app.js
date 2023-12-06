@@ -34,7 +34,7 @@ const app = (0, express_1.default)();
 //   })
 // );
 (0, passport_2.default)(); // 패스포트 설정
-app.set("port", process.env.PORT || 8006);
+app.set("port", process.env.PORT || 3000);
 app.set("view engine", "html");
 nunjucks_1.default.configure("views", {
     express: app,
@@ -71,11 +71,16 @@ const sessionOption = {
     resave: false,
     saveUninitialized: false,
     secret: process.env.COOKIE_SECRET,
+    proxy: false,
     cookie: {
         httpOnly: true,
         secure: false,
-    }
+    },
 };
+if (process.env.NODE_ENV === "production") {
+    sessionOption.proxy = true;
+    sessionOption.cookie.secure = true;
+}
 app.use((0, express_session_1.default)(sessionOption));
 app.use(passport_1.default.initialize());
 app.use(passport_1.default.session());

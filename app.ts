@@ -76,11 +76,16 @@ const sessionOption = {
   resave: false,
   saveUninitialized: false,
   secret: process.env.COOKIE_SECRET!,
+  proxy: false,
   cookie: {
     httpOnly: true,
     secure: false,
   },
 };
+if (process.env.NODE_ENV === "production") {
+  sessionOption.proxy = true;
+  sessionOption.cookie.secure = true;
+}
 app.use(session(sessionOption));
 app.use(passport.initialize());
 app.use(passport.session());
