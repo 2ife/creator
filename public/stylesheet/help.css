@@ -14,10 +14,10 @@ body {
 }
 
 .gameZone {
-  width: 100vw;
-  height: 50vw;
+  width: 100dvw;
+  height: 50dvw;
   background-color: black;
-  font-size: 1.25vw;
+  font-size: 1.25dvw;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
@@ -37,9 +37,9 @@ body {
 
 @media (min-aspect-ratio:2/1) {
   .gameZone {
-    width: 200vh;
-    height: 100vh;
-    font-size: 2.5vh;
+    width: 200dvh;
+    height: 100dvh;
+    font-size: 2.5dvh;
   }
 }
 
