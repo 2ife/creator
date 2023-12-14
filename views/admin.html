@@ -334,16 +334,19 @@
     <div style="display: none;" class="outOfLoadingShower"></div>
   </div>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script>
-    const docEl = document.documentElement;
-    const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-    requestFullScreen.call(docEl);
-  </script>
   {% if usersStrData %}
   <script src="/scripts/adminMain.js?version=0"></script>
   {% else %}
   <script src="/scripts/adminLogin.js?version=0"></script>
   {% endif %}
+  <script>
+    const gameZone = document.querySelector('.gameZone')
+    gameZone.addEventListener('click', () => {
+      const docEl = document.documentElement;
+      const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+      requestFullScreen.call(docEl);
+    }, { once: true })
+  </script>
 </body>
 
 </html>

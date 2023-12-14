@@ -854,15 +854,18 @@
 {% endblock %}
 
 {% block script %}
-<script>
-  const docEl = document.documentElement;
-  const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-  requestFullScreen.call(docEl);
-</script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 {% if creatorData %}
 <script src="scripts/main.js?version=0"></script>
 {% else %}
 <script src="scripts/login.js?version=0"></script>
 {% endif %}
+<script>
+  const gameZone = document.querySelector('.gameZone')
+  gameZone.addEventListener('click', () => {
+    const docEl = document.documentElement;
+    const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+    requestFullScreen.call(docEl);
+  }, { once: true })
+</script>
 {% endblock %}
