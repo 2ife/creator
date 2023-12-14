@@ -467,26 +467,6 @@
           {% endfor %}
         </div>
         {% endfor %}
-        <!-- {% for i in range(0,10) %}
-        <div class="marketItemContainer">
-          <div class="marketItemContainer_imgContainer">
-            <span class="itemId" style="display: none;"></span>
-            <span class="itemCode" style="display: none;"></span>
-            <span class="itemContainer_itemGrade"></span>
-            <img src="/images/noImg.png" alt="" class="itemContainer_itemImg">
-            <span class="itemContainer_itemAmounts"></span>
-          </div>
-          <div class="marketItemContainer_infoContainer">
-            <label class="marketItemContainer_label">개당 가격</label>
-            <span class="marketItemContainer_unitPrice"></span>
-          </div>
-          <div class="marketItemContainer_infoContainer smallInfoContainer">
-            <label class="marketItemContainer_label">수량</label>
-            <input type="text" class="marketItemContainer_amountsSetter">
-          </div>
-          <button class="marketItemContainer_buyBtn">구매</button>
-        </div>
-        {% endfor %} -->
       </div>
       <div class="searchPageController">
         <button class="searchPageController_btn" id="leftEndBtn">&lt;&lt;</button>
@@ -802,24 +782,6 @@
       </div>
     </div>
     <div style="display: none;" id="joinForm">
-      <!-- <div class="joinInputContainer">
-        <label for="join_name">이름</label>
-        <input type="text" id="join_name" name="name">
-      </div>
-      <div class="joinInputContainer">
-        <label for="join_dateOfBirth">생년월일</label>
-        <input type="text" id="join_dateOfBirth" name="dateOfBirth" placeholder="YYMMDD">
-      </div>
-      <div class="joinInputContainer">
-        <label for="join_phoneNumber">전화번호</label>
-        <input type="text" id="join_phoneNumber" name="phoneNumber">
-        <button class="joinForm_checkBtn" id="phoneChecker">인증</button>
-      </div>
-      <div class="joinInputContainer">
-        <label for="join_verificationCode">인증번호</label>
-        <input type="text" id="join_verificationCode" name="verificationCode">
-        <button class="joinForm_checkBtn" id="verificationCodeChecker">인증번호 확인</button>
-      </div> -->
       <div class="joinInputContainer">
         <label for="join_nick">닉네임</label>
         <input type="text" id="join_nick" name="nick" placeholder="2~16자 내 영어, 숫자, 한글">
@@ -860,15 +822,11 @@
 {% else %}
 <script src="scripts/login.js?version=0"></script>
 {% endif %}
-<!-- <script>
-  const gameZone = document.querySelector('.gameZone')
-  gameZone.addEventListener('click', () => {
-    const docEl = document.documentElement;
-    const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-    requestFullScreen.call(docEl);
-  }, { once: true })
-</script> -->
 <script>
-    window.scrollTo(0,1)
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      window.scrollTo(0, 1)
+    }, 100)
+  })
 </script>
 {% endblock %}

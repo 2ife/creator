@@ -341,17 +341,12 @@
   {% else %}
   <script src="/scripts/adminLogin.js?version=0"></script>
   {% endif %}
-  <!-- <script>
-    const gameZone = document.querySelector('.gameZone')
-    gameZone.addEventListener('click', () => {
-      const docEl = document.documentElement;
-      const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-      requestFullScreen.call(docEl);
-    }, { once: true })
-  </script> -->
   <script>
-    window.scrollTo(0, 1)
-
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        window.scrollTo(0, 1)
+      }, 100)
+    })
   </script>
 </body>
 
