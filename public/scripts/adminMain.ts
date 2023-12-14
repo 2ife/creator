@@ -969,9 +969,14 @@ const changeUserNick = async () => {
     } else if (fatal === false) {
       throw new Error("error");
     }
-    users[userId].nick = newNick;
-    targetUsers[userId].nick = newNick;
-    userInfoTableNickCell.innerText = newNick;
+    const {nickExist}=data
+    if(nickExist){
+      alertByModal("해당 닉네임이 이미 사용 중입니다.");
+    }else{
+      users[userId].nick = newNick;
+      targetUsers[userId].nick = newNick;
+      userInfoTableNickCell.innerText = newNick;
+    }
     newNickContainer.value = "";
     stopLoading();
   } catch (err: any) {

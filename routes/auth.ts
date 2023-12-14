@@ -24,7 +24,7 @@ router.post("/checkId", apiLimiter, isNotLoggedIn, checkId);
 router.post("/login", apiLimiter, isNotLoggedIn, login);
 router.get("/logout", apiLimiter, isLoggedIn, checkRequest, logout);
 router.post("/leave", apiLimiter, isLoggedIn, checkRequest, leave);
-router.post("/nick", apiLimiter, isLoggedIn, checkRequest, changeNick);
-router.post("/password", apiLimiter, isLoggedIn, checkRequest, changePassword);
+router.post("/changeNick", apiLimiter, isLoggedIn, checkRequest, changeNick);
+router.post("/changePassword", apiLimiter, isLoggedIn, checkRequest, changePassword);
 
 export default router;

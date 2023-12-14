@@ -1,4 +1,4 @@
-import { User, Summoner, Item, Totem } from "../models";
+import { User, Summoner, Item, Totem, sequelize } from "../models";
 import { Op } from "sequelize";
 import { RequestHandler } from "express";
 import { splitCodeToInfoWithoutInspection, ReqError } from "./common";
@@ -15,7 +15,7 @@ const renderMain: RequestHandler = async (req, res, next) => {
     const creator = await User.findOne({ where: { id: UserId } });
     if (!creator) {
       const errorObj = {
-        fatal:true,
+        fatal: true,
         status: 400,
         place: "controllers-page-renderMain",
         content: `no creator! UserId: ${UserId}`,
@@ -41,12 +41,37 @@ const renderMain: RequestHandler = async (req, res, next) => {
       );
       if (discountEndTime <= new Date()) {
         creator.marketCommisionDiscount = "0";
-        await creator.save();
       }
     }
-    const { nick, level, exp, gold, cash, marketCommisionDiscount } = creator;
+    const transaction = await sequelize.transaction();
+    try {
+      await creator.save({ transaction });
+      const lastTime = creator.updatedAt;
+      const now = new Date();
+      if (
+        lastTime.getDate() !== now.getDate() ||
+        lastTime.getMonth() !== lastTime.getMonth() ||
+        lastTime.getFullYear() !== lastTime.getFullYear()
+      ) {
+       creator.cash+=3333
+       await creator.save({transaction})
+      }
+      await transaction.commit();
+    } catch (err: any) {
+      await transaction.rollback();
+      const errorObj = {
+        status: 400,
+        place: "controllers-page-renderMain",
+        content: `renderMain transaction error! ${err}`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, err.message);
+    }
+    const { nick, loginId, level, exp, gold, cash, marketCommisionDiscount } =
+      creator;
     const expToLevelUp = 10 ** (Math.ceil(level / 10) + 3) * 5 * level;
     const creatorData = {
+      loginId,
       nick,
       level,
       exp,
@@ -144,15 +169,12 @@ const renderMain: RequestHandler = async (req, res, next) => {
       err.status = 400;
       err.place = "controllers-page-renderMain";
       err.content = "renderMainError";
-      err.user = req.user?req.user.id:null;
+      err.user = req.user ? req.user.id : null;
     }
     return next(err);
   }
 };
 // info:
 // fail:
-const renderHelp: RequestHandler = async (req, res, next) => {};
-// info:
-// fail:
-const renderProfile: RequestHandler = async (req, res, next) => {};
-export { renderMain, renderHelp, renderProfile };
+
+export { renderMain };

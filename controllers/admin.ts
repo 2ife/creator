@@ -333,6 +333,10 @@ const changeUserNick: RequestHandler = async (req, res, next) => {
       };
       throw new ReqError(errorObj, errorObj.content);
     }
+    const nickExist = await User.findOne({ where: { nick: newNick } });
+    if(nickExist){
+return    res.status(200).json({nickExist:true});
+    }
     const user = await User.findOne({ where: { id: userId } });
     if (!user) {
       const errorObj = {

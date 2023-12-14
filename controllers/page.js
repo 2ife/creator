@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderProfile = exports.renderHelp = exports.renderMain = void 0;
+exports.renderMain = void 0;
 const models_1 = require("../models");
 const sequelize_1 = require("sequelize");
 const common_1 = require("./common");
@@ -41,12 +41,35 @@ const renderMain = async (req, res, next) => {
             const discountEndTime = new Date(Number(marketDiscount.slice(colonIndex + 1)));
             if (discountEndTime <= new Date()) {
                 creator.marketCommisionDiscount = "0";
-                await creator.save();
             }
         }
-        const { nick, level, exp, gold, cash, marketCommisionDiscount } = creator;
+        const transaction = await models_1.sequelize.transaction();
+        try {
+            await creator.save({ transaction });
+            const lastTime = creator.updatedAt;
+            const now = new Date();
+            if (lastTime.getDate() !== now.getDate() ||
+                lastTime.getMonth() !== lastTime.getMonth() ||
+                lastTime.getFullYear() !== lastTime.getFullYear()) {
+                creator.cash += 3333;
+                await creator.save({ transaction });
+            }
+            await transaction.commit();
+        }
+        catch (err) {
+            await transaction.rollback();
+            const errorObj = {
+                status: 400,
+                place: "controllers-page-renderMain",
+                content: `renderMain transaction error! ${err}`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, err.message);
+        }
+        const { nick, loginId, level, exp, gold, cash, marketCommisionDiscount } = creator;
         const expToLevelUp = 10 ** (Math.ceil(level / 10) + 3) * 5 * level;
         const creatorData = {
+            loginId,
             nick,
             level,
             exp,
@@ -142,11 +165,3 @@ const renderMain = async (req, res, next) => {
     }
 };
 exports.renderMain = renderMain;
-// info:
-// fail:
-const renderHelp = async (req, res, next) => { };
-exports.renderHelp = renderHelp;
-// info:
-// fail:
-const renderProfile = async (req, res, next) => { };
-exports.renderProfile = renderProfile;

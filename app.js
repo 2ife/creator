@@ -20,12 +20,24 @@ const totem_1 = __importDefault(require("./routes/totem"));
 const item_1 = __importDefault(require("./routes/item"));
 const market_1 = __importDefault(require("./routes/market"));
 const admin_1 = __importDefault(require("./routes/admin"));
+const help_1 = __importDefault(require("./routes/help"));
 const models_1 = require("./models");
 const passport_2 = __importDefault(require("./passport"));
 const logger_1 = require("./logger");
 const helmet_1 = __importDefault(require("helmet"));
 const hpp_1 = __importDefault(require("hpp"));
+// import {createClient} from 'redis'
+// import RedisStore from 'connect-redis'
 dotenv_1.default.config();
+// const redisClient = createClient({
+//   password: process.env.REDIS_PASSWORD,
+//   socket: {
+//       host: process.env.REDIS_HOST,
+//       port: Number(process.env.REDIS_PORT)
+//   },
+//   legacyMode:true
+// });
+// redisClient.connect().catch(console.error);
 const app = (0, express_1.default)();
 // app.use(
 //   cors({
@@ -60,10 +72,7 @@ if (process.env.NODE_ENV === "production") {
 else {
     app.use((0, morgan_1.default)("dev"));
 }
-app.use(express_1.default.static(path_1.default.join(__dirname, "public")
-// ,{ maxAge: 86400000*30 }
-));
-app.use("/img", express_1.default.static(path_1.default.join(__dirname, "images"), { maxAge: 86400000 * 30 }));
+app.use(express_1.default.static(path_1.default.join(__dirname, "public"), { maxAge: 2592000000 }));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, cookie_parser_1.default)(process.env.COOKIE_SECRET));
@@ -75,10 +84,13 @@ const sessionOption = {
     cookie: {
         httpOnly: true,
         secure: false,
+        SameSite: "Lax",
     },
+    // store: new RedisStore({ client: redisClient }),
 };
 if (process.env.NODE_ENV === "production") {
     sessionOption.proxy = true;
+    sessionOption.cookie.SameSite = "None";
     sessionOption.cookie.secure = true;
 }
 app.use((0, express_session_1.default)(sessionOption));
@@ -92,6 +104,7 @@ app.use("/totem", totem_1.default);
 app.use("/item", item_1.default);
 app.use("/market", market_1.default);
 app.use("/admin", admin_1.default);
+app.use("/help", help_1.default);
 class ReqError extends Error {
     constructor(obj, msg) {
         super(msg);

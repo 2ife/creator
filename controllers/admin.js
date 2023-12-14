@@ -327,6 +327,10 @@ const changeUserNick = async (req, res, next) => {
             };
             throw new common_1.ReqError(errorObj, errorObj.content);
         }
+        const nickExist = await models_1.User.findOne({ where: { nick: newNick } });
+        if (nickExist) {
+            return res.status(200).json({ nickExist: true });
+        }
         const user = await models_1.User.findOne({ where: { id: userId } });
         if (!user) {
             const errorObj = {

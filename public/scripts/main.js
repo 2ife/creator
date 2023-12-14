@@ -171,7 +171,15 @@ const footerBtns = document.querySelectorAll(".footer_btn");
 const menuBtn = document.querySelector("#menuBtn");
 const menuBtn_listContainer = document.querySelector(".menuBtn_listContainer");
 const menuBtn_lists = menuBtn_listContainer.querySelectorAll(".menuBtn_list");
+const profileBtn = menuBtn_listContainer.querySelector("#profileBtn");
 const logoutLink = menuBtn_lists[3].querySelector("a");
+const profileModal = document.querySelector(".profileModal");
+const OutOfProfileModal = document.querySelector(".OutOfProfileModal");
+const profileModalCloseBtn = profileModal.querySelector(".profileModal_closeBtn");
+const profileNickContainer = profileModal.querySelector("#profile_nick");
+const nickChangeBtn = profileModal.querySelector("#nickChangeBtn");
+const profilePasswordContainer = profileModal.querySelector("#profile_password");
+const passwordChangeBtn = profileModal.querySelector("#passwordChangeBtn");
 const alertModal = document.querySelector(".alertModal");
 const OutOfAlertModal = document.querySelector(".OutOfAlertModal");
 const loadingShower = document.querySelector(".loadingShower");
@@ -744,7 +752,8 @@ let cashModalEventListeners = [];
 let loadInterval = null;
 let reload = false;
 class Creator {
-    constructor(level, gold, cash, marketDiscount) {
+    constructor(nick, level, gold, cash, marketDiscount) {
+        this.nick = nick;
         this.level = level;
         this.gold = gold;
         this.cash = cash;
@@ -804,9 +813,9 @@ class SellingItem extends Item {
 const getCreatorInfoAtFirst = () => {
     const firstCreatorStringInfoContainer = document.querySelector(".firstCreatorInfo");
     const firstCreatorInfo = JSON.parse(firstCreatorStringInfoContainer.innerText);
-    const { level, gold, cash, marketCommisionDiscount } = firstCreatorInfo;
+    const { nick, level, gold, cash, marketCommisionDiscount } = firstCreatorInfo;
     firstCreatorStringInfoContainer.remove();
-    return new Creator(level, gold, cash, marketCommisionDiscount);
+    return new Creator(nick, level, gold, cash, marketCommisionDiscount);
 };
 const getSummonersInfoAtFirst = () => {
     const firstSummonersStringInfoContainer = document.querySelector(".firstSummonersInfo");
@@ -868,6 +877,16 @@ const totems = getTotemsInfoAtFirst();
 const myItems = getMyItemsInfoAtFirst();
 let mySellingItems = {};
 let marketItems = [];
+const testLoginInfo = (category, text) => {
+    let tester = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
+    switch (category) {
+        case "password": {
+            tester = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/;
+            break;
+        }
+    }
+    return tester.test(text);
+};
 /* common(html) */
 const alertByModal = (msg) => {
     alertModal.innerText = msg;
@@ -1779,8 +1798,6 @@ const blessSummoner = (code) => async () => {
             }
         }
         stopLoading();
-        footerBtns[0].click();
-        openSummonerMenu(summonerIndex);
     }
     catch (err) {
         stopLoading();
@@ -2380,7 +2397,6 @@ const renderCraftExecuter = (code) => {
         craftAmountsSetter.placeholder = `1~${max}`;
         craftAmountsSetter.value = "";
         craftAmountsSetter.style.display = "block";
-        craftAmountsSetter.focus();
         craftTargetRateContainer.innerText =
             successRate === -1
                 ? "(창조자 LV 부족)"
@@ -3403,6 +3419,86 @@ const updateCreatorLevelExp = (exp) => {
         100).toFixed(2)}%)`;
     renderExpBar(creatorExpContainer);
 };
+const changeNick = async () => {
+    try {
+        if (loadInterval)
+            return;
+        const nick = profileNickContainer.value;
+        if (nick === creator.nick) {
+            profileNickContainer.value = "";
+            alertByModal("변경을 희망하는 닉네임을 입력 바랍니다!");
+            return;
+        }
+        const nickTest = testLoginInfo("nick", nick);
+        if (!nickTest) {
+            profileNickContainer.value = "";
+            alertByModal("2~16자 내 영어, 숫자, 한글로만 닉네임 변경 가능!");
+            return;
+        }
+        showLoading();
+        const res = await axios.default.post("/auth/changeNick", { newNick: nick });
+        const { data } = res;
+        const { fatal } = data;
+        if (fatal) {
+            throw new Error("fatal error");
+        }
+        else if (fatal === false) {
+            throw new Error("error");
+        }
+        const { nickExist } = data;
+        stopLoading();
+        if (nickExist) {
+            profileNickContainer.value = "";
+            alertByModal("해당 닉네임이 이미 사용 중입니다.");
+        }
+        else {
+            profileNickContainer.value = nick;
+            alertByModal("해당 닉네임으로 변경되었습니다!");
+            reload = true;
+        }
+    }
+    catch (err) {
+        stopLoading();
+        reload = true;
+        alertByModal(err.message === "fatal error"
+            ? "오류가 발생하여 재접속합니다.\n오류 조사를 위해 해당 계정이 일시적으로 정지될 수 있으니 양해 부탁드립니다."
+            : "오류가 발생하여 재접속합니다.");
+    }
+};
+const changePassword = async () => {
+    try {
+        if (loadInterval)
+            return;
+        const password = profilePasswordContainer.value;
+        const passwordTest = testLoginInfo("password", password);
+        if (!passwordTest) {
+            profilePasswordContainer.value = "";
+            alertByModal("6~16자 내 영어, 숫자로만 비밀번호 변경 가능!");
+            return;
+        }
+        showLoading();
+        const res = await axios.default.post("/auth/changePassword", { password });
+        const { data } = res;
+        const { fatal } = data;
+        if (fatal) {
+            throw new Error("fatal error");
+        }
+        else if (fatal === false) {
+            throw new Error("error");
+        }
+        stopLoading();
+        profileNickContainer.value = "";
+        alertByModal("비밀번호 변경 완료!");
+        reload = true;
+    }
+    catch (err) {
+        stopLoading();
+        reload = true;
+        alertByModal(err.message === "fatal error"
+            ? "오류가 발생하여 재접속합니다.\n오류 조사를 위해 해당 계정이 일시적으로 정지될 수 있으니 양해 부탁드립니다."
+            : "오류가 발생하여 재접속합니다.");
+    }
+};
 // addEventListener(basic)
 homeModalCloseBtn.addEventListener("click", () => {
     homeModal.style.display = "none";
@@ -3490,6 +3586,18 @@ menuBtn.addEventListener("click", () => {
         menuBtn_listContainer.style.display = "none";
     }
 });
+profileBtn.addEventListener("click", () => {
+    if (loadInterval)
+        return;
+    profileModal.style.display = "flex";
+    OutOfProfileModal.style.display = "block";
+});
+profileModalCloseBtn.addEventListener("click", () => {
+    profileModal.style.display = "none";
+    OutOfProfileModal.style.display = "none";
+});
+nickChangeBtn.addEventListener("click", changeNick);
+passwordChangeBtn.addEventListener("click", changePassword);
 alertModal.addEventListener("click", () => {
     alertModal.style.display = "none";
     OutOfAlertModal.style.display = "none";

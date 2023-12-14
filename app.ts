@@ -16,13 +16,25 @@ import totemRouter from "./routes/totem";
 import itemRouter from "./routes/item";
 import marketRouter from "./routes/market";
 import adminRouter from "./routes/admin";
+import helpRouter from "./routes/help";
 import { sequelize, Error as MyError } from "./models";
 import passportConfig from "./passport";
 import { logger } from "./logger";
 import helmet from "helmet";
 import hpp from "hpp";
+// import {createClient} from 'redis'
+// import RedisStore from 'connect-redis'
 
 dotenv.config();
+// const redisClient = createClient({
+//   password: process.env.REDIS_PASSWORD,
+//   socket: {
+//       host: process.env.REDIS_HOST,
+//       port: Number(process.env.REDIS_PORT)
+//   },
+//   legacyMode:true
+// });
+// redisClient.connect().catch(console.error);
 const app = express();
 // app.use(
 //   cors({
@@ -59,16 +71,7 @@ if (process.env.NODE_ENV === "production") {
 } else {
   app.use(morgan("dev"));
 }
-app.use(
-  express.static(
-    path.join(__dirname, "public")
-    // ,{ maxAge: 86400000*30 }
-  )
-);
-app.use(
-  "/img",
-  express.static(path.join(__dirname, "images"), { maxAge: 86400000 * 30 })
-);
+app.use(express.static(path.join(__dirname, "public"), { maxAge: 2592000000 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -80,10 +83,13 @@ const sessionOption = {
   cookie: {
     httpOnly: true,
     secure: false,
+    SameSite: "Lax",
   },
+  // store: new RedisStore({ client: redisClient }),
 };
 if (process.env.NODE_ENV === "production") {
   sessionOption.proxy = true;
+  sessionOption.cookie.SameSite = "None";
   sessionOption.cookie.secure = true;
 }
 app.use(session(sessionOption));
@@ -98,6 +104,7 @@ app.use("/totem", totemRouter);
 app.use("/item", itemRouter);
 app.use("/market", marketRouter);
 app.use("/admin", adminRouter);
+app.use("/help", helpRouter);
 
 type errorObj = {
   fatal?: boolean;

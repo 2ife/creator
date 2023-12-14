@@ -87,7 +87,7 @@ const join = async (req, res, next) => {
             };
             throw new common_1.ReqError(errorObj, err.message);
         }
-        return res.status(200).json('ok');
+        return res.status(200).json("ok");
     }
     catch (err) {
         if (!err.place) {
@@ -183,7 +183,7 @@ const login = (req, res, next) => {
             return res.status(200).json({ info: "noUser" });
         }
         if (user.lockMemo) {
-            return res.status(200).json({ info: 'lock' });
+            return res.status(200).json({ info: "lock" });
         }
         return req.login(user, (loginError) => {
             if (loginError) {
@@ -194,7 +194,7 @@ const login = (req, res, next) => {
                 authError.user = null;
                 return next(loginError);
             }
-            return res.redirect('/');
+            return res.redirect("/");
         });
     })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
 };
@@ -207,7 +207,112 @@ const logout = (req, res) => {
 exports.logout = logout;
 const leave = async (req, res, next) => { };
 exports.leave = leave;
-const changeNick = async (req, res, next) => { };
+const changeNick = async (req, res, next) => {
+    try {
+        const UserId = Number(req.user.id);
+        let { newNick } = req.body;
+        newNick = `${newNick}`;
+        const nickTester = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
+        if (!nickTester.test(newNick)) {
+            const errorObj = {
+                status: 400,
+                place: "controllers-auth-changeNick",
+                content: `weird newNick! newNick: ${newNick}`,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        const nickExist = await models_1.User.findOne({ where: { nick: newNick } });
+        if (nickExist) {
+            return res.status(200).json({ nickExist: true });
+        }
+        const user = await models_1.User.findOne({ where: { id: UserId } });
+        if (!user) {
+            const errorObj = {
+                status: 400,
+                place: "controllers-auth-changeNick",
+                content: `no creator! UserId: ${UserId}`,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        const transaction = await models_1.sequelize.transaction();
+        try {
+            user.nick = newNick;
+            await user.save({ transaction });
+            await transaction.commit();
+        }
+        catch (err) {
+            await transaction.rollback();
+            const errorObj = {
+                status: 400,
+                place: "controllers-auth-changeNick",
+                content: `changeNick transaction error! ${err}`,
+            };
+            throw new common_1.ReqError(errorObj, err.message);
+        }
+        res.status(200).json("ok");
+    }
+    catch (err) {
+        if (!err.place) {
+            err.fatal = false;
+            err.status = 400;
+            err.place = "controllers-auth-changeNick";
+            err.content = "changeNickError";
+            err.user = req.user ? req.user.id : null;
+        }
+        return next(err);
+    }
+};
 exports.changeNick = changeNick;
-const changePassword = async (req, res, next) => { };
+const changePassword = async (req, res, next) => {
+    try {
+        const UserId = Number(req.user.id);
+        let { password } = req.body;
+        password = `${password}`;
+        const nickTester = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/;
+        if (!nickTester.test(password)) {
+            const errorObj = {
+                status: 400,
+                place: "controllers-auth-changePassword",
+                content: `weird password! password: ${password}`,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        const user = await models_1.User.findOne({ where: { id: UserId } });
+        if (!user) {
+            const errorObj = {
+                status: 400,
+                place: "controllers-auth-changePassword",
+                content: `no creator! UserId: ${UserId}`,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        const hash = await bcrypt_1.default.hash(password, 12);
+        const transaction = await models_1.sequelize.transaction();
+        try {
+            user.password = hash;
+            await user.save({ transaction });
+            await transaction.commit();
+        }
+        catch (err) {
+            await transaction.rollback();
+            const errorObj = {
+                status: 400,
+                place: "controllers-auth-changePassword",
+                content: `changePassword transaction error! ${err}`,
+            };
+            throw new common_1.ReqError(errorObj, err.message);
+        }
+        res.status(200).json("ok");
+    }
+    catch (err) {
+        if (!err.place) {
+            err.fatal = false;
+            err.status = 400;
+            err.place = "controllers-auth-changePassword";
+            err.content = "changePasswordError";
+            err.user = req.user ? req.user.id : null;
+        }
+        return next(err);
+    }
+};
 exports.changePassword = changePassword;

@@ -16,6 +16,6 @@ router.post("/checkId", middlewares_1.apiLimiter, middlewares_1.isNotLoggedIn, a
 router.post("/login", middlewares_1.apiLimiter, middlewares_1.isNotLoggedIn, auth_1.login);
 router.get("/logout", middlewares_1.apiLimiter, middlewares_1.isLoggedIn, common_1.checkRequest, auth_1.logout);
 router.post("/leave", middlewares_1.apiLimiter, middlewares_1.isLoggedIn, common_1.checkRequest, auth_1.leave);
-router.post("/nick", middlewares_1.apiLimiter, middlewares_1.isLoggedIn, common_1.checkRequest, auth_1.changeNick);
-router.post("/password", middlewares_1.apiLimiter, middlewares_1.isLoggedIn, common_1.checkRequest, auth_1.changePassword);
+router.post("/changeNick", middlewares_1.apiLimiter, middlewares_1.isLoggedIn, common_1.checkRequest, auth_1.changeNick);
+router.post("/changePassword", middlewares_1.apiLimiter, middlewares_1.isLoggedIn, common_1.checkRequest, auth_1.changePassword);
 exports.default = router;

@@ -89,7 +89,7 @@ const join: RequestHandler = async (req, res, next) => {
       };
       throw new ReqError(errorObj, err.message);
     }
-    return res.status(200).json('ok');
+    return res.status(200).json("ok");
   } catch (err: any) {
     if (!err.place) {
       err.fatal = false;
@@ -121,7 +121,7 @@ const checkNick: RequestHandler = async (req, res, next) => {
     } else {
       res.json({ nickExist: false });
     }
-  } catch (err:any) {
+  } catch (err: any) {
     if (!err.place) {
       err.fatal = false;
       err.status = 400;
@@ -152,7 +152,7 @@ const checkId: RequestHandler = async (req, res, next) => {
     } else {
       res.json({ idExist: false });
     }
-  } catch (err:any) {
+  } catch (err: any) {
     if (!err.place) {
       err.fatal = false;
       err.status = 400;
@@ -176,8 +176,8 @@ const login: RequestHandler = (req, res, next) => {
     if (!user) {
       return res.status(200).json({ info: "noUser" });
     }
-    if(user.lockMemo){
-      return res.status(200).json({info:'lock'})
+    if (user.lockMemo) {
+      return res.status(200).json({ info: "lock" });
     }
     return req.login(user, (loginError) => {
       if (loginError) {
@@ -188,7 +188,7 @@ const login: RequestHandler = (req, res, next) => {
         authError.user = null;
         return next(loginError);
       }
-      return res.redirect('/');
+      return res.redirect("/");
     });
   })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
 };
@@ -198,8 +198,109 @@ const logout: RequestHandler = (req, res) => {
   });
 };
 const leave: RequestHandler = async (req, res, next) => {};
-const changeNick: RequestHandler = async (req, res, next) => {};
-const changePassword: RequestHandler = async (req, res, next) => {};
+const changeNick: RequestHandler = async (req, res, next) => {
+  try {
+    const UserId = Number(req.user!.id);
+    let { newNick } = req.body as { newNick: string };
+    newNick = `${newNick}`;
+    const nickTester = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
+    if (!nickTester.test(newNick)) {
+      const errorObj = {
+        status: 400,
+        place: "controllers-auth-changeNick",
+        content: `weird newNick! newNick: ${newNick}`,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    const nickExist = await User.findOne({ where: { nick: newNick } });
+    if (nickExist) {
+      return res.status(200).json({ nickExist: true });
+    }
+    const user = await User.findOne({ where: { id: UserId } });
+    if (!user) {
+      const errorObj = {
+        status: 400,
+        place: "controllers-auth-changeNick",
+        content: `no creator! UserId: ${UserId}`,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    const transaction = await sequelize.transaction();
+    try {
+      user.nick = newNick;
+      await user.save({ transaction });
+      await transaction.commit();
+    } catch (err: any) {
+      await transaction.rollback();
+      const errorObj = {
+        status: 400,
+        place: "controllers-auth-changeNick",
+        content: `changeNick transaction error! ${err}`,
+      };
+      throw new ReqError(errorObj, err.message);
+    }
+    res.status(200).json("ok");
+  } catch (err: any) {
+    if (!err.place) {
+      err.fatal = false;
+      err.status = 400;
+      err.place = "controllers-auth-changeNick";
+      err.content = "changeNickError";
+      err.user = req.user ? req.user.id : null;
+    }
+    return next(err);
+  }
+};
+const changePassword: RequestHandler = async (req, res, next) => {
+  try {
+    const UserId = Number(req.user!.id);
+    let { password } = req.body as { password: string };
+    password = `${password}`;
+    const nickTester = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/;
+    if (!nickTester.test(password)) {
+      const errorObj = {
+        status: 400,
+        place: "controllers-auth-changePassword",
+        content: `weird password! password: ${password}`,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    const user = await User.findOne({ where: { id: UserId } });
+    if (!user) {
+      const errorObj = {
+        status: 400,
+        place: "controllers-auth-changePassword",
+        content: `no creator! UserId: ${UserId}`,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    const hash = await bcrypt.hash(password, 12);
+    const transaction = await sequelize.transaction();
+    try {
+      user.password = hash;
+      await user.save({ transaction });
+      await transaction.commit();
+    } catch (err: any) {
+      await transaction.rollback();
+      const errorObj = {
+        status: 400,
+        place: "controllers-auth-changePassword",
+        content: `changePassword transaction error! ${err}`,
+      };
+      throw new ReqError(errorObj, err.message);
+    }
+    res.status(200).json("ok");
+  } catch (err: any) {
+    if (!err.place) {
+      err.fatal = false;
+      err.status = 400;
+      err.place = "controllers-auth-changePassword";
+      err.content = "changePasswordError";
+      err.user = req.user ? req.user.id : null;
+    }
+    return next(err);
+  }
+};
 export {
   join,
   // requestPhoneVerify,
