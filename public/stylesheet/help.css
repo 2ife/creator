@@ -1,8 +1,6 @@
 @import './reset.css';
 
 body {
-  height: -webkit-fill-available;
-  height: -moz-fill-available;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;

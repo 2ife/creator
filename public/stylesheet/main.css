@@ -3,10 +3,6 @@
 * {
   user-select: none;
 }
-body{
-  height: -webkit-fill-available;
-  height: -moz-fill-available
-}
 .screenTurnShower {
   display: none;
   z-index: 10;

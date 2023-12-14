@@ -6,7 +6,7 @@
   <title>CR8OR | Help</title>
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="stylesheet" type="text/css" href="/stylesheet/help.css?version=1">
+  <link rel="stylesheet" type="text/css" href="/stylesheet/help.css?version=2">
 </head>
 
 <body>
@@ -352,12 +352,12 @@
     ].indexOf(part)
     partIndex = partIndex === -1 ? 0 : partIndex
     navBtns[partIndex].click()
-    const gameZone = document.querySelector('.gameZone')
-    gameZone.addEventListener('click', () => {
-      const docEl = document.documentElement;
-      const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-      requestFullScreen.call(docEl);
-    }, { once: true })
+    // const gameZone = document.querySelector('.gameZone')
+    // gameZone.addEventListener('click', () => {
+    //   const docEl = document.documentElement;
+    //   const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+    //   requestFullScreen.call(docEl);
+    // }, { once: true })
   </script>
 </body>
 
