@@ -334,6 +334,11 @@
     <div style="display: none;" class="outOfLoadingShower"></div>
   </div>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    const docEl = document.documentElement;
+    const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+    requestFullScreen.call(docEl);
+  </script>
   {% if usersStrData %}
   <script src="/scripts/adminMain.js?version=0"></script>
   {% else %}

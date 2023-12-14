@@ -327,6 +327,9 @@
     </main>
   </div>
   <script>
+    const docEl = document.documentElement;
+    const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+    requestFullScreen.call(docEl);
     const navBtns = document.querySelectorAll('.nav_btn')
     const contentParts = document.querySelectorAll('.contentPart')
     navBtns.forEach((btn) => btn.addEventListener('click', () => {
