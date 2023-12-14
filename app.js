@@ -47,6 +47,7 @@ const app = (0, express_1.default)();
 // );
 (0, passport_2.default)(); // 패스포트 설정
 app.set("port", process.env.PORT || 3000);
+app.set('trust proxy',true)
 app.set("view engine", "html");
 nunjucks_1.default.configure("views", {
     express: app,
