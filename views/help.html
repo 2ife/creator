@@ -7,6 +7,8 @@
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="stylesheet" type="text/css" href="/stylesheet/help.css?version=2">
+  <link rel="apple-touch-icon" href="/images/mainImgIOS.png" />
+  <link rel="shortcut icon" href="/images/mainImgAndroid.png" />
 </head>
 
 <body>
@@ -352,6 +354,7 @@
     ].indexOf(part)
     partIndex = partIndex === -1 ? 0 : partIndex
     navBtns[partIndex].click()
+    window.scrollTo(0,1)
     // const gameZone = document.querySelector('.gameZone')
     // gameZone.addEventListener('click', () => {
     //   const docEl = document.documentElement;

@@ -92,7 +92,9 @@ video {
   vertical-align: baseline;
 }
 
-a{text-decoration: none;}
+a {
+  text-decoration: none;
+}
 
 /* HTML5 display-role reset for older browsers */
 article,
@@ -141,10 +143,14 @@ dialog {
   margin: 0;
 }
 
-html,
 body {
   width: 100dvw;
-  height: 100dvh;
+  height: 100.1dvh;
+  -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 * {
