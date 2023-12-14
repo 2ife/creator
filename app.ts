@@ -44,7 +44,7 @@ const app = express();
 // );
 passportConfig(); // 패스포트 설정
 app.set("port", process.env.PORT || 3000);
-app.set('trust proxy','13.124.237.200')
+// app.set('trust proxy','13.124.237.200')
 app.set("view engine", "html");
 nunjucks.configure("views", {
   express: app,
@@ -89,9 +89,9 @@ const sessionOption = {
   // store: new RedisStore({ client: redisClient }),
 };
 if (process.env.NODE_ENV === "production") {
-  sessionOption.proxy = true;
-  sessionOption.cookie.SameSite = "None";
-  sessionOption.cookie.secure = true;
+  // sessionOption.proxy = true;
+  // sessionOption.cookie.SameSite = "None";
+  // sessionOption.cookie.secure = true;
 }
 app.use(session(sessionOption));
 app.use(passport.initialize());
