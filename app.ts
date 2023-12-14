@@ -44,7 +44,7 @@ const app = express();
 // );
 passportConfig(); // 패스포트 설정
 app.set("port", process.env.PORT || 3000);
-app.set('trust proxy',true)
+app.set('trust proxy','13.124.237.200')
 app.set("view engine", "html");
 nunjucks.configure("views", {
   express: app,
