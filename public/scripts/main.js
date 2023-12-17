@@ -112,7 +112,7 @@ const currentPageShower = searchPageShower.querySelector("#currentPage");
 const lastPageShower = searchPageShower.querySelector("#lastPage");
 const searchRightBtn = searchPageController.querySelector("#rightBtn");
 const searchRightEndBtn = searchPageController.querySelector("#rightEndBtn");
-const marketInventoryWrapper = marketPart.querySelector('.inventoryWrapper');
+const marketInventoryWrapper = marketPart.querySelector(".inventoryWrapper");
 const marketPartInventories = marketPart.querySelectorAll(".inventory");
 const currentSaleInventory = marketPart.querySelector("#currentSaleInventory");
 const mySellingItemContainers = currentSaleInventory.querySelectorAll(".itemContainer");
@@ -2510,7 +2510,8 @@ const makeItem = async () => {
             changeItemAmounts(recipeCode, -amounts);
         }
         ingredients.forEach((ingredient) => {
-            changeItemAmounts(ingredient.code, -ingredient.amounts * (success + fail));
+            const ingredientClass = splitCodeToInfoWithoutInspection(ingredient.code).itemClass;
+            changeItemAmounts(ingredient.code, -ingredient.amounts * (ingredientClass === 5 ? success : success + fail));
         });
         openMakeModal(code, success, fail);
         resetCraftExecuter();
@@ -2692,7 +2693,7 @@ const changeToBuyMode = () => {
     marketItemList.style.display = "flex";
     searchPageController.style.display = "flex";
     marketClassNavContainer.style.display = "none";
-    marketInventoryWrapper.style.display = 'none';
+    marketInventoryWrapper.style.display = "none";
     marketPartInventories.forEach((inventory) => {
         if (inventory.style.display === "flex") {
             inventory.style.display = "none";
@@ -2707,7 +2708,7 @@ const changeToSaleMode = () => {
     marketItemList.style.display = "none";
     searchPageController.style.display = "none";
     marketClassNavContainer.style.display = "flex";
-    marketInventoryWrapper.style.display = 'flex';
+    marketInventoryWrapper.style.display = "flex";
     stopLoading();
     marketSalePartNavBtns[0].click();
 };
