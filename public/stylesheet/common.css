@@ -140,11 +140,11 @@ dialog {
 
 body {
   width: 100dvw;
-  height: 120dvh;
+  height: 200dvh;
   -ms-overflow-style: none;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   background-color: black;
 }
@@ -176,11 +176,11 @@ button:focus {
 
 .gameZone {
   position: fixed;
-  width: 100dvw;
-  height: 50dvw;
+  width: 96dvw;
+  height: 48dvw;
   background-color: white;
   font-size: 1.5vw;
-  top: calc((100dvh - 50dvw)/2);
+  top: calc((96dvh - 48dvw)/2);
 }
 
 @media (max-aspect-ratio:1/1) or (max-width:600px)or (max-height:300px) {
@@ -188,15 +188,15 @@ button:focus {
     display: block;
     width: 100dvw;
     height: 100dvh;
-    position: absolute;
+    position: fixed;
   }
 }
 
 @media (min-aspect-ratio:2/1) {
   .gameZone {
-    width: 200dvh;
-    height: 100dvh;
+    width: 192dvh;
+    height: 96dvh;
     font-size: 3dvh;
-    top: 0;
+    top: 2dvh;
   }
 }
