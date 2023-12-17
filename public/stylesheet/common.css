@@ -186,9 +186,15 @@ button:focus {
   top: calc((96dvh - 48dvw)/2);
 }
 
-@media (min-aspect-ratio:1/1) or (min-width:600px)or (min-height:300px) {
+@media (min-aspect-ratio:1/1) {
   .screenTurnShower {
     display: none;
+  }
+}
+
+@media (max-width:600px)or (max-height:300px) {
+  .screenTurnShower {
+    display: block;
   }
 }
 
