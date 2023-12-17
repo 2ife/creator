@@ -51,7 +51,7 @@ const renderMain: RequestHandler = async (req, res, next) => {
         lastTime.getMonth() !== lastTime.getMonth() ||
         lastTime.getFullYear() !== lastTime.getFullYear()
       ) {
-       creator.cash+=3333
+       creator.cash+=10000
        await creator.save({transaction})
       }
       await transaction.commit();
