@@ -258,6 +258,24 @@ const cancelSale = async (req, res, next) => {
             throw new common_1.ReqError(errorObj, errorObj.content);
         }
         const { name, korName, code, itemClass, itemGrade, itemDetail, markSpeedEnhanceGrade, markGrowthEnhanceGrade, markCreationEnhanceGrade, markFantasyEnhanceGrade, } = item;
+        const wholeMarks = await models_1.Item.findAll({
+            where: {
+                UserId,
+                name: "mark_of_summoner",
+                amounts: { [sequelize_1.Op.gte]: 1 },
+                saleCode: 0,
+            },
+        });
+        const markTotalAmounts = wholeMarks.reduce((amountsAccumulator, mark) => amountsAccumulator + mark.amounts, 0);
+        if (markTotalAmounts + cancelAmounts > 135) {
+            const errorObj = {
+                status: 400,
+                place: "controllers-mark-cancelSale",
+                content: `max mark amounts exceed!`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
         const transaction = await models_1.sequelize.transaction();
         try {
             item.amounts -= cancelAmounts;
@@ -372,6 +390,24 @@ const buyItem = async (req, res, next) => {
                 status: 400,
                 place: "controllers-market-buyItem",
                 content: `insufficient gold!`,
+                user: UserId,
+            };
+            throw new common_1.ReqError(errorObj, errorObj.content);
+        }
+        const wholeMarks = await models_1.Item.findAll({
+            where: {
+                UserId,
+                name: "mark_of_summoner",
+                amounts: { [sequelize_1.Op.gte]: 1 },
+                saleCode: 0,
+            },
+        });
+        const markTotalAmounts = wholeMarks.reduce((amountsAccumulator, mark) => amountsAccumulator + mark.amounts, 0);
+        if (markTotalAmounts + buyingAmounts > 135) {
+            const errorObj = {
+                status: 400,
+                place: "controllers-mark-buyItem",
+                content: `max mark amounts exceed!`,
                 user: UserId,
             };
             throw new common_1.ReqError(errorObj, errorObj.content);

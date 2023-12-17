@@ -1,230 +1,234 @@
 {% extends 'layout.html' %}
 
-{% block mainContent %}
-{% if creatorData %}
-<div class="gameZone">
-  <main>
-    <div class="homePart">
-      <div class="homePart_row">
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell">
-          {% if summonersData[0] %}
-          <img src="/images/summoner/summoner{{summonersData[0].grade}}_{{summonersData[0].mark}}.png" alt=""
-            class="homePart_summonerImg">
-          {% else %}
-          <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
-          {% endif %}
-        </div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell">
-          {% if summonersData[2] %}
-          <img src="/images/summoner/summoner{{summonersData[2].grade}}_{{summonersData[2].mark}}.png" alt=""
-            class="homePart_summonerImg">
-          {% else %}
-          <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
-          {% endif %}
-        </div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell">
-          {% if summonersData[4] %}
-          <img src="/images/summoner/summoner{{summonersData[4].grade}}_{{summonersData[4].mark}}.png" alt=""
-            class="homePart_summonerImg">
-          {% else %}
-          <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
-          {% endif %}
-        </div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell">
-          {% if summonersData[6] %}
-          <img src="/images/summoner/summoner{{summonersData[6].grade}}_{{summonersData[6].mark}}.png" alt=""
-            class="homePart_summonerImg">
-          {% else %}
-          <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
-          {% endif %}
-        </div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell">
-          {% if summonersData[8] %}
-          <img src="/images/summoner/summoner{{summonersData[8].grade}}_{{summonersData[8].mark}}.png" alt=""
-            class="homePart_summonerImg">
-          {% else %}
-          <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
-          {% endif %}
-        </div>
-        <div class="homePart_cell"></div>
-      </div>
-      <div class="homePart_row">
-        {% for i in range(0,15)%}
-        <div class="homePart_cell"></div>
-        {% endfor %}
-      </div>
-      <div class="homePart_row">
-        {% for i in range(0,15)%}
-        <div class="homePart_cell"></div>
-        {% endfor %}
-      </div>
-      <div class="homePart_row">
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell">
-          {% if totemsData[0].totemIndex %}
-          <img src="/images/totem/{{totemsData[0].name}}{{totemsData[0].grade}}.png" alt="" class="homePart_totemImg">
-          {% else %}
-          <img src="/images/totem/noTotem.png" alt="" class="homePart_totemImg">
-          {% endif %}
-        </div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell">
-          {% if totemsData[1].totemIndex %}
-          <img src="/images/totem/{{totemsData[1].name}}{{totemsData[1].grade}}.png" alt="" class="homePart_totemImg">
-          {% else %}
-          <img src="/images/totem/noTotem.png" alt="" class="homePart_totemImg">
-          {% endif %}
-        </div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell">
-          {% if totemsData[2].totemIndex %}
-          <img src="/images/totem/{{totemsData[2].name}}{{totemsData[2].grade}}.png" alt="" class="homePart_totemImg">
-          {% else %}
-          <img src="/images/totem/noTotem.png" alt="" class="homePart_totemImg">
-          {% endif %}
-        </div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell">
-          {% if totemsData[3].totemIndex %}
-          <img src="/images/totem/{{totemsData[3].name}}{{totemsData[3].grade}}.png" alt="" class="homePart_totemImg">
-          {% else %}
-          <img src="/images/totem/noTotem.png" alt="" class="homePart_totemImg">
-          {% endif %}
-        </div>
-        <div class="homePart_cell"></div>
-      </div>
-      <div class="homePart_row">
-        {% for i in range(0,15)%}
-        <div class="homePart_cell"></div>
-        {% endfor %}
-      </div>
-      <div class="homePart_row">
-        {% for i in range(0,15)%}
-        <div class="homePart_cell"></div>
-        {% endfor %}
-      </div>
-      <div class="homePart_row">
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell">
-          {% if summonersData[1] %}
-          <img src="/images/summoner/summoner{{summonersData[1].grade}}_{{summonersData[1].mark}}.png" alt=""
-            class="homePart_summonerImg">
-          {% else %}
-          <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
-          {% endif %}
-        </div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell">
-          {% if summonersData[3] %}
-          <img src="/images/summoner/summoner{{summonersData[3].grade}}_{{summonersData[3].mark}}.png" alt=""
-            class="homePart_summonerImg">
-          {% else %}
-          <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
-          {% endif %}
-        </div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell">
-          {% if summonersData[5] %}
-          <img src="/images/summoner/summoner{{summonersData[5].grade}}_{{summonersData[5].mark}}.png" alt=""
-            class="homePart_summonerImg">
-          {% else %}
-          <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
-          {% endif %}
-        </div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell">
-          {% if summonersData[7] %}
-          <img src="/images/summoner/summoner{{summonersData[7].grade}}_{{summonersData[7].mark}}.png" alt=""
-            class="homePart_summonerImg">
-          {% else %}
-          <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
-          {% endif %}
-        </div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell"></div>
-        <div class="homePart_cell">
-          {% if summonersData[9] %}
-          <img src="/images/summoner/summoner{{summonersData[9].grade}}_{{summonersData[9].mark}}.png" alt=""
-            class="homePart_summonerImg">
-          {% else %}
-          <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
-          {% endif %}
-        </div>
-        <div class="homePart_cell"></div>
-      </div>
-      <div class="outOfModal" id="OutOfHomeModal"></div>
-      <div class="homeModal">
-        <div class="homeModal_header">
-          <button class="homeModal_closeBtn">✖</button>
-        </div>
-        <div class="homeModal_main" id="homeModalFirstMain">
-          <img src="/images/noImg.png" alt="" class="homeModal_img">
-          <div class="homeModal_basicInfoContainer">
-            <div class="homeModal_basicInfo" id="homeModal_name">
+{% block styleSheet %}
+<link rel="stylesheet" type="text/css" href="/stylesheet/main.css?version=0.0.1">
+{% endblock %}
 
-            </div>
-            <div class="homeModal_basicInfo" id="homeModal_levelAndGrade">
+{% block content %}
+<main>
+  <div class="homePart">
+    <div class="homePart_row">
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell">
+        {% if summonersData[0] %}
+        <img src="/images/summoner/summoner{{summonersData[0].grade}}_{{summonersData[0].mark}}.png" alt=""
+          class="homePart_summonerImg">
+        {% else %}
+        <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
+        {% endif %}
+      </div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell">
+        {% if summonersData[2] %}
+        <img src="/images/summoner/summoner{{summonersData[2].grade}}_{{summonersData[2].mark}}.png" alt=""
+          class="homePart_summonerImg">
+        {% else %}
+        <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
+        {% endif %}
+      </div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell">
+        {% if summonersData[4] %}
+        <img src="/images/summoner/summoner{{summonersData[4].grade}}_{{summonersData[4].mark}}.png" alt=""
+          class="homePart_summonerImg">
+        {% else %}
+        <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
+        {% endif %}
+      </div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell">
+        {% if summonersData[6] %}
+        <img src="/images/summoner/summoner{{summonersData[6].grade}}_{{summonersData[6].mark}}.png" alt=""
+          class="homePart_summonerImg">
+        {% else %}
+        <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
+        {% endif %}
+      </div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell">
+        {% if summonersData[8] %}
+        <img src="/images/summoner/summoner{{summonersData[8].grade}}_{{summonersData[8].mark}}.png" alt=""
+          class="homePart_summonerImg">
+        {% else %}
+        <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
+        {% endif %}
+      </div>
+      <div class="homePart_cell"></div>
+    </div>
+    <div class="homePart_row">
+      {% for i in range(0,15)%}
+      <div class="homePart_cell"></div>
+      {% endfor %}
+    </div>
+    <div class="homePart_row">
+      {% for i in range(0,15)%}
+      <div class="homePart_cell"></div>
+      {% endfor %}
+    </div>
+    <div class="homePart_row">
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell">
+        {% if totemsData[0].totemIndex %}
+        <img src="/images/totem/{{totemsData[0].name}}{{totemsData[0].grade}}.png" alt="" class="homePart_totemImg">
+        {% else %}
+        <img src="/images/totem/noTotem.png" alt="" class="homePart_totemImg">
+        {% endif %}
+      </div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell">
+        {% if totemsData[1].totemIndex %}
+        <img src="/images/totem/{{totemsData[1].name}}{{totemsData[1].grade}}.png" alt="" class="homePart_totemImg">
+        {% else %}
+        <img src="/images/totem/noTotem.png" alt="" class="homePart_totemImg">
+        {% endif %}
+      </div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell">
+        {% if totemsData[2].totemIndex %}
+        <img src="/images/totem/{{totemsData[2].name}}{{totemsData[2].grade}}.png" alt="" class="homePart_totemImg">
+        {% else %}
+        <img src="/images/totem/noTotem.png" alt="" class="homePart_totemImg">
+        {% endif %}
+      </div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell">
+        {% if totemsData[3].totemIndex %}
+        <img src="/images/totem/{{totemsData[3].name}}{{totemsData[3].grade}}.png" alt="" class="homePart_totemImg">
+        {% else %}
+        <img src="/images/totem/noTotem.png" alt="" class="homePart_totemImg">
+        {% endif %}
+      </div>
+      <div class="homePart_cell"></div>
+    </div>
+    <div class="homePart_row">
+      {% for i in range(0,15)%}
+      <div class="homePart_cell"></div>
+      {% endfor %}
+    </div>
+    <div class="homePart_row">
+      {% for i in range(0,15)%}
+      <div class="homePart_cell"></div>
+      {% endfor %}
+    </div>
+    <div class="homePart_row">
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell">
+        {% if summonersData[1] %}
+        <img src="/images/summoner/summoner{{summonersData[1].grade}}_{{summonersData[1].mark}}.png" alt=""
+          class="homePart_summonerImg">
+        {% else %}
+        <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
+        {% endif %}
+      </div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell">
+        {% if summonersData[3] %}
+        <img src="/images/summoner/summoner{{summonersData[3].grade}}_{{summonersData[3].mark}}.png" alt=""
+          class="homePart_summonerImg">
+        {% else %}
+        <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
+        {% endif %}
+      </div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell">
+        {% if summonersData[5] %}
+        <img src="/images/summoner/summoner{{summonersData[5].grade}}_{{summonersData[5].mark}}.png" alt=""
+          class="homePart_summonerImg">
+        {% else %}
+        <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
+        {% endif %}
+      </div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell">
+        {% if summonersData[7] %}
+        <img src="/images/summoner/summoner{{summonersData[7].grade}}_{{summonersData[7].mark}}.png" alt=""
+          class="homePart_summonerImg">
+        {% else %}
+        <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
+        {% endif %}
+      </div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell"></div>
+      <div class="homePart_cell">
+        {% if summonersData[9] %}
+        <img src="/images/summoner/summoner{{summonersData[9].grade}}_{{summonersData[9].mark}}.png" alt=""
+          class="homePart_summonerImg">
+        {% else %}
+        <img src="/images/summoner/noSummoner.png" alt="" class="homePart_summonerImg">
+        {% endif %}
+      </div>
+      <div class="homePart_cell"></div>
+    </div>
+    <div class="outOfModal" id="OutOfHomeModal"></div>
+    <div class="homeModal">
+      <div class="homeModal_header">
+        <button class="homeModal_closeBtn">✖</button>
+      </div>
+      <div class="homeModal_main" id="homeModalFirstMain">
+        <img src="/images/noImg.png" alt="" class="homeModal_img">
+        <div class="homeModal_basicInfoContainer">
+          <div class="homeModal_basicInfo" id="homeModal_name">
 
-            </div>
           </div>
-          <div class="homeModal_expContainer">
-            <div class="expBar"></div>
-            <div class="expInfo"></div>
-          </div>
-          <div class="homeModal_infoContainer">
-            <div class="homeModal_info" id="homeModal_firstInfo"></div>
-            <div class="homeModal_info" id="homeModal_secondInfo">
+          <div class="homeModal_basicInfo" id="homeModal_levelAndGrade">
 
-            </div>
           </div>
         </div>
-        <div class="homeModal_main bigHomeModal_main" id="homeModalSecondMain" style="display: none;">
-          <img class="homeModal_img" id="homeModal_markImg" src="/images/noImg.png">
-          <div class="homeModal_basicInfoContainer" id="homeModal_markInfo">
-          </div>
-          <div class="homeModal_smallImgContainer">
-            <img class="homeModal_smallImg" id="homeModal_blessOfSpeedImg" src="/images/noImg.png">
-            <img class="homeModal_smallImg" id="homeModal_blessOfGrowthImg" src="/images/noImg.png">
-            <img class="homeModal_smallImg" id="homeModal_blessOfCreationImg" src="/images/noImg.png">
-            <img class="homeModal_smallImg" id="homeModal_blessOfFantasyImg" src="/images/noImg.png">
-          </div>
-          <div class="homeModal_basicInfoContainer" id="homeModal_blessInfo">
+        <div class="homeModal_expContainer">
+          <div class="expBar"></div>
+          <div class="expInfo"></div>
+        </div>
+        <div class="homeModal_infoContainer">
+          <div class="homeModal_info" id="homeModal_firstInfo"></div>
+          <div class="homeModal_info" id="homeModal_secondInfo">
+
           </div>
         </div>
-        <div class="homeModal_footer">
-          <button class="homeModal_btn" id="summonBtn">소환</button>
-          <button class="homeModal_btn" id="awakenBtn">각성</button>
+      </div>
+      <div class="homeModal_main bigHomeModal_main" id="homeModalSecondMain" style="display: none;">
+        <img class="homeModal_img" id="homeModal_markImg" src="/images/noImg.png">
+        <div class="homeModal_basicInfoContainer" id="homeModal_markInfo">
         </div>
+        <div class="homeModal_smallImgContainer">
+          <img class="homeModal_smallImg" id="homeModal_blessOfSpeedImg" src="/images/noImg.png">
+          <img class="homeModal_smallImg" id="homeModal_blessOfGrowthImg" src="/images/noImg.png">
+          <img class="homeModal_smallImg" id="homeModal_blessOfCreationImg" src="/images/noImg.png">
+          <img class="homeModal_smallImg" id="homeModal_blessOfFantasyImg" src="/images/noImg.png">
+        </div>
+        <div class="homeModal_basicInfoContainer" id="homeModal_blessInfo">
+        </div>
+      </div>
+      <div class="homeModal_footer">
+        <button class="homeModal_btn" id="summonBtn">소환</button>
+        <button class="homeModal_btn" id="awakenBtn">각성</button>
       </div>
     </div>
-    <div class="itemPart" style="display: none;">
-      <div class="classNav">
-        <button class="classNav_navBtn">원소</button>
-        <button class="classNav_navBtn">힘</button>
-        <button class="classNav_navBtn">목재</button>
-        <button class="classNav_navBtn">축복</button>
-        <button class="classNav_navBtn">문양</button>
-        <button class="classNav_navBtn">조합서</button>
-        <button class="classNav_navBtn">기타</button>
-      </div>
+  </div>
+  <div class="itemPart" style="display: none;">
+    <div class="classNav">
+      <button class="classNav_navBtn">원소</button>
+      <button class="classNav_navBtn">힘</button>
+      <button class="classNav_navBtn">목재</button>
+      <button class="classNav_navBtn">축복</button>
+      <button class="classNav_navBtn">문양</button>
+      <button class="classNav_navBtn">조합서</button>
+      <button class="classNav_navBtn">기타</button>
+    </div>
+
+    <div class="inventoryWrapper">
       {% set inventoryIdArr = [
       "elementInventory",
       "powerInventory",
@@ -235,9 +239,9 @@
       "etcInventory"] %}
       {% for inventory in range(0,7) %}
       <div class="inventory" id="{{inventoryIdArr[inventory]}}">
-        {% for row in range(0,6) %}
+        {% for row in range(0,9) %}
         <div class="inventory_row">
-          {% for container in range(0,20) %}
+          {% for container in range(0,15) %}
           <div class="itemContainer">
             <span class="itemCode" style="display: none;"></span>
             <span class="itemContainer_itemGrade"></span>
@@ -249,81 +253,83 @@
         {% endfor %}
       </div>
       {% endfor %}
-      <div class="itemDetailContainer" style="display: none;">
-        <span class="itemCode" style="display: none;"></span>
-        <div class="itemDetailContainer_itemName"></div>
-        <div class="itemDetailContainer_itemClass"></div>
-        <div class="itemDetailContainer_itemDescription"></div>
-        <div class="itemDetailContainer_btnContainer">
-          <button class="itemDetailContainer_btn"></button>
-        </div>
-      </div>
-      <div class="outOfModal" id="OutOfItemModal"></div>
-      <div class="itemModal">
-        <div class="itemModal_header">
-          <button class="itemModal_closeBtn">✖</button>
-        </div>
-        <div class="itemModal_main">
-          <div class="itemModal_title"></div>
-          <div class="itemModal_content">
-            <div class="itemModal_imgContainer" id="itemModalMainImgContainer">
-              <span class="itemModal_itemGrade"></span>
-              <img src="/images/noImg.png" alt="" class="itemModal_img">
-              <span class="itemContainer_itemAmounts"></span>
-            </div>
-            <img src="/images/arrow.png" alt="" class="itemModal_arrow">
-            <div class="itemModal_imgContainer" id="itemModalResultImgContainer">
-              <span class="itemModal_itemGrade"></span>
-              <img src="/images/noImg.png" alt="" class="itemModal_img">
-            </div>
-            <div class="itemModal_info"></div>
-            <div class="itemModal_amountsSetterContainer">
-              <span class="itemModal_amountsSetterLabel">수량</span>
-              <input type="number" class="itemModal_amountsSetter" min="1">
-            </div>
-          </div>
-        </div>
-        <div class="itemModal_footer">
-          <button class="itemModal_btn">확인</button>
-        </div>
+    </div>
+    <div class="itemDetailContainer" style="display: none;">
+      <span class="itemCode" style="display: none;"></span>
+      <div class="itemDetailContainer_itemName"></div>
+      <div class="itemDetailContainer_itemClass"></div>
+      <div class="itemDetailContainer_itemDescription"></div>
+      <div class="itemDetailContainer_btnContainer">
+        <button class="itemDetailContainer_btn"></button>
       </div>
     </div>
-    <div class="makePart" style="display: none;">
-      <div class="classNav">
-        <div class="classNav_navBtn" id="makeClassNavBtn">
-          <button class="classNav_nameBtn">분류</button>
-          <ul class="navList" style="display: none;">
-            <li class="navList_nav">원소</li>
-            <li class="navList_nav">힘</li>
-            <li class="navList_nav">목재</li>
-            <li class="navList_nav">축복</li>
-            <li class="navList_nav">문양</li>
-            <li class="navList_nav">기타</li>
-          </ul>
-        </div>
-        <div class="classNav_navBtn" id="makeGradeNavBtn">
-          <button class="classNav_nameBtn">등급</button>
-          <ul class="navList twelveNavList" style="display: none;">
-            <li class="navList_nav">등급 x</li>
-            <li class="navList_nav">I</li>
-            <li class="navList_nav">II</li>
-            <li class="navList_nav">III</li>
-            <li class="navList_nav">IV</li>
-            <li class="navList_nav">V</li>
-            <li class="navList_nav">VI</li>
-            <li class="navList_nav">VII</li>
-            <li class="navList_nav">VIII</li>
-            <li class="navList_nav">IX</li>
-            <li class="navList_nav">X</li>
-            <li class="navList_nav">모두</li>
-          </ul>
-        </div>
-        <button class="classNav_modeChangeBtn">문양 강화</button>
+    <div class="outOfModal" id="OutOfItemModal"></div>
+    <div class="itemModal">
+      <div class="itemModal_header">
+        <button class="itemModal_closeBtn">✖</button>
       </div>
+      <div class="itemModal_main">
+        <div class="itemModal_title"></div>
+        <div class="itemModal_content">
+          <div class="itemModal_imgContainer" id="itemModalMainImgContainer">
+            <span class="itemModal_itemGrade"></span>
+            <img src="/images/noImg.png" alt="" class="itemModal_img">
+            <span class="itemContainer_itemAmounts"></span>
+          </div>
+          <img src="/images/arrow.png" alt="" class="itemModal_arrow">
+          <div class="itemModal_imgContainer" id="itemModalResultImgContainer">
+            <span class="itemModal_itemGrade"></span>
+            <img src="/images/noImg.png" alt="" class="itemModal_img">
+          </div>
+          <div class="itemModal_info"></div>
+          <div class="itemModal_amountsSetterContainer">
+            <span class="itemModal_amountsSetterLabel">수량</span>
+            <input type="number" class="itemModal_amountsSetter" min="1">
+          </div>
+        </div>
+      </div>
+      <div class="itemModal_footer">
+        <button class="itemModal_btn">확인</button>
+      </div>
+    </div>
+  </div>
+  <div class="makePart" style="display: none;">
+    <div class="classNav">
+      <div class="classNav_navBtn" id="makeClassNavBtn">
+        <button class="classNav_nameBtn">분류</button>
+        <ul class="navList" style="display: none;">
+          <li class="navList_nav">원소</li>
+          <li class="navList_nav">힘</li>
+          <li class="navList_nav">목재</li>
+          <li class="navList_nav">축복</li>
+          <li class="navList_nav">문양</li>
+          <li class="navList_nav">기타</li>
+        </ul>
+      </div>
+      <div class="classNav_navBtn" id="makeGradeNavBtn">
+        <button class="classNav_nameBtn">등급</button>
+        <ul class="navList twelveNavList" style="display: none;">
+          <li class="navList_nav">등급 x</li>
+          <li class="navList_nav">I</li>
+          <li class="navList_nav">II</li>
+          <li class="navList_nav">III</li>
+          <li class="navList_nav">IV</li>
+          <li class="navList_nav">V</li>
+          <li class="navList_nav">VI</li>
+          <li class="navList_nav">VII</li>
+          <li class="navList_nav">VIII</li>
+          <li class="navList_nav">IX</li>
+          <li class="navList_nav">X</li>
+          <li class="navList_nav">모두</li>
+        </ul>
+      </div>
+      <button class="classNav_modeChangeBtn">문양 강화</button>
+    </div>
+    <div class="craftInventoryWrapper">
       <div class="craftInventory">
-        {% for row in range(0,6) %}
+        {% for row in range(0,8) %}
         <div class="craftInventory_row">
-          {% for container in range(0,14) %}
+          {% for container in range(0,10) %}
           <div class="craftTargetContainer">
             <span class="itemCode" style="display: none;"></span>
             <span class="itemContainer_itemGrade"></span>
@@ -333,171 +339,173 @@
         </div>
         {% endfor %}
       </div>
-      <div class="craftExecuter">
-        <div class="craftExecuter_basicInfo">
-          <div class="craftTarget_targetImgContainer">
-            <span class="itemCode" style="display: none;"></span>
-            <span class="itemContainer_itemGrade"></span>
-            <img src="/images/noImg.png" alt="" class="craftTargetImg">
-          </div>
-          <div class="craftTarget_info" id="craftTargetName"></div>
-          <div class="craftTarget_info" id="craftTargetRecipeAmounts"></div>
+    </div>
+    <div class="craftExecuter">
+      <div class="craftExecuter_basicInfo">
+        <div class="craftTarget_targetImgContainer">
+          <span class="itemCode" style="display: none;"></span>
+          <span class="itemContainer_itemGrade"></span>
+          <img src="/images/noImg.png" alt="" class="craftTargetImg">
         </div>
-        <div class="craftExecuter_description"></div>
-        <div class="craftExecuter_ingredientList">
-        </div>
-        <div class="craftExecuter_executer">
-          <input type="number" class="executer_amounts" min="1">
-          <button class="executer_craftBtn">제작</button>
-          <div class="executer_rateContainer"></div>
-        </div>
+        <div class="craftTarget_info" id="craftTargetName"></div>
+        <div class="craftTarget_info" id="craftTargetRecipeAmounts"></div>
       </div>
-      <div class="outOfModal" id="OutOfMakeModal"></div>
-      <div class="makeModal">
-        <div class="makeModal_header">
-        </div>
-        <div class="makeModal_main">
-          <div class="makeModal_title">제작 결과</div>
-          <div class="makeModal_content">
-            <div class="makeModal_imgContainer">
-              <span class="makeModal_itemGrade"></span>
-              <img src="/images/noImg.png" alt="" class="makeModal_img">
-            </div>
-            <div class="makeModal_info">
-            </div>
-          </div>
-        </div>
-        <div class="makeModal_footer">
-          <button class="makeModal_btn">확인</button>
-        </div>
+      <div class="craftExecuter_description"></div>
+      <div class="craftExecuter_ingredientList">
+      </div>
+      <div class="craftExecuter_executer">
+        <input type="number" class="executer_amounts" min="1">
+        <button class="executer_craftBtn">제작</button>
+        <div class="executer_rateContainer"></div>
       </div>
     </div>
-    <div class="marketPart" style="display: none;">
-      <div class="searchNav">
-        <input type="text" name="" id="" class="searchNav_searchTextContainer" placeholder="검색">
-        <div class="searchNav_navBtn" id="marketClassNavBtn">
-          <button class="classNav_nameBtn">분류</button>
-          <ul class="navList sevenNavList" style="display: none;">
-            <li class="navList_nav">원소</li>
-            <li class="navList_nav">힘</li>
-            <li class="navList_nav">목재</li>
-            <li class="navList_nav">축복</li>
-            <li class="navList_nav">문양</li>
-            <li class="navList_nav">조합서</li>
-            <li class="navList_nav">기타</li>
-          </ul>
-        </div>
-        <div class="searchNav_navBtn" id="marketGradeNavBtn">
-          <button class="classNav_nameBtn">등급</button>
-          <ul class="navList elevenNavList" style="display: none;">
-            <li class="navList_nav">등급 x</li>
-            <li class="navList_nav">I</li>
-            <li class="navList_nav">II</li>
-            <li class="navList_nav">III</li>
-            <li class="navList_nav">IV</li>
-            <li class="navList_nav">V</li>
-            <li class="navList_nav">VI</li>
-            <li class="navList_nav">VII</li>
-            <li class="navList_nav">VIII</li>
-            <li class="navList_nav">IX</li>
-            <li class="navList_nav">X</li>
-          </ul>
-        </div>
-        {% set markSpecificNavBtnIdArr = [
-        'marketMarkSpeedEnhanceNavBtn',
-        'marketMarkGrowthEnhanceNavBtn',
-        'marketMarkCreationEnhanceNavBtn',
-        'marketMarkFantasyEnhanceNavBtn'] %}
-        {% set markSpecificNavBtnTextArr = [
-        '신속',
-        '성장',
-        '창조',
-        '환상'] %}
-        {% set markSpecificNavTextArr = [
-        '+0',
-        '+1',
-        '+2',
-        '+3',
-        '+4',
-        '+5',
-        '모두'] %}
-        <div class="searchNav_markSpecificNav">
-          문양 상세 검색 (강화)
-          {% for navBtn in range(0,4) %}
-          <div class="markSpecificNav_navBtn" id="{{markSpecificNavBtnIdArr[navBtn]}}">
-            <button class="classNav_nameBtn">{{markSpecificNavBtnTextArr[navBtn]}}</button>
-            <ul class="navList" style="display: none;">
-              {% for nav in range(0,7) %}
-              <li class="navList_nav">{{markSpecificNavTextArr[nav]}}</li>
-              {% endfor %}
-            </ul>
+    <div class="outOfModal" id="OutOfMakeModal"></div>
+    <div class="makeModal">
+      <div class="makeModal_header">
+      </div>
+      <div class="makeModal_main">
+        <div class="makeModal_title">제작 결과</div>
+        <div class="makeModal_content">
+          <div class="makeModal_imgContainer">
+            <span class="makeModal_itemGrade"></span>
+            <img src="/images/noImg.png" alt="" class="makeModal_img">
           </div>
-          {% endfor %}
-        </div>
-        <button class="searchNav_btn" id="marketSearchBtn">검색</button>
-        <button class="searchNav_btn" id="marketInitializeBtn">초기화</button>
-        <button class="searchNav_btn" id="marketSaleModeBtn">판매</button>
-        <div class="searchNav_goldContainer">
-          <img src="/images/gold.png" alt="" class="goldContainer_goldImg">
-          <input type="string" class="goldContainer_goldValue" id="" value="{{creatorData.gold}}" readonly>
+          <div class="makeModal_info">
+          </div>
         </div>
       </div>
-      <div class="marketItemList">
-        {% for i in range(0,5) %}
-        <div class="marketItemList_row">
-          {% for j in range(0,2) %}
-          <div class="marketItemContainer">
-            <div class="marketItemContainer_imgContainer">
-              <span class="itemId" style="display: none;"></span>
-              <span class="itemCode" style="display: none;"></span>
-              <span class="itemContainer_itemGrade"></span>
-              <img src="/images/noImg.png" alt="" class="itemContainer_itemImg">
-              <span class="itemContainer_itemAmounts"></span>
-            </div>
-            <div class="marketItemContainer_infoContainer">
-              <label class="marketItemContainer_label">개당 가격</label>
-              <span class="marketItemContainer_unitPrice"></span>
-            </div>
-            <div class="marketItemContainer_infoContainer smallInfoContainer">
-              <label class="marketItemContainer_label">수량</label>
-              <input type="text" class="marketItemContainer_amountsSetter">
-            </div>
-            <button class="marketItemContainer_buyBtn">구매</button>
-          </div>
-          {% endfor %}
+      <div class="makeModal_footer">
+        <button class="makeModal_btn">확인</button>
+      </div>
+    </div>
+  </div>
+  <div class="marketPart" style="display: none;">
+    <div class="searchNav">
+      <input type="text" name="" id="" class="searchNav_searchTextContainer" placeholder="검색">
+      <div class="searchNav_navBtn">
+        <button class="classNav_nameBtn" id="marketClassNavBtn">분류</button>
+        <ul class="navList sevenNavList" style="display: none;">
+          <li class="navList_nav">원소</li>
+          <li class="navList_nav">힘</li>
+          <li class="navList_nav">목재</li>
+          <li class="navList_nav">축복</li>
+          <li class="navList_nav">문양</li>
+          <li class="navList_nav">조합서</li>
+          <li class="navList_nav">기타</li>
+        </ul>
+      </div>
+      <div class="searchNav_navBtn">
+        <button class="classNav_nameBtn" id="marketGradeNavBtn">등급</button>
+        <ul class="navList elevenNavList" style="display: none;">
+          <li class="navList_nav">등급 x</li>
+          <li class="navList_nav">I</li>
+          <li class="navList_nav">II</li>
+          <li class="navList_nav">III</li>
+          <li class="navList_nav">IV</li>
+          <li class="navList_nav">V</li>
+          <li class="navList_nav">VI</li>
+          <li class="navList_nav">VII</li>
+          <li class="navList_nav">VIII</li>
+          <li class="navList_nav">IX</li>
+          <li class="navList_nav">X</li>
+        </ul>
+      </div>
+      {% set markSpecificNavBtnIdArr = [
+      'marketMarkSpeedEnhanceNavBtn',
+      'marketMarkGrowthEnhanceNavBtn',
+      'marketMarkCreationEnhanceNavBtn',
+      'marketMarkFantasyEnhanceNavBtn'] %}
+      {% set markSpecificNavBtnTextArr = [
+      '신속',
+      '성장',
+      '창조',
+      '환상'] %}
+      {% set markSpecificNavTextArr = [
+      '+0',
+      '+1',
+      '+2',
+      '+3',
+      '+4',
+      '+5',
+      '모두'] %}
+      <div class="searchNav_markSpecificNav">
+        문양 상세 검색 (강화)
+        {% for navBtn in range(0,4) %}
+        <div class="markSpecificNav_navBtn">
+          <button class="classNav_nameBtn"
+            id="{{markSpecificNavBtnIdArr[navBtn]}}">{{markSpecificNavBtnTextArr[navBtn]}}</button>
+          <ul class="navList" style="display: none;">
+            {% for nav in range(0,7) %}
+            <li class="navList_nav">{{markSpecificNavTextArr[nav]}}</li>
+            {% endfor %}
+          </ul>
         </div>
         {% endfor %}
       </div>
-      <div class="searchPageController">
-        <button class="searchPageController_btn" id="leftEndBtn">&lt;&lt;</button>
-        <button class="searchPageController_btn" id="leftBtn">&lt;</button>
-        <div class="searchPageController_pageShower">
-          <span class="pageShower_pageContainer" id="currentPage"></span>/
-          <span class="pageShower_pageContainer" id="lastPage"></span>
-        </div>
-        <button class="searchPageController_btn" id="rightBtn">&gt;</button>
-        <button class="searchPageController_btn" id="rightEndBtn">&gt;&gt;</button>
+      <button class="searchNav_btn" id="marketSearchBtn">검색</button>
+      <button class="searchNav_btn" id="marketInitializeBtn">초기화</button>
+      <button class="searchNav_btn" id="marketSaleModeBtn">판매</button>
+      <div class="searchNav_goldContainer">
+        <img src="/images/gold.png" alt="" class="goldContainer_goldImg">
+        <input type="string" class="goldContainer_goldValue" id="" value="{{creatorData.gold}}" readonly>
       </div>
-      <div class="classNav" style="display: none;">
-        <button class="classNav_navBtn">원소</button>
-        <button class="classNav_navBtn">힘</button>
-        <button class="classNav_navBtn">목재</button>
-        <button class="classNav_navBtn">축복</button>
-        <button class="classNav_navBtn">문양</button>
-        <button class="classNav_navBtn">조합서</button>
-        <button class="classNav_navBtn">기타</button>
-        <button class="classNav_navBtn">판매 목록</button>
-        <button class="classNav_modeChangeBtn" id="marketBuyModeBtn">구매</button>
-        <div class="classNav_feeContainer">
-          <span class="feeContainer_fee"></span>
-          <span class="feeContainer_endtime"></span>
+    </div>
+    <div class="marketItemList">
+      {% for i in range(0,5) %}
+      <div class="marketItemList_row">
+        {% for j in range(0,2) %}
+        <div class="marketItemContainer">
+          <div class="marketItemContainer_imgContainer">
+            <span class="itemId" style="display: none;"></span>
+            <span class="itemCode" style="display: none;"></span>
+            <span class="itemContainer_itemGrade"></span>
+            <img src="/images/noImg.png" alt="" class="itemContainer_itemImg">
+            <span class="itemContainer_itemAmounts"></span>
+          </div>
+          <div class="marketItemContainer_infoContainer">
+            <label class="marketItemContainer_label">개당 가격</label>
+            <span class="marketItemContainer_unitPrice"></span>
+          </div>
+          <div class="marketItemContainer_infoContainer smallInfoContainer">
+            <label class="marketItemContainer_label">수량</label>
+            <input type="text" class="marketItemContainer_amountsSetter">
+          </div>
+          <button class="marketItemContainer_buyBtn">구매</button>
         </div>
-        <div class="classNav_goldContainer">
-          <img src="/images/gold.png" alt="" class="goldContainer_goldImg">
-          <input type="string" class="goldContainer_goldValue" id="" value="{{creatorData.gold}}" readonly>
-        </div>
+        {% endfor %}
       </div>
-
+      {% endfor %}
+    </div>
+    <div class="searchPageController">
+      <button class="searchPageController_btn" id="leftEndBtn">&lt;&lt;</button>
+      <button class="searchPageController_btn" id="leftBtn">&lt;</button>
+      <div class="searchPageController_pageShower">
+        <span class="pageShower_pageContainer" id="currentPage"></span>/
+        <span class="pageShower_pageContainer" id="lastPage"></span>
+      </div>
+      <button class="searchPageController_btn" id="rightBtn">&gt;</button>
+      <button class="searchPageController_btn" id="rightEndBtn">&gt;&gt;</button>
+    </div>
+    <div class="classNav" style="display: none;">
+      <button class="classNav_navBtn">원소</button>
+      <button class="classNav_navBtn">힘</button>
+      <button class="classNav_navBtn">목재</button>
+      <button class="classNav_navBtn">축복</button>
+      <button class="classNav_navBtn">문양</button>
+      <button class="classNav_navBtn">조합서</button>
+      <button class="classNav_navBtn">기타</button>
+      <button class="classNav_navBtn">판매 목록</button>
+      <button class="classNav_modeChangeBtn" id="marketBuyModeBtn">구매</button>
+      <div class="classNav_feeContainer">
+        <span class="feeContainer_fee"></span>
+        <span class="feeContainer_endtime"></span>
+      </div>
+      <div class="classNav_goldContainer">
+        <img src="/images/gold.png" alt="" class="goldContainer_goldImg">
+        <input type="string" class="goldContainer_goldValue" id="" value="{{creatorData.gold}}" readonly>
+      </div>
+    </div>
+    <div style="display: none;" class="inventoryWrapper">
       {% set saleInventoryIdArr = [
       "elementSaleInventory",
       "powerSaleInventory",
@@ -509,9 +517,9 @@
       "currentSaleInventory"] %}
       {% for inventory in range(0,8) %}
       <div style="display: none;" class="inventory" id="{{saleInventoryIdArr[inventory]}}">
-        {% for row in range(0,6) %}
+        {% for row in range(0,9) %}
         <div class="inventory_row">
-          {% for container in range(0,20) %}
+          {% for container in range(0,15) %}
           <div class="itemContainer">
             {% if inventory === 7 %}
             <span class="itemId" style="display: none;"></span>
@@ -528,305 +536,236 @@
         {% endfor %}
       </div>
       {% endfor %}
-      <div class="itemDetailContainer" style="display: none;">
-        <span class="itemId" style="display: none;"></span>
-        <span class="itemCode" style="display: none;"></span>
-        <div class="itemDetailContainer_itemName"></div>
-        <div class="itemDetailContainer_itemClass"></div>
-        <div class="itemDetailContainer_itemDescription"></div>
-        <div class="itemDetailContainer_btnContainer">
-          <button class="itemDetailContainer_btn"></button>
-        </div>
-      </div>
-      <div class="outOfModal" id="OutOfSaleModal"></div>
-      <div class="itemModal" id="saleModal">
-        <div class="itemModal_header">
-          <button class="itemModal_closeBtn">✖</button>
-        </div>
-        <div class="itemModal_main">
-          <div class="itemModal_title"></div>
-          <div class="itemModal_content">
-            <div class="itemModal_imgContainer">
-              <span class="itemModal_itemGrade"></span>
-              <img src="/images/noImg.png" alt="" class="itemModal_img">
-              <span class="itemContainer_itemAmounts"></span>
-            </div>
-            <div class="itemModal_info">
-              <div class="itemModal_setterContainer">
-                <span class="itemModal_setterLabel">수량</span>
-                <input type="number" class="itemModal_setter" id="saleModal_amountsSetter">
-              </div>
-              <div class="itemModal_setterContainer">
-                <span class="itemModal_setterLabel">개당 가격</span>
-                <input type="number" class="itemModal_setter" id="saleModal_priceSetter" min="1">
-              </div>
-              <div class="itemModal_setterContainer" id="saleModal_totalPriceShowerContainer">
-                <span class="itemModal_setterLabel">총 가격</span>
-                <div class="itemModal_totalPriceShower"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="itemModal_footer">
-          <button class="itemModal_btn"></button>
-        </div>
+    </div>
+    <div class="itemDetailContainer" style="display: none;">
+      <span class="itemId" style="display: none;"></span>
+      <span class="itemCode" style="display: none;"></span>
+      <div class="itemDetailContainer_itemName"></div>
+      <div class="itemDetailContainer_itemClass"></div>
+      <div class="itemDetailContainer_itemDescription"></div>
+      <div class="itemDetailContainer_btnContainer">
+        <button class="itemDetailContainer_btn"></button>
       </div>
     </div>
-    <div class="cashPart" style="display: none;">
-      <div class="cashItemList">
-        {% set RomeGradeArr = ["I",
-        "II",
-        "III",
-        "IV",
-        "V",
-        "VI",
-        "VII",
-        "VIII",
-        "IX",
-        "X"] %}
-        {% set cashItemPriceArr = ['100', '170', '280', '470', '780', '1,290', '2,150', '3,590',
-        '5,990', '10,000'] %}
-        <div class="cashItemList_row">
-          {% for i in range(0,10) %}
-          <div class="cashItemList_cashItemContainer">
-            <span class="itemCode" style="display: none;">4_{{i+1}}_5</span>
-            <div class="cashItemContainer_imgContainer">
-              <span class="itemContainer_itemGrade">{{RomeGradeArr[i]}}</span>
-              <img src="/images/item/first_bless_of_speed.png" alt="" class="cashItemContainer_img">
-            </div>
-            <div class="cashItemContainer_priceShower">{{cashItemPriceArr[i]}}</div>
+    <div class="outOfModal" id="OutOfSaleModal"></div>
+    <div class="itemModal" id="saleModal">
+      <div class="itemModal_header">
+        <button class="itemModal_closeBtn">✖</button>
+      </div>
+      <div class="itemModal_main">
+        <div class="itemModal_title"></div>
+        <div class="itemModal_content">
+          <div class="itemModal_imgContainer">
+            <span class="itemModal_itemGrade"></span>
+            <img src="/images/noImg.png" alt="" class="itemModal_img">
+            <span class="itemContainer_itemAmounts"></span>
           </div>
-          {% endfor %}
-        </div>
-        <div class="cashItemList_row">
-          {% for i in range(0,10)%}
-          <div class="cashItemList_cashItemContainer">
-            <span class="itemCode" style="display: none;">4_{{i+1}}_6</span>
-            <div class="cashItemContainer_imgContainer">
-              <span class="itemContainer_itemGrade">{{RomeGradeArr[i]}}</span>
-              <img src="/images/item/first_bless_of_growth.png" alt="" class="cashItemContainer_img">
+          <div class="itemModal_info">
+            <div class="itemModal_setterContainer">
+              <span class="itemModal_setterLabel">수량</span>
+              <input type="number" class="itemModal_setter" id="saleModal_amountsSetter">
             </div>
-            <div class="cashItemContainer_priceShower">{{cashItemPriceArr[i]}}</div>
-          </div>
-          {% endfor %}
-        </div>
-        <div class="cashItemList_row">
-          {% for i in range(0,10)%}
-          <div class="cashItemList_cashItemContainer">
-            <span class="itemCode" style="display: none;">4_{{i+1}}_7</span>
-            <div class="cashItemContainer_imgContainer">
-              <span class="itemContainer_itemGrade">{{RomeGradeArr[i]}}</span>
-              <img src="/images/item/first_bless_of_creation.png" alt="" class="cashItemContainer_img">
+            <div class="itemModal_setterContainer">
+              <span class="itemModal_setterLabel">개당 가격</span>
+              <input type="number" class="itemModal_setter" id="saleModal_priceSetter" min="1">
             </div>
-            <div class="cashItemContainer_priceShower">{{cashItemPriceArr[i]}}</div>
-          </div>
-          {% endfor %}
-        </div>
-        <div class="cashItemList_row">
-          {% for i in range(0,10)%}
-          <div class="cashItemList_cashItemContainer">
-            <span class="itemCode" style="display: none;">7_{{i+1}}_2</span>
-            <div class="cashItemContainer_imgContainer">
-              <span class="itemContainer_itemGrade">{{RomeGradeArr[i]}}</span>
-              <img src="/images/item/market_commission_discount_ticket.png" alt="" class="cashItemContainer_img">
+            <div class="itemModal_setterContainer" id="saleModal_totalPriceShowerContainer">
+              <span class="itemModal_setterLabel">총 가격</span>
+              <div class="itemModal_totalPriceShower"></div>
             </div>
-            <div class="cashItemContainer_priceShower">{{cashItemPriceArr[i]}}</div>
           </div>
-          {% endfor %}
         </div>
       </div>
-      <div class="cashContainer">
-        <img src="/images/cash.png" class="cashContainer_cashImg">
-        <input type="text" class="cashContainer_cashValue" value="{{creatorData.cash}}" readonly>
+      <div class="itemModal_footer">
+        <button class="itemModal_btn"></button>
       </div>
-      <div class="cashChargeInfo">
-        <p> 🌜 캐시 획득 방법 🌛
-          <br>
-          매일 출석 시, 3333 캐시 자동 충전됩니다!
-          <br>
-          추가로 캐시가 필요한 경우, <a href="/help/inquiry">문의</a> 주시길 바랍니다.
-          <!-- 939302-00-448094(국민) 계좌 이체 ⇒ 010-4592-3497 문자 전송 (문자 형식: ID/금액)<br>
+    </div>
+  </div>
+  <div class="cashPart" style="display: none;">
+    <div class="cashItemList">
+      {% set RomeGradeArr = ["I",
+      "II",
+      "III",
+      "IV",
+      "V",
+      "VI",
+      "VII",
+      "VIII",
+      "IX",
+      "X"] %}
+      {% set cashItemPriceArr = ['100', '170', '280', '470', '780', '1,290', '2,150', '3,590',
+      '5,990', '10,000'] %}
+      <div class="cashItemList_row">
+        {% for i in range(0,10) %}
+        <div class="cashItemList_cashItemContainer">
+          <span class="itemCode" style="display: none;">4_{{i+1}}_5</span>
+          <div class="cashItemContainer_imgContainer">
+            <span class="itemContainer_itemGrade">{{RomeGradeArr[i]}}</span>
+            <img src="/images/item/first_bless_of_speed.png" alt="" class="cashItemContainer_img">
+          </div>
+          <div class="cashItemContainer_priceShower">{{cashItemPriceArr[i]}}</div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="cashItemList_row">
+        {% for i in range(0,10)%}
+        <div class="cashItemList_cashItemContainer">
+          <span class="itemCode" style="display: none;">4_{{i+1}}_6</span>
+          <div class="cashItemContainer_imgContainer">
+            <span class="itemContainer_itemGrade">{{RomeGradeArr[i]}}</span>
+            <img src="/images/item/first_bless_of_growth.png" alt="" class="cashItemContainer_img">
+          </div>
+          <div class="cashItemContainer_priceShower">{{cashItemPriceArr[i]}}</div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="cashItemList_row">
+        {% for i in range(0,10)%}
+        <div class="cashItemList_cashItemContainer">
+          <span class="itemCode" style="display: none;">4_{{i+1}}_7</span>
+          <div class="cashItemContainer_imgContainer">
+            <span class="itemContainer_itemGrade">{{RomeGradeArr[i]}}</span>
+            <img src="/images/item/first_bless_of_creation.png" alt="" class="cashItemContainer_img">
+          </div>
+          <div class="cashItemContainer_priceShower">{{cashItemPriceArr[i]}}</div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="cashItemList_row">
+        {% for i in range(0,10)%}
+        <div class="cashItemList_cashItemContainer">
+          <span class="itemCode" style="display: none;">7_{{i+1}}_2</span>
+          <div class="cashItemContainer_imgContainer">
+            <span class="itemContainer_itemGrade">{{RomeGradeArr[i]}}</span>
+            <img src="/images/item/market_commission_discount_ticket.png" alt="" class="cashItemContainer_img">
+          </div>
+          <div class="cashItemContainer_priceShower">{{cashItemPriceArr[i]}}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="cashContainer">
+      <img src="/images/cash.png" class="cashContainer_cashImg">
+      <input type="text" class="cashContainer_cashValue" value="{{creatorData.cash}}" readonly>
+    </div>
+    <div class="cashChargeInfo">
+      <p> 🌜 캐시 획득 방법 🌛
+        <br>
+        매일 출석 시, 3333 캐시 자동 충전됩니다!
+        <br>
+        추가로 캐시가 필요한 경우, <a href="/help/inquiry">문의</a> 주시길 바랍니다.
+        <!-- 939302-00-448094(국민) 계좌 이체 ⇒ 010-4592-3497 문자 전송 (문자 형식: ID/금액)<br>
   이체 금액의 5배만큼 캐시 획득 (1,000원 단위로만 충전 가능합니다!) -->
-        </p>
+      </p>
+    </div>
+    <div class="itemDetailContainer" style="display: none;">
+      <span class="itemId" style="display: none;"></span>
+      <span class="itemCode" style="display: none;"></span>
+      <div class="itemDetailContainer_itemName"></div>
+      <div class="itemDetailContainer_itemClass"></div>
+      <div class="itemDetailContainer_itemDescription"></div>
+      <div class="itemDetailContainer_btnContainer">
+        <button class="itemDetailContainer_btn"></button>
       </div>
-      <div class="itemDetailContainer" style="display: none;">
-        <span class="itemId" style="display: none;"></span>
-        <span class="itemCode" style="display: none;"></span>
-        <div class="itemDetailContainer_itemName"></div>
-        <div class="itemDetailContainer_itemClass"></div>
-        <div class="itemDetailContainer_itemDescription"></div>
-        <div class="itemDetailContainer_btnContainer">
-          <button class="itemDetailContainer_btn"></button>
-        </div>
+    </div>
+    <div class="outOfModal" id="OutOfCashModal"></div>
+    <div class="itemModal" id="cashModal">
+      <div class="itemModal_header">
+        <button class="itemModal_closeBtn">✖</button>
       </div>
-      <div class="outOfModal" id="OutOfCashModal"></div>
-      <div class="itemModal" id="cashModal">
-        <div class="itemModal_header">
-          <button class="itemModal_closeBtn">✖</button>
-        </div>
-        <div class="itemModal_main">
-          <div class="itemModal_title">아이템 구매</div>
-          <div class="itemModal_content">
-            <div class="itemModal_imgContainer">
-              <span class="itemModal_itemGrade"></span>
-              <img src="/images/noImg.png" alt="" class="itemModal_img">
+      <div class="itemModal_main">
+        <div class="itemModal_title">아이템 구매</div>
+        <div class="itemModal_content">
+          <div class="itemModal_imgContainer">
+            <span class="itemModal_itemGrade"></span>
+            <img src="/images/noImg.png" alt="" class="itemModal_img">
+          </div>
+          <div class="itemModal_info">
+            <div class="itemModal_setterContainer">
+              <span class="itemModal_setterLabel">수량</span>
+              <input type="number" class="itemModal_setter" id="cashModal_amountsSetter" min="1" max="1000">
             </div>
-            <div class="itemModal_info">
-              <div class="itemModal_setterContainer">
-                <span class="itemModal_setterLabel">수량</span>
-                <input type="number" class="itemModal_setter" id="cashModal_amountsSetter" min="1" max="1000">
-              </div>
-              <div class="itemModal_setterContainer">
-                <span class="itemModal_setterLabel">개당 가격</span>
-                <input type="number" class="itemModal_setter" id="cashModal_priceSetter" readonly>
-              </div>
-              <div class="itemModal_setterContainer" id="cashModal_totalPriceShowerContainer">
-                <span class="itemModal_setterLabel">총 가격</span>
-                <div class="itemModal_totalPriceShower"></div>
-              </div>
+            <div class="itemModal_setterContainer">
+              <span class="itemModal_setterLabel">개당 가격</span>
+              <input type="number" class="itemModal_setter" id="cashModal_priceSetter" readonly>
+            </div>
+            <div class="itemModal_setterContainer" id="cashModal_totalPriceShowerContainer">
+              <span class="itemModal_setterLabel">총 가격</span>
+              <div class="itemModal_totalPriceShower"></div>
             </div>
           </div>
         </div>
-        <div class="itemModal_footer">
-          <button class="itemModal_btn">구매</button>
-        </div>
+      </div>
+      <div class="itemModal_footer">
+        <button class="itemModal_btn">구매</button>
       </div>
     </div>
-  </main>
-  <footer>
-    <div class="footer_creatorInfoContainer">
-      <div class="footer_creatorInfo" id="creatorNick">{{creatorData.nick}}</div>
-      <div class="footer_creatorInfo" id="creatorLevel">LV. {{creatorData.level}}</div>
-      <div class="footer_creatorExpContainer">
-        <div class="expBar"></div>
-        <div class="expInfo">{{creatorData.exp}} ({{creatorData.expPercent}}%)</div>
-      </div>
+  </div>
+</main>
+<footer>
+  <div class="footer_creatorInfoContainer">
+    <div class="footer_creatorInfo" id="creatorNick">{{creatorData.nick}}</div>
+    <div class="footer_creatorInfo" id="creatorLevel">LV. {{creatorData.level}}</div>
+    <div class="footer_creatorExpContainer">
+      <div class="expBar"></div>
+      <div class="expInfo">{{creatorData.exp}} ({{creatorData.expPercent}}%)</div>
     </div>
-    <div class="footer_btnContainer">
-      <button class="footer_btn" id="spaceNavBtn"></button>
-      <button class="footer_btn" id="itemNavBtn"></button>
-      <button class="footer_btn" id="makeNavBtn"></button>
-      <button class="footer_btn" id="marketNavBtn"></button>
-      <button class="footer_btn" id="cashNavBtn"></button>
-      <button class="footer_menuBtn" id="menuBtn">
-        <ul class="menuBtn_listContainer" style="display: none;">
-          <li class="menuBtn_list" id="profileBtn">프로필</li>
-          <li class="menuBtn_list"><a href="/help/tutorial">백과사전</a></li>
-          <li class="menuBtn_list"><a href="/help/inquiry">문의</a></li>
-          <li class="menuBtn_list"><a href="/auth/logout">로그아웃</a></li>
-        </ul>
-      </button>
+  </div>
+  <div class="footer_btnContainer">
+    <button class="footer_btn" id="spaceNavBtn"></button>
+    <button class="footer_btn" id="itemNavBtn"></button>
+    <button class="footer_btn" id="makeNavBtn"></button>
+    <button class="footer_btn" id="marketNavBtn"></button>
+    <button class="footer_btn" id="cashNavBtn"></button>
+    <button class="footer_menuBtn" id="menuBtn">
+      <ul class="menuBtn_listContainer" style="display: none;">
+        <li class="menuBtn_list" id="profileBtn">프로필</li>
+        <li class="menuBtn_list"><a href="/help/tutorial">백과사전</a></li>
+        <li class="menuBtn_list"><a href="/help/inquiry">문의</a></li>
+        <li class="menuBtn_list"><a href="/auth/logout">로그아웃</a></li>
+      </ul>
+    </button>
 
-    </div>
-  </footer>
-  <div class="firstCreatorInfo" style="display: none;">
-    {{creatorStrData}}
   </div>
-  <div class="firstSummonersInfo" style="display: none;">
-    {{summonersStrData}}
-  </div>
-  <div class="firstTotemsInfo" style="display: none;">
-    {{totemsStrData}}
-  </div>
-  <div class="firstItemInfo" style="display: none;">
-    {{itemsStrData}}
-  </div>
-  <div style="display: none;" class="profileModal">
-    <div class="profileModal_header">
-      <button class="profileModal_closeBtn">✖</button>
-    </div>
-    <div class="profileInputContainer">
-      <label for="profile_nick">닉네임</label>
-      <input type="text" id="profile_nick" name="nick" value="{{creatorData.nick}}">
-      <button id="nickChangeBtn">변경</button>
-    </div>
-    <div class="profileInputContainer">
-      <label for="profile_id">ID</label>
-      <input type="text" id="profile_id" name="id" value="{{creatorData.loginId}}" readonly>
-    </div>
-    <div class="profileInputContainer">
-      <label for="profile_password">비밀번호</label>
-      <input type="text" id="profile_password" name="password" placeholder="6~16자 내 영어,숫자">
-      <button id="passwordChangeBtn">변경</button>
-    </div>
-  </div>
-  <div style="display: none;" class="OutOfProfileModal"></div>
-  <div style="display: none;" class="alertModal"></div>
-  <div style="display: none;" class="OutOfAlertModal"></div>
-  <div style="display: none;" class="loadingShower">로딩 중</div>
-  <div style="display: none;" class="outOfLoadingShower"></div>
+</footer>
+<div class="firstCreatorInfo" style="display: none;">
+  {{creatorStrData}}
 </div>
-<div class="screenTurnShower">CR8OR</div>
-
-{% else %}
-<div class="gameZone">
-  <header>
-    <img src="/images/cr8or.png" alt="" class="title">
-    <a href="/help/tutorial">
-      <img src="/images/help.png" alt="" class="helpImg">
-    </a>
-  </header>
-  <main>
-    <div id="loginForm">
-      <div class="loginInputContainer">
-        <label for="login_id">ID</label>
-        <input type="text" id="login_id" name="id">
-      </div>
-      <div class="loginInputContainer">
-        <label for="login_password">비밀번호</label>
-        <input type="password" id="login_password" name="password">
-      </div>
-      <div class="form_footerBtnContainer">
-        <button id="loginBtn">로그인</button>
-        <button class="modeChangeBtn">회원가입</button>
-      </div>
-    </div>
-    <div style="display: none;" id="joinForm">
-      <div class="joinInputContainer">
-        <label for="join_nick">닉네임</label>
-        <input type="text" id="join_nick" name="nick" placeholder="2~16자 내 영어, 숫자, 한글">
-        <button class="joinForm_checkBtn" id="nickOverlapChecker">중복 검사</button>
-      </div>
-      <div class="joinInputContainer">
-        <label for="join_id">ID</label>
-        <input type="text" id="join_id" name="id" placeholder="3~16자 내 영어, 숫자">
-        <button class="joinForm_checkBtn" id="idOverlapChecker">중복 검사</button>
-      </div>
-      <div class="joinInputContainer">
-        <label for="join_password">비밀번호</label>
-        <input type="password" id="join_password" name="password" placeholder="6~16자 내 영어, 숫자">
-      </div>
-      <div class="joinInputContainer">
-        <label for="join_passwordCheck">비밀번호 확인</label>
-        <input type="password" id="join_passwordCheck" name="passwordCheck">
-      </div>
-      <div class="form_footerBtnContainer">
-        <button id="joinBtn">회원가입</button>
-        <button class="modeChangeBtn">취소</button>
-      </div>
-    </div>
-  </main>
-  <div style="display: none;" class="alertModal"></div>
-  <div style="display: none;" class="OutOfAlertModal"></div>
-  <div style="display: none;" class="loadingShower">로딩 중</div>
-  <div style="display: none;" class="outOfLoadingShower"></div>
+<div class="firstSummonersInfo" style="display: none;">
+  {{summonersStrData}}
 </div>
-<div class="screenTurnShower">CR8OR</div>
-{% endif %}
+<div class="firstTotemsInfo" style="display: none;">
+  {{totemsStrData}}
+</div>
+<div class="firstItemInfo" style="display: none;">
+  {{itemsStrData}}
+</div>
+<div style="display: none;" class="profileModal">
+  <div class="profileModal_header">
+    <button class="profileModal_closeBtn">✖</button>
+  </div>
+  <div class="profileInputContainer">
+    <label for="profile_nick">닉네임</label>
+    <input type="text" id="profile_nick" name="nick" value="{{creatorData.nick}}">
+    <button id="nickChangeBtn">변경</button>
+  </div>
+  <div class="profileInputContainer">
+    <label for="profile_id">ID</label>
+    <input type="text" id="profile_id" name="id" value="{{creatorData.loginId}}" readonly>
+  </div>
+  <div class="profileInputContainer">
+    <label for="profile_password">비밀번호</label>
+    <input type="text" id="profile_password" name="password" placeholder="6~16자 내 영어,숫자">
+    <button id="passwordChangeBtn">변경</button>
+  </div>
+</div>
+<div style="display: none;" class="OutOfProfileModal"></div>
+<div style="display: none;" class="alertModal"></div>
+<div style="display: none;" class="OutOfAlertModal"></div>
+<div style="display: none;" class="loadingShower">로딩 중</div>
+<div style="display: none;" class="outOfLoadingShower"></div>
 {% endblock %}
 
 {% block script %}
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-{% if creatorData %}
-<script src="scripts/main.js?version=0"></script>
-{% else %}
-<script src="scripts/login.js?version=0"></script>
-{% endif %}
-<script>
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      window.scrollTo(0, 1)
-    }, 100)
-  })
-</script>
+<script src="scripts/main.js?version=0.0.1"></script>
 {% endblock %}

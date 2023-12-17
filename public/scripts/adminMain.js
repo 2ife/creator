@@ -993,7 +993,11 @@ window.addEventListener("keydown", () => {
     }
 });
 /* first func */
-usersStrDataContainer.remove();
-errorsStrDataContainer.remove();
-renderMainTable("user");
-renderMainTable("error");
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        usersStrDataContainer.remove();
+        errorsStrDataContainer.remove();
+        renderMainTable("user");
+        renderMainTable("error");
+    }, 100);
+});

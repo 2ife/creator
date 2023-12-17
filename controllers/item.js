@@ -207,7 +207,7 @@ const makeItem = async (req, res, next) => {
                 },
             });
             const markTotalAmounts = wholeMarks.reduce((amountsAccumulator, mark) => amountsAccumulator + mark.amounts, 0);
-            if (markTotalAmounts + amounts > 120) {
+            if (markTotalAmounts + amounts > 135) {
                 const errorObj = {
                     status: 400,
                     place: "controllers-item-makeItem",
@@ -342,7 +342,12 @@ const makeItem = async (req, res, next) => {
             for (let i = 0; i < ingredients.length; i++) {
                 const { ingredientAmounts } = ingredients[i];
                 const targetIngredient = myIngredients[i];
-                targetIngredient.amounts -= amounts * ingredientAmounts;
+                if (targetIngredient.itemClass === 5) {
+                    targetIngredient.amounts -= success * ingredientAmounts;
+                }
+                else {
+                    targetIngredient.amounts -= amounts * ingredientAmounts;
+                }
                 if (targetIngredient.amounts) {
                     await targetIngredient.save({ transaction });
                 }

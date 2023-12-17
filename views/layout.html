@@ -4,18 +4,29 @@
 <head>
   <meta charset="UTF-8">
   <title>CR8OR</title>
-  <meta name="viewport" content="width=device-width, user-scalable=no">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="stylesheet" type="text/css" href="/stylesheet/main.css?version=2">
+  <link rel="stylesheet" type="text/css" href="/stylesheet/common.css?version=0.0.1">
+  {% block styleSheet %}
+  {% endblock %}
   <link rel="apple-touch-icon" href="/images/mainImgIOS.png" />
   <link rel="shortcut icon" href="/images/mainImgAndroid.png" />
 </head>
 
 <body>
-  {% block mainContent %}
-  {% endblock %}
+  <div class="gameZone">
+    {% block content %}
+    {% endblock %}
+  </div>
+  <img src="/images/screenTurnShower.png" alt="" class="screenTurnShower">
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   {% block script %}
   {% endblock %}
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        window.scrollTo(0, 100)
+      }, 100)
+    })
+  </script>
 </body>
 
 </html>

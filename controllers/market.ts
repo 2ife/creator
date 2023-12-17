@@ -280,6 +280,27 @@ const cancelSale: RequestHandler = async (req, res, next) => {
       markCreationEnhanceGrade,
       markFantasyEnhanceGrade,
     } = item;
+    const wholeMarks = await Item.findAll({
+      where: {
+        UserId,
+        name: "mark_of_summoner",
+        amounts: { [Op.gte]: 1 },
+        saleCode: 0,
+      },
+    });
+    const markTotalAmounts = wholeMarks.reduce(
+      (amountsAccumulator, mark) => amountsAccumulator + mark.amounts,
+      0
+    );
+    if (markTotalAmounts + cancelAmounts > 135) {
+      const errorObj = {
+        status: 400,
+        place: "controllers-mark-cancelSale",
+        content: `max mark amounts exceed!`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
     const transaction = await sequelize.transaction();
     try {
       item.amounts -= cancelAmounts;
@@ -406,6 +427,27 @@ const buyItem: RequestHandler = async (req, res, next) => {
         status: 400,
         place: "controllers-market-buyItem",
         content: `insufficient gold!`,
+        user: UserId,
+      };
+      throw new ReqError(errorObj, errorObj.content);
+    }
+    const wholeMarks = await Item.findAll({
+      where: {
+        UserId,
+        name: "mark_of_summoner",
+        amounts: { [Op.gte]: 1 },
+        saleCode: 0,
+      },
+    });
+    const markTotalAmounts = wholeMarks.reduce(
+      (amountsAccumulator, mark) => amountsAccumulator + mark.amounts,
+      0
+    );
+    if (markTotalAmounts + buyingAmounts > 135) {
+      const errorObj = {
+        status: 400,
+        place: "controllers-mark-buyItem",
+        content: `max mark amounts exceed!`,
         user: UserId,
       };
       throw new ReqError(errorObj, errorObj.content);

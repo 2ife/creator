@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 /* html */
 const userNavBtn = document.querySelector("#userNavBtn") as HTMLButtonElement;
 const errorNavBtn = document.querySelector("#errorNavBtn") as HTMLButtonElement;
@@ -400,8 +399,9 @@ const clickSearchNavBtn = (part: "user" | "error") => (event: MouseEvent) => {
   const target = event.target as
     | HTMLUListElement
     | HTMLLIElement
-    | HTMLButtonElement|HTMLDivElement
-  const nameBtn = part === "user" ?userSearchNameBtn:errorSearchNameBtn
+    | HTMLButtonElement
+    | HTMLDivElement;
+  const nameBtn = part === "user" ? userSearchNameBtn : errorSearchNameBtn;
   const navList = part === "user" ? userSearchNavList : errorSearchNavList;
   if (target === nameBtn) {
     if (navList.style.display === "none") {
@@ -969,10 +969,10 @@ const changeUserNick = async () => {
     } else if (fatal === false) {
       throw new Error("error");
     }
-    const {nickExist}=data
-    if(nickExist){
+    const { nickExist } = data;
+    if (nickExist) {
       alertByModal("해당 닉네임이 이미 사용 중입니다.");
-    }else{
+    } else {
       users[userId].nick = newNick;
       targetUsers[userId].nick = newNick;
       userInfoTableNickCell.innerText = newNick;
@@ -1290,7 +1290,11 @@ window.addEventListener("keydown", () => {
 });
 
 /* first func */
-usersStrDataContainer.remove();
-errorsStrDataContainer.remove();
-renderMainTable("user");
-renderMainTable("error");
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    usersStrDataContainer.remove();
+    errorsStrDataContainer.remove();
+    renderMainTable("user");
+    renderMainTable("error");
+  }, 100);
+});

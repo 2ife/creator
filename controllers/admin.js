@@ -13,9 +13,7 @@ dotenv_1.default.config();
 const renderAdmin = async (req, res, next) => {
     try {
         if (!req.user) {
-            return res.render("admin", {
-                title: "Admin",
-            });
+            return res.render("adminLogin");
         }
         const userId = Number(req.user.id);
         const creator = await models_1.User.findOne({ where: { id: userId } });
@@ -55,8 +53,7 @@ const renderAdmin = async (req, res, next) => {
             const { id, fatal, user, status, place, content } = error;
             errorsData[id] = { id, fatal, user, status, place, content };
         }
-        return res.render("admin", {
-            title: "Manager",
+        return res.render("adminMain", {
             usersStrData: JSON.stringify(usersData),
             errorsStrData: JSON.stringify(errorsData),
         });

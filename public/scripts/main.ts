@@ -309,6 +309,7 @@ const searchRightBtn = searchPageController.querySelector(
 const searchRightEndBtn = searchPageController.querySelector(
   "#rightEndBtn"
 ) as HTMLButtonElement;
+const marketInventoryWrapper = marketPart.querySelector('.inventoryWrapper') as HTMLDivElement
 const marketPartInventories = marketPart.querySelectorAll(
   ".inventory"
 ) as NodeListOf<HTMLDivElement>;
@@ -1127,6 +1128,32 @@ const getItemImgSrc = (code: string) => {
     itemClass === 5 ? itemGrade : ""
   }.png`;
 };
+
+const sortItems = (items: { [key: string]: Item | Mark }) => {
+  return Object.fromEntries(
+    Object.entries(items).sort((a, b) => {
+      if (a[1].itemGrade === b[1].itemGrade) {
+        if (a[1].itemClass === 5) {
+          const aGradeSum = getMarkEnhanceGrade(a[1].itemDetail).reduce(
+            (a, b) => {
+              return a + b;
+            },
+            0
+          );
+          const bGradeSum = getMarkEnhanceGrade(b[1].itemDetail).reduce(
+            (a, b) => {
+              return a + b;
+            },
+            0
+          );
+          return aGradeSum - bGradeSum;
+        }
+        return Number(a[1].itemDetail) - Number(b[1].itemDetail);
+      }
+      return a[1].itemGrade - b[1].itemGrade;
+    })
+  );
+};
 const changeItemAmounts = (code: string, amounts: number) => {
   const { itemClass } = splitCodeToInfoWithoutInspection(code);
   const targetClass = myItems[itemClass - 1];
@@ -1140,9 +1167,7 @@ const changeItemAmounts = (code: string, amounts: number) => {
   } else {
     targetClass[code] = new Item(code, amounts);
   }
-  myItems[itemClass - 1] = Object.fromEntries(
-    Object.entries(targetClass).sort()
-  );
+  myItems[itemClass - 1] = sortItems(targetClass);
   resetItemContainers(itemClass);
   renderItems(itemClass);
 };
@@ -2351,7 +2376,7 @@ const showItemsAmountsChange = (items: { [key: string]: number }) => {
     }
   }
   for (let i = 0; i < myItems.length; i++) {
-    myItems[i] = Object.fromEntries(Object.entries(myItems[i]).sort());
+    myItems[i] = sortItems(myItems[i]);
     resetItemContainers(i + 1);
     renderItems(i + 1);
   }
@@ -3157,6 +3182,18 @@ const makeItem = async () => {
         return;
       }
     }
+    const { itemClass } = splitCodeToInfoWithoutInspection(code);
+    if (itemClass === 5) {
+      const myMarks = myItems[4];
+      let myMarksAmounts: number = 0;
+      for (const markCode in myMarks) {
+        myMarksAmounts += myMarks[markCode].amounts;
+      }
+      if (myMarksAmounts + amounts > 135) {
+        alertByModal("소환사의 문양은 최대 135개까지만 보유할 수 있습니다!");
+        return;
+      }
+    }
     showLoading();
     const res = await axios.post(`/item/make/${code}`, { amounts });
     const { data } = res;
@@ -3413,6 +3450,7 @@ const changeToBuyMode = () => {
   marketItemList.style.display = "flex";
   searchPageController.style.display = "flex";
   marketClassNavContainer.style.display = "none";
+  marketInventoryWrapper.style.display='none'
   marketPartInventories.forEach((inventory) => {
     if (inventory.style.display === "flex") {
       inventory.style.display = "none";
@@ -3427,6 +3465,7 @@ const changeToSaleMode = () => {
   marketItemList.style.display = "none";
   searchPageController.style.display = "none";
   marketClassNavContainer.style.display = "flex";
+  marketInventoryWrapper.style.display='flex'
   stopLoading();
   marketSalePartNavBtns[0].click();
 };
@@ -3695,6 +3734,22 @@ const buyItem = async (event: MouseEvent) => {
       alertByModal("골드 부족!");
       return;
     }
+    const codeContainer = marketItemContainer.querySelector(
+      ".itemCode"
+    ) as HTMLSpanElement;
+    const code = codeContainer.innerText;
+    const {itemClass}=splitCodeToInfoWithoutInspection(code)
+    if (itemClass === 5) {
+      const myMarks = myItems[4];
+      let myMarksAmounts: number = 0;
+      for (const markCode in myMarks) {
+        myMarksAmounts += myMarks[markCode].amounts;
+      }
+      if (myMarksAmounts + amounts > 135) {
+        alertByModal("소환사의 문양은 최대 135개까지만 보유할 수 있습니다!");
+        return;
+      }
+    }
     showLoading();
     const res = await axios.post(`market/buy/${itemId}`, {
       buyingAmounts: amounts,
@@ -3708,10 +3763,6 @@ const buyItem = async (event: MouseEvent) => {
     }
     if (!data.info) {
       updateCreatorGold(-totalPrice);
-      const codeContainer = marketItemContainer.querySelector(
-        ".itemCode"
-      ) as HTMLSpanElement;
-      const code = codeContainer.innerText;
       changeItemAmounts(code, amounts);
     }
     stopLoading();
@@ -3887,6 +3938,19 @@ const cancelSale = (id: number) => async () => {
       alertByModal("취소 개수 입력 오류!");
       return;
     }
+    const { code } = mySellingItems[id];
+    const {itemClass}=splitCodeToInfoWithoutInspection(code)
+    if (itemClass === 5) {
+      const myMarks = myItems[4];
+      let myMarksAmounts: number = 0;
+      for (const markCode in myMarks) {
+        myMarksAmounts += myMarks[markCode].amounts;
+      }
+      if (myMarksAmounts + cancelAmounts > 135) {
+        alertByModal("소환사의 문양은 최대 135개까지만 보유할 수 있습니다!");
+        return;
+      }
+    }
     showLoading();
     const res = await axios.post(`/market/cancel/${id}`, {
       cancelAmounts,
@@ -3898,7 +3962,6 @@ const cancelSale = (id: number) => async () => {
     } else if (fatal === false) {
       throw new Error("error");
     }
-    const { code } = mySellingItems[id];
     changeItemAmounts(code, cancelAmounts);
     saleModal.style.display = "none";
     OutOfSaleModal.style.display = "none";
@@ -4477,10 +4540,14 @@ document.addEventListener("click", (event: MouseEvent) => {
   }
 });
 
-for (const itemClass of availableItemClass) {
-  renderItems(itemClass);
-}
-updateCreatorGold(0);
-updateMarketDiscount();
-updateCreatorCash(0);
-changeCreatorExpToLocaleString();
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    for (const itemClass of availableItemClass) {
+      renderItems(itemClass);
+    }
+    updateCreatorGold(0);
+    updateMarketDiscount();
+    updateCreatorCash(0);
+    changeCreatorExpToLocaleString();
+  }, 100);
+});

@@ -7,9 +7,7 @@ import { splitCodeToInfoWithoutInspection, ReqError } from "./common";
 const renderMain: RequestHandler = async (req, res, next) => {
   try {
     if (!req.user) {
-      return res.render("main", {
-        title: "Creator",
-      });
+      return res.render("login");
     }
     const UserId = req.user.id;
     const creator = await User.findOne({ where: { id: UserId } });
@@ -154,7 +152,6 @@ const renderMain: RequestHandler = async (req, res, next) => {
       itemsData[itemClass - 1][code] = { amounts };
     }
     return res.render("main", {
-      title: "Creator",
       creatorData,
       summonersData,
       totemsData,

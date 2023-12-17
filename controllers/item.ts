@@ -185,7 +185,7 @@ const makeItem: RequestHandler = async (req, res, next) => {
     });
     if (!creator) {
       const errorObj = {
-        fatal:true,
+        fatal: true,
         status: 400,
         place: "controllers-item-makeItem",
         content: `no creator! UserId: ${UserId}`,
@@ -193,9 +193,9 @@ const makeItem: RequestHandler = async (req, res, next) => {
       };
       throw new ReqError(errorObj, errorObj.content);
     }
-    if(creator.lockMemo){
+    if (creator.lockMemo) {
       const errorObj = {
-        fatal:true,
+        fatal: true,
         status: 400,
         place: "controllers-item-makeItem",
         content: `locked creator! UserId: ${UserId}`,
@@ -225,7 +225,7 @@ const makeItem: RequestHandler = async (req, res, next) => {
         (amountsAccumulator, mark) => amountsAccumulator + mark.amounts,
         0
       );
-      if (markTotalAmounts + amounts > 120) {
+      if (markTotalAmounts + amounts > 135) {
         const errorObj = {
           status: 400,
           place: "controllers-item-makeItem",
@@ -371,7 +371,11 @@ const makeItem: RequestHandler = async (req, res, next) => {
       for (let i = 0; i < ingredients.length; i++) {
         const { ingredientAmounts } = ingredients[i];
         const targetIngredient = myIngredients[i];
-        targetIngredient.amounts -= amounts * ingredientAmounts;
+        if (targetIngredient.itemClass === 5) {
+          targetIngredient.amounts -= success * ingredientAmounts;
+        } else {
+          targetIngredient.amounts -= amounts * ingredientAmounts;
+        }
         if (targetIngredient.amounts) {
           await targetIngredient.save({ transaction });
         } else {
@@ -415,7 +419,7 @@ const enhanceMark: RequestHandler = async (req, res, next) => {
     });
     if (!creator) {
       const errorObj = {
-        fatal:true,
+        fatal: true,
         status: 400,
         place: "controllers-item-enhanceMark",
         content: `no creator! UserId: ${UserId}`,
@@ -423,9 +427,9 @@ const enhanceMark: RequestHandler = async (req, res, next) => {
       };
       throw new ReqError(errorObj, errorObj.content);
     }
-    if(creator.lockMemo){
+    if (creator.lockMemo) {
       const errorObj = {
-        fatal:true,
+        fatal: true,
         status: 400,
         place: "controllers-item-enhanceMark",
         content: `locked creator! UserId: ${UserId}`,
@@ -594,7 +598,7 @@ const disassembleItem: RequestHandler = async (req, res, next) => {
     });
     if (!creator) {
       const errorObj = {
-        fatal:true,
+        fatal: true,
         status: 400,
         place: "controllers-item-disassembleItem",
         content: `no creator! UserId: ${UserId}`,
@@ -602,9 +606,9 @@ const disassembleItem: RequestHandler = async (req, res, next) => {
       };
       throw new ReqError(errorObj, errorObj.content);
     }
-    if(creator.lockMemo){
+    if (creator.lockMemo) {
       const errorObj = {
-        fatal:true,
+        fatal: true,
         status: 400,
         place: "controllers-item-disassembleItem",
         content: `locked creator! UserId: ${UserId}`,
@@ -722,7 +726,7 @@ const buyCashItem: RequestHandler = async (req, res, next) => {
       (itemClass === 7 && itemDetailNumber !== 2)
     ) {
       const errorObj = {
-        fatal:true,
+        fatal: true,
         status: 400,
         place: "controllers-item-buyCashItem",
         content: `weird code! code: ${code}`,
@@ -732,7 +736,7 @@ const buyCashItem: RequestHandler = async (req, res, next) => {
     }
     if (!Number.isInteger(amounts) || amounts < 1) {
       const errorObj = {
-        fatal:true,
+        fatal: true,
         status: 400,
         place: "controllers-item-buyCashItem",
         content: `weird amounts! amounts: ${amounts}`,
@@ -746,7 +750,7 @@ const buyCashItem: RequestHandler = async (req, res, next) => {
     });
     if (!creator) {
       const errorObj = {
-        fatal:true,
+        fatal: true,
         status: 400,
         place: "controllers-item-buyCashItem",
         content: `no creator! UserId: ${UserId}`,
@@ -754,9 +758,9 @@ const buyCashItem: RequestHandler = async (req, res, next) => {
       };
       throw new ReqError(errorObj, errorObj.content);
     }
-    if(creator.lockMemo){
+    if (creator.lockMemo) {
       const errorObj = {
-        fatal:true,
+        fatal: true,
         status: 400,
         place: "controllers-item-buyCashItem",
         content: `locked creator! UserId: ${UserId}`,
@@ -824,4 +828,4 @@ const buyCashItem: RequestHandler = async (req, res, next) => {
     return next(err);
   }
 };
-export { makeItem, enhanceMark,  disassembleItem, buyCashItem };
+export { makeItem, enhanceMark, disassembleItem, buyCashItem };

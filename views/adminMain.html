@@ -1,0 +1,310 @@
+{% extends 'layout.html' %}
+
+{% block styleSheet %}
+<link rel="stylesheet" type="text/css" href="/stylesheet/adminMain.css?version=0.0.1">
+{% endblock %}
+
+{% block content %}
+<header>
+  <button class="header_navBtn" id="userNavBtn">유저</button>
+  <button class="header_navBtn" id="errorNavBtn">에러</button>
+  <button class="header_logoutBtn"><a href="/admin/logout">로그아웃</a></button>
+</header>
+<main>
+  <div class="searchNav" id="userSearchNav">
+    <div class="searchNav_navBtn">
+      <button class="searchNav_nameBtn">닉네임</button>
+      <ul style="display: none;" class="searchNav_navList">
+        <li class="navList_nav">닉네임</li>
+        <li class="navList_nav">ID</li>
+        <li class="navList_nav">ID(DB)</li>
+      </ul>
+    </div>
+    <div class="searchNav_conditionList">
+      <div class="searchNav_conditionContainer">LOCK:&nbsp;<input type="checkbox" class="conditionContainer_checkbox"
+          id="userLockCheckBox">
+      </div>
+      <div class="searchNav_conditionContainer">CASHCODE:&nbsp;<input type="checkbox"
+          class="conditionContainer_checkbox" id="userCashCodeCheckBox">
+      </div>
+    </div>
+    <input type="search" class="searchNav_searchTextContainer">
+    <button class="searchNav_searchBtn">🔍</button>
+    <div class="searchNav_executeBtnContainer">
+      <button class="searchNav_executeBtn" id="userSearchNavDeleteCashCodeBtn">캐시코드 제거</button>
+    </div>
+  </div>
+  <table class="userTable">
+    <thead class="userTable_head">
+      <td class="userTable_headCell firstCell">
+        <input type="checkbox" class="userTable_headCheckbox">
+      </td>
+      <td class="userTable_headCell">닉네임</td>
+      <td class="userTable_headCell">ID</td>
+      <td class="userTable_headCell">ID(DB)</td>
+      <td class="userTable_headCell">레벨</td>
+      <td class="userTable_headCell">골드</td>
+      <td class="userTable_headCell">캐시</td>
+      <td class="userTable_headCell">정지메모</td>
+      <td class="userTable_headCell">캐시코드</td>
+    </thead>
+    <tbody class="userTable_body">
+      {% for row in range(0,10) %}
+      <tr class="userTable_row">
+        {% for cell in range(0,9) %}
+        {% if cell===0 %}
+        <td class="userTable_bodyCell firstCell">
+          <input type="checkbox" class="userTable_bodyCheckbox">
+        </td>
+        {% elif cell===3%}
+        <td class="userTable_bodyCell idCell"></td>
+        {% else %}
+        <td class="userTable_bodyCell"></td>
+        {% endif %}
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="userTableController">
+    <button class="userTableController_btn" id="leftEndBtn">&lt;&lt;</button>
+    <button class="userTableController_btn" id="leftBtn">&lt;</button>
+    <div class="userTableController_pageShower">
+      <span class="pageShower_pageContainer" id="currentPage"></span>/
+      <span class="pageShower_pageContainer" id="lastPage"></span>
+    </div>
+    <button class="userTableController_btn" id="rightBtn">&gt;</button>
+    <button class="userTableController_btn" id="rightEndBtn">&gt;&gt;</button>
+  </div>
+  <div style="display: none;" class="searchNav" id="errorSearchNav">
+    <div class="searchNav_navBtn">
+      <button class="searchNav_nameBtn">유저</button>
+      <ul style="display: none;" class="searchNav_navList">
+        <li class="navList_nav">유저</li>
+        <li class="navList_nav">위치</li>
+        <li class="navList_nav">내용</li>
+      </ul>
+    </div>
+    <div class="searchNav_conditionList">
+      <div class="searchNav_conditionContainer">FATAL:&nbsp;<input type="checkbox" class="conditionContainer_checkbox">
+      </div>
+    </div>
+    <input type="search" class="searchNav_searchTextContainer">
+    <button class="searchNav_searchBtn">🔍</button>
+    <div class="searchNav_executeBtnContainer">
+      <button class="searchNav_executeBtn" id="errorSearchNavDeleteErrorBtn">에러 제거</button>
+    </div>
+  </div>
+  <table style="display: none;" class="errorTable">
+    <thead class="errorTable_head">
+      <td class="errorTable_headCell firstCell">
+        <input type="checkbox" class="errorTable_headCheckbox">
+      </td>
+      <td class="errorTable_headCell">유저</td>
+      <td class="errorTable_headCell">ID(DB)</td>
+      <td class="errorTable_headCell">위치</td>
+      <td class="errorTable_headCell">상태</td>
+      <td class="errorTable_headCell">내용</td>
+      <td class="errorTable_headCell">FATAL</td>
+    </thead>
+    <tbody class="errorTable_body">
+      {% for row in range(0,10) %}
+      <tr class="errorTable_row">
+        {% for cell in range(0,7) %}
+        {% if cell===0 %}
+        <td class="errorTable_bodyCell firstCell">
+          <input type="checkbox" class="errorTable_bodyCheckbox">
+        </td>
+        {% elif cell===2%}
+        <td class="errorTable_bodyCell idCell"></td>
+        {% else %}
+        <td class="errorTable_bodyCell"></td>
+        {% endif %}
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div style="display: none;" class="errorTableController">
+    <button class="errorTableController_btn" id="leftEndBtn">&lt;&lt;</button>
+    <button class="errorTableController_btn" id="leftBtn">&lt;</button>
+    <div class="errorTableController_pageShower">
+      <span class="pageShower_pageContainer" id="currentPage"></span>/
+      <span class="pageShower_pageContainer" id="lastPage"></span>
+    </div>
+    <button class="errorTableController_btn" id="rightBtn">&gt;</button>
+    <button class="errorTableController_btn" id="rightEndBtn">&gt;&gt;</button>
+  </div>
+  <div style="display: none;" class="userInfoContainer">
+    <span class="userInfoContainer_label">유저</span>
+    <button class="userInfoContainer_closeBtn">✖</button>
+    <table class="userInfoTable">
+      <thead class="userInfoTable_head">
+        <td class="userInfoTable_headCell">닉네임</td>
+        <td class="userInfoTable_headCell">ID</td>
+        <td class="userInfoTable_headCell">ID(DB)</td>
+        <td class="userInfoTable_headCell">레벨</td>
+        <td class="userInfoTable_headCell">골드</td>
+        <td class="userInfoTable_headCell">캐시</td>
+        <td class="userInfoTable_headCell">정지메모</td>
+        <td class="userInfoTable_headCell">캐시코드</td>
+      </thead>
+      <tbody class="userInfoTable_body">
+        <tr class="userInfoTable_row">
+          {% for cell in range(0,8)%}
+          {% if cell===0 %}
+          <td class="userInfoTable_bodyCell nickCell"></td>
+          {% elif cell===2 %}
+          <td class="userInfoTable_bodyCell idCell"></td>
+          {% elif cell===4 %}
+          <td class="userInfoTable_bodyCell goldCell"></td>
+          {% elif cell===5 %}
+          <td class="userInfoTable_bodyCell cashCell"></td>
+          {% elif cell===6 %}
+          <td class="userInfoTable_bodyCell lockMemoCell"></td>
+          {% elif cell===7 %}
+          <td class="userInfoTable_bodyCell cashCodeCell"></td>
+          {% else %}
+          <td class="userInfoTable_bodyCell"></td>
+          {% endif %}
+          {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+    <span class="userInfoContainer_label" id="errorInfoTableLabel">에러</span>
+    <table class="errorInfoTable">
+      <thead class="errorInfoTable_head">
+        <td class="errorInfoTable_headCell firstCell">
+          <input type="checkbox" class="errorInfoTable_headCheckbox">
+        </td>
+        <td class="errorInfoTable_headCell">유저</td>
+        <td class="errorInfoTable_headCell">ID(DB)</td>
+        <td class="errorInfoTable_headCell">위치</td>
+        <td class="errorInfoTable_headCell">상태</td>
+        <td class="errorInfoTable_headCell">내용</td>
+        <td class="errorInfoTable_headCell">FATAL</td>
+      </thead>
+      <tbody class="errorInfoTable_body">
+        {% for row in range(0,5)%}
+        <tr class="errorInfoTable_row">
+          {% for cell in range(0,7)%}
+          {% if cell===0 %}
+          <td class="errorInfoTable_bodyCell firstCell"><input type="checkbox" class="errorInfoTable_bodyCheckbox">
+          </td>
+          {% elif cell===2%}
+          <td class="errorInfoTable_bodyCell idCell"></td>
+          {% else %}
+          <td class="errorInfoTable_bodyCell"></td>
+          {% endif %}
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <span class="userInfoContainer_label">소환사</span>
+    <span class="userInfoContainer_label rightLabel">토템</span>
+    <table class="summonersInfoTable">
+      <tbody class="summonersInfoTable_body">
+        {% for row in range(0,3)%}
+        <tr class="summonersInfoTable_row">
+          {% for cell in range(0,11)%}
+          {% if cell===0 %}
+          <td class="summonersInfoTable_bodyCell">
+            {% if row===0 %}
+            인덱스
+            {% elif row===1 %}
+            등급
+            {% else %}
+            레벨
+            {% endif %}
+          </td>
+          {% else %}
+          <td class="summonersInfoTable_bodyCell"></td>
+          {% endif %}
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <table class="totemsInfoTable">
+      <tbody class="totemsInfoTable_body">
+        {% for row in range(0,3)%}
+        <tr class="totemsInfoTable_row">
+          {% for cell in range(0,5)%}
+          {% if cell===0 %}
+          <td class="totemsInfoTable_bodyCell">
+            {% if row===0 %}
+            인덱스
+            {% elif row===1 %}
+            등급
+            {% else %}
+            레벨
+            {% endif %}
+          </td>
+          {% else %}
+          <td class="totemsInfoTable_bodyCell"></td>
+          {% endif %}
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="userInfoContainer_btnContainer">
+      <button class="userInfoContainer_bigBtn" id="userInfoContainerDeleteCashCodeBtn">캐시코드 제거</button>
+      <button class="userInfoContainer_bigBtn" id="userInfoContainerDeleteErrorBtn">에러 삭제</button>
+      <button class="userInfoContainer_bigBtn" id="userInfoContainerUserLockBtn">계정 정지 (해제)</button>
+      <button class="userInfoContainer_bigBtn rightBigBtn" id="userInfoContainerDeleteUserBtn">계정 삭제</button>
+      <div class="userInfoContainer_complexBtnContainer">
+        <div class="complexBtnContainer_setterContainer">
+          <span class="complexBtnContainer_setterLabel">닉네임</span>
+          <input type="text" class="complexBtnContainer_textContainer" id="newNickContainer" placeholder="정지메모 / 삭제">
+        </div>
+        <button class="complexBtnContainer_btn" id="changeNickBtn">닉네임 변경</button>
+      </div>
+      <div class="userInfoContainer_complexBtnContainer">
+        <div class="complexBtnContainer_setterContainer">
+          <span class="complexBtnContainer_setterLabel">전체</span>
+          <input type="checkbox" class="complexBtnContainer_checkbox" id="goldChangeAllChecker">
+        </div>
+        <div class="complexBtnContainer_setterContainer">
+          <span class="complexBtnContainer_setterLabel">골드</span>
+          <input type="number" class="complexBtnContainer_numberContainer" id="goldChangeNumberContainer">
+        </div>
+        <button class="complexBtnContainer_btn" id="changeGoldBtn">골드 변경</button>
+      </div>
+      <div class="userInfoContainer_complexBtnContainer">
+        <div class="complexBtnContainer_setterContainer">
+          <span class="complexBtnContainer_setterLabel">전체</span>
+          <input type="checkbox" class="complexBtnContainer_checkbox" id="cashChangeAllChecker">
+        </div>
+        <div class="complexBtnContainer_setterContainer">
+          <span class="complexBtnContainer_setterLabel">캐시</span>
+          <input type="number" class="complexBtnContainer_numberContainer" id="cashChangeNumberContainer">
+        </div>
+        <button class="complexBtnContainer_btn" id="changeCashBtn">캐시 변경</button>
+      </div>
+      <div class="userInfoContainer_complexBtnContainer">
+        <div class="complexBtnContainer_setterContainer">
+          <span class="complexBtnContainer_setterLabel">코드</span>
+          <input type="text" class="complexBtnContainer_numberContainer" id="itemChangeCodeContainer">
+        </div>
+        <div class="complexBtnContainer_setterContainer">
+          <span class="complexBtnContainer_setterLabel">수량</span>
+          <input type="number" class="complexBtnContainer_numberContainer" id="itemChangeAmountsContainer">
+        </div>
+        <button class="complexBtnContainer_btn" id="changeItemBtn">아이템 추가</button>
+      </div>
+    </div>
+  </div>
+</main>
+<div style="display: none;" class="usersStrData">{{usersStrData}}</div>
+<div style="display: none;" class="errorsStrData">{{errorsStrData}}</div>
+<div style="display: none;" class="alertModal"></div>
+<div style="display: none;" class="OutOfAlertModal"></div>
+<div style="display: none;" class="loadingShower">로딩 중</div>
+<div style="display: none;" class="outOfLoadingShower"></div>
+{% endblock %}
+
+{% block script %}
+<script src="/scripts/adminMain.js?version=0.0.1"></script>
+{% endblock %}
