@@ -170,7 +170,10 @@ button:focus {
 }
 
 .screenTurnShower {
-  display: none;
+  display: block;
+  width: 100dvw;
+  height: 100dvh;
+  position: fixed;
   z-index: 10;
 }
 
@@ -183,12 +186,9 @@ button:focus {
   top: calc((96dvh - 48dvw)/2);
 }
 
-@media (max-aspect-ratio:1/1) or (max-width:600px)or (max-height:300px) {
+@media (min-aspect-ratio:1/1) or (min-width:600px)or (min-height:300px) {
   .screenTurnShower {
-    display: block;
-    width: 100dvw;
-    height: 100dvh;
-    position: fixed;
+    display: none;
   }
 }
 
