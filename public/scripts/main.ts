@@ -309,7 +309,9 @@ const searchRightBtn = searchPageController.querySelector(
 const searchRightEndBtn = searchPageController.querySelector(
   "#rightEndBtn"
 ) as HTMLButtonElement;
-const marketInventoryWrapper = marketPart.querySelector('.inventoryWrapper') as HTMLDivElement
+const marketInventoryWrapper = marketPart.querySelector(
+  ".inventoryWrapper"
+) as HTMLDivElement;
 const marketPartInventories = marketPart.querySelectorAll(
   ".inventory"
 ) as NodeListOf<HTMLDivElement>;
@@ -3214,9 +3216,12 @@ const makeItem = async () => {
       changeItemAmounts(recipeCode, -amounts);
     }
     ingredients.forEach((ingredient) => {
+      const ingredientClass = splitCodeToInfoWithoutInspection(
+        ingredient.code
+      ).itemClass;
       changeItemAmounts(
         ingredient.code,
-        -ingredient.amounts * (success + fail)
+        -ingredient.amounts * (ingredientClass === 5 ? success : success + fail)
       );
     });
     openMakeModal(code, success, fail);
@@ -3450,7 +3455,7 @@ const changeToBuyMode = () => {
   marketItemList.style.display = "flex";
   searchPageController.style.display = "flex";
   marketClassNavContainer.style.display = "none";
-  marketInventoryWrapper.style.display='none'
+  marketInventoryWrapper.style.display = "none";
   marketPartInventories.forEach((inventory) => {
     if (inventory.style.display === "flex") {
       inventory.style.display = "none";
@@ -3465,7 +3470,7 @@ const changeToSaleMode = () => {
   marketItemList.style.display = "none";
   searchPageController.style.display = "none";
   marketClassNavContainer.style.display = "flex";
-  marketInventoryWrapper.style.display='flex'
+  marketInventoryWrapper.style.display = "flex";
   stopLoading();
   marketSalePartNavBtns[0].click();
 };
@@ -3738,7 +3743,7 @@ const buyItem = async (event: MouseEvent) => {
       ".itemCode"
     ) as HTMLSpanElement;
     const code = codeContainer.innerText;
-    const {itemClass}=splitCodeToInfoWithoutInspection(code)
+    const { itemClass } = splitCodeToInfoWithoutInspection(code);
     if (itemClass === 5) {
       const myMarks = myItems[4];
       let myMarksAmounts: number = 0;
@@ -3939,7 +3944,7 @@ const cancelSale = (id: number) => async () => {
       return;
     }
     const { code } = mySellingItems[id];
-    const {itemClass}=splitCodeToInfoWithoutInspection(code)
+    const { itemClass } = splitCodeToInfoWithoutInspection(code);
     if (itemClass === 5) {
       const myMarks = myItems[4];
       let myMarksAmounts: number = 0;
