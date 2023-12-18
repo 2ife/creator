@@ -7,12 +7,6 @@ const common_1 = require("./common");
 // info:
 // fail:
 const renderMain = async (req, res, next) => {
-  console.log(
-    "req!!!",
-    req.headers["x-forwarded-for"] || req.connection.remoteAddress
-  );
-  console.log(req.socket.remotePort);
-  console.log(req.headers.host); // 서버의 포트 번호
   try {
     if (!req.user) {
       return res.render("login");

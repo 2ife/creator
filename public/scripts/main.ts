@@ -2759,7 +2759,9 @@ const openItemMenu = async (code: string) => {
         itemModalBtn.addEventListener("click", useMarketDiscountTicketFunc);
       } else if (itemDetailNumber === 4) {
         itemModalTitle.innerText = "창조의 고서 사용";
-        itemModalInfo.innerText = `달 ${1000 * 2 ** (itemGrade - 1)}개 획득`;
+        itemModalInfo.innerText = `달 ${
+          cashItemPriceArr[itemGrade - 1]
+        }개 획득`;
         itemModalAmountsSetterContainer.style.display = "flex";
         itemModalAmountsSetter.max = amounts.toString();
         const useOldBookFunc = useOldBook(code);
