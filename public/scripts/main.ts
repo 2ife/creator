@@ -2760,7 +2760,7 @@ const openItemMenu = async (code: string) => {
       } else if (itemDetailNumber === 4) {
         itemModalTitle.innerText = "창조의 고서 사용";
         itemModalInfo.innerText = `달 ${
-          cashItemPriceArr[itemGrade - 1]
+          cashItemPriceArr[itemGrade - 1] * 2.1
         }개 획득`;
         itemModalAmountsSetterContainer.style.display = "flex";
         itemModalAmountsSetter.max = amounts.toString();
