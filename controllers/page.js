@@ -7,7 +7,10 @@ const common_1 = require("./common");
 // info:
 // fail:
 const renderMain = async (req, res, next) => {
-  console.log("req!!!", req.connection.remoteAddress);
+  console.log(
+    "req!!!",
+    req.headers["x-forwarded-for"] || req.connection.remoteAddress
+  );
   try {
     if (!req.user) {
       return res.render("login");
