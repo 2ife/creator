@@ -7,7 +7,7 @@ const common_1 = require("./common");
 // info:
 // fail:
 const renderMain = async (req, res, next) => {
-  console.log("req!!!", req.ip);
+  console.log("req!!!", req.connection.remoteAddress);
   try {
     if (!req.user) {
       return res.render("login");
