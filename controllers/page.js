@@ -8,7 +8,7 @@ const common_1 = require("./common");
 // fail:
 const renderMain = async (req, res, next) => {
   const a = req.headers["x-forwarded-for"];
-  console.log(a ? a.split(",")[a.split(",").length - 1] : "no ip");
+  console.log(a ? a.split(",") : "no ip");
   try {
     if (!req.user) {
       return res.render("login");
