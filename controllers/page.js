@@ -8,9 +8,13 @@ const common_1 = require("./common");
 // fail:
 const renderMain = async (req, res, next) => {
   console.log(
+    "req.ip:",
     req.ip,
+    'req.headers["x-forwarded-for"]:',
     req.headers["x-forwarded-for"],
+    'req.headers["x-real-ip"]:',
     req.headers["x-real-ip"],
+    "req.connection.remoteAddress:",
     req.connection.remoteAddress
   );
   try {
