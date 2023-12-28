@@ -8,10 +8,10 @@ const common_1 = require("./common");
 // fail:
 const renderMain = async (req, res, next) => {
   console.log(
-    request.ip,
-    request.headers["x-forwarded-for"],
-    request.headers["x-real-ip"],
-    request.connection.remoteAddress
+    req.ip,
+    req.headers["x-forwarded-for"],
+    req.headers["x-real-ip"],
+    req.connection.remoteAddress
   );
   try {
     if (!req.user) {
